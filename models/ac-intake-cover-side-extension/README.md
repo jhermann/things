@@ -1,5 +1,7 @@
 # AC Side Extension Box
 
+> 🔗 [AC Intake Cover - Side Extension Box - MakerWorld](https://makerworld.com/en/models/3148775-ac-intake-cover-side-extension-box)
+
 This complements an intake AC adapter as created by the
 [Parametric AC Hose Adapter Plate](https://makerworld.com/en/models/3002030-parametric-ac-hose-adapter-plate-adjustable)
 model. 
