@@ -9,7 +9,7 @@ model.
 > [Use the Interactiev 3D Preview](./Side-Extension-Box.stl) (STL file)
 
 You have to extend that model's width so that it also covers the smaller opening of this side extension
-(depth + arc radius of this model, and using the same height and wall thickness).
+(width + arc radius of this model, and using the same height and wall thickness).
 
 The resulting model can be printed without supports, when not changing the "support angle" too much,
 and when the large side wall is placed on the print bed.
@@ -28,6 +28,7 @@ If you device's surface is curved beyond a simple round corner, just apply more 
 
 - [MakerWorld's Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker)
 was used, with the "Creator Portal" button on top.
+- [Create customizable models on Maker World using Parametric Model Maker](https://forum.bambulab.com/t/create-customizable-models-on-maker-world-using-parametric-model-maker/156334) (forum post)
 - ▶️ [Cool new MakerWorld feature](https://www.youtube.com/watch?v=tTxtUKSM08c)
 
 AI instructions:
