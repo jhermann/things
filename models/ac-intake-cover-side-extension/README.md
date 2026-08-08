@@ -5,6 +5,8 @@ This complements an intake AC adapter as created by the
 model. 
 
 > <img title="Model Preview" src="Slicer-View.png" width=480 />
+>
+> [Use the Interactiev 3D Preview](./Side-Extension-Box.stl) (STL file)
 
 You have to extend that model's width so that it also covers the smaller opening of this side extension
 (depth + arc radius of this model, and using the same height and wall thickness).
