@@ -1,5 +1,7 @@
 # Parametric AC Hose Adapter with Insect Grill
 
+> Feed resulting SCAD into https://makerworld.com/en/makerlab/parametricModelMaker
+
 Create an AC hose adapter as a OpenSCAD model, consisting of these parts:
 
 - square base plate with rounded edges, chamfered on the bottom side on the edge of the rounded rectangle
@@ -75,7 +77,7 @@ Hose connector:
 
 * **`hose_diameter`**: `150 mm`
 *Nominal outer diameter of the hose.*
-* **`hose_connector_height`**: `35 mm`
+* **`hose_connector_height`**: `55 mm`
 *Height of the straight cylindrical section.*
 * **`wall_thickness`**: `2.5 mm`
 *Wall thickness for the main hose connector cylinder and top rim radius.*

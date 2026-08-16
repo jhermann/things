@@ -4,7 +4,7 @@
 
 /* [Hose Connector] */
 hose_diameter           = 150;   // Nominal outer diameter of the hose (mm)
-hose_connector_height   = 35;    // Height of straight cylindrical section (mm)
+hose_connector_height   = 55;    // Height of straight cylindrical section (mm)
 wall_thickness          = 2.5;   // Wall thickness for connector & top rim (mm)
 tolerance_gap           = 0.15;  // Subtracted from outer diameter for fit (mm)
 
