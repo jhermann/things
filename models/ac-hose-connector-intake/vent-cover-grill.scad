@@ -16,7 +16,7 @@ rim_thickness      = 3;      // Height/thickness of the rim
 rim_bottom_chamfer = 1;      // Chamfer distance at bottom outer edge
 
 // Grill fins
-grill_distance     = 12;     // Spacing of the grill fins
+grill_distance     = 12.5;   // Spacing of the grill fins
 grill_angle        = 45;     // Angle of the grill fins (deg)
 grill_height       = 15;     // Height of angled grill fins & stabilizer
 grill_thickness    = 1;      // Wall thickness of the grill fins

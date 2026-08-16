@@ -1,12 +1,15 @@
 # Parametric AC Exhaust Vent Cover
 
+> Feed resulting SCAD into https://makerworld.com/en/makerlab/parametricModelMaker
+
 Create an OpenSCAD model of a cover for an AC hose exchaust, with integrated grill that deflects the air at a given angle.
 
 - a hollow cylinder (tube) is the main body, with an outer diameter of the hose but tolerance subtracted.
 - the outside end of the vent has a rim around its edge, sitting on the print plate.
 - within the vent cover tube there are grill fins with a given spacing, angle, and height.
 - perpendicular to the fins there is a vertical stabilizer rectangle (not angled) conencting them in the middle.
-- the with of the angled fins is calculated so that they go up to the given grill height.
+- the width of the angled fins is calculated so that they go up to the given grill height.
+
 - at the inner end of the tube, there are four spring tongues excerting pressure for a better fit.
 - they have a given depth which is also their width, and they are made by cutting two vertical slits into the hose wall, a wall thickness wide and the tongue size high.
 - on the outside of those tongues there are segments cut from an ellipsoid, with the diameter of the segment equal to the tongue size minus a wall thickness.
@@ -40,7 +43,7 @@ Vent rim:
 
 Grill fins:
 
-* **`grill_distance`**: `12 mm`
+* **`grill_distance`**: `12.5 mm`
 *Spacing of the grill fins.*
 * **`grill_angle`**: `45 deg`
 *Angle of the grill fins.*
