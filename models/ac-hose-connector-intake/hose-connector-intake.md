@@ -75,7 +75,7 @@ Hose connector:
 
 * **`hose_diameter`**: `150 mm`
 *Nominal outer diameter of the hose.*
-* **`hose_connector_height`**: `30 mm`
+* **`hose_connector_height`**: `35 mm`
 *Height of the straight cylindrical section.*
 * **`wall_thickness`**: `2.5 mm`
 *Wall thickness for the main hose connector cylinder and top rim radius.*
