@@ -9,6 +9,9 @@ Interactive 3D Previews:
 - [Exhaust cover with delflection grill](./vent-cover-grill.stl) (STL file)
 - [Intake hose connector with insect screen](./hose-connector-intake.stl) (STL file)
 
+![Exhaust Front](assets/exhaust-front.jpg)
+![Exhaust Back](assets/exhaust-back.jpg)
+
 The *exhaust & intake hose connectors* are inserted into 150mm holes (or 180/200mm for the intake if you choose to),
 from the side of the panel that ends up outside.
 
