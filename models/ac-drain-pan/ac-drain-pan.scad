@@ -1,18 +1,25 @@
-$fn = 64;
-
 // AC condensate drain pan. Dimensions are millimetres.
-wall_thickness = 2.5;
-chamfer_size = 1.5;
-box_height = 35;
-box_width = 230;
-box_depth = 180;
-box_wall_angle = 75;
-spout_width = 30;
-spout_length = 25;
-handle_length = 120;
-handle_width = 5;
-handle_height = 25;
-handle_radius = 10;
+
+/* [Basic Settings] */
+wall_thickness = 2.5; // [1.0:0.1:5.0]
+chamfer_size = 1.5; // [0.0:0.1:5.0]
+box_height = 35; // [10:1:100]
+box_width = 230; // [50:1:300]
+box_depth = 180; // [50:1:300]
+box_wall_angle = 75; // [45:1:89]
+
+/* [Spout Settings] */
+spout_width = 30; // [10:1:100]
+spout_length = 25; // [10:1:100]
+
+/* [Handle Settings] */
+handle_length = 120; // [20:1:200]
+handle_width = 5; // [1:0.5:20]
+handle_height = 25; // [10:1:100]
+handle_radius = 10; // [1:1:20]
+
+/* [Hidden] */
+$fn = 64; // [16, 32, 64, 128]
 
 bottom_width = box_width - 2 * box_height / tan(box_wall_angle);
 bottom_depth = box_depth - 2 * box_height / tan(box_wall_angle);
