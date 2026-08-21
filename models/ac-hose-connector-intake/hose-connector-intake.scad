@@ -16,6 +16,10 @@ base_bottom_chamfer     = 1.5;   // Chamfer size on bottom outer edge (mm)
 foam_tape_groove_width  = 10;    // Width of foam tape groove (mm)
 foam_tape_thickness     = 1;     // Foam tape thickness (90% depth cutout) (mm)
 
+/* [Mounting Holes] */
+add_holes               = true;  // Add four M4 screw holes
+m4_hole_diameter        = 4.25;   // M4 clearance hole diameter (mm)
+
 /* [Insect Screen] */
 grid_hole_size          = 2.1;   // Flat-to-flat inner diameter of hex cell (mm)
 grid_wall_thickness     = 0.6;   // Shared wall thickness of hex grid (mm)
@@ -48,6 +52,10 @@ union() {
             
         // Foam Tape Recessed Grooves cut directly out of the top surface
         foam_tape_grooves();
+
+        // Optional M4 screw holes near each corner
+        if (add_holes)
+            mounting_screw_holes();
     }
 
     // 2. Main Hose Connector Cylinder
@@ -135,6 +143,22 @@ module foam_tape_grooves() {
             translate([-groove_len / 2, groove_y_center - (foam_tape_groove_width / 2), z_start]) {
                 cube([groove_len, foam_tape_groove_width, groove_depth + edge_pad]);
             }
+        }
+    }
+}
+
+// Four M4 clearance holes positioned inward from the base plate rim
+module mounting_screw_holes() {
+    half_s = base_size / 2;
+    hole_offset = half_s - foam_tape_groove_width - (4 * base_bottom_chamfer);
+
+    for (x = [-hole_offset, hole_offset]) {
+        for (y = [-hole_offset, hole_offset]) {
+            translate([x, y, -edge_pad])
+                cylinder(
+                    d = m4_hole_diameter,
+                    h = base_plate_thickness + (2 * edge_pad)
+                );
         }
     }
 }
