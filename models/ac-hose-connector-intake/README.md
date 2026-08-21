@@ -3,7 +3,12 @@
 These are parts that allow you to connect AC hoses to a window or door panel
 with holes cut into it.
 
-Interactive 3D Previews:
+**Model pages on MakerWorld:**
+
+- [Parametric AC Hose Connectors (Intake / Exhaust)](https://makerworld.com/en/models/3201549-parametric-ac-hose-connectors-intake-exhaust)
+- [Parametric AC Deflecting Grill](https://makerworld.com/en/models/3201677-parametric-ac-deflecting-grill)
+
+**Interactive 3D Previews:**
 
 - [Exhaust hose connector](./hose-connector-generic.stl) (STL file)
 - [Exhaust cover with delflection grill](./vent-cover-grill.stl) (STL file)
