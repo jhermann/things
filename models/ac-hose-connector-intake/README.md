@@ -11,7 +11,7 @@ with holes cut into it.
 **Interactive 3D Previews:**
 
 - [Exhaust hose connector](./hose-connector-generic.stl) (STL file)
-- [Exhaust cover with delflection grill](./vent-cover-grill.stl) (STL file)
+- [Exhaust cover with deflection grill](./vent-cover-grill.stl) (STL file)
 - [Intake hose connector with insect screen](./hose-connector-intake.stl) (STL file)
 
 ![Exhaust Front](assets/exhaust-front.jpg)
