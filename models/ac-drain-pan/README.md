@@ -7,7 +7,7 @@ The example model with default measurements holds ~680ml to the rim,
 but in practice that'll be about 400ml when you don't want to spill.
 It fits on a *Bambu Lab A1* plate.
 
-The default model works with many common AC monblock devices, e.g.
+The default model works with many common AC mono-block devices, e.g.
 *Comfee PH1-08CRN1* (8000 BTU/h) and *MPPH-09CRN7* (9000 BTU/h),
 or the *Olimpia Splendid 01913 Dolceclima Compact 8P* (8000 BTU/h).
 
