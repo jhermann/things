@@ -3,10 +3,10 @@
 /* [Basic Settings] */
 wall_thickness = 2.5; // [1.0:0.1:5.0]
 chamfer_size = 1.5; // [0.0:0.1:5.0]
-box_height = 35; // [10:1:100]
-box_width = 230; // [50:1:300]
-box_depth = 180; // [50:1:300]
-box_wall_angle = 75; // [45:1:89]
+box_height = 19; // [10:1:100]
+box_width = 240; // [50:1:300]
+box_depth = 200; // [50:1:300]
+box_wall_angle = 82; // [45:1:89]
 
 /* [Spout Settings] */
 spout_width = 30; // [10:1:100]

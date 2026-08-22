@@ -3,6 +3,23 @@
 A parametric model that you can use to drain your AC's condensate
 before you transport it or putting it away at the end of season.
 
+The example model with default measurements holds ~680ml to the rim,
+but in practice that'll be about 400ml when you don't want to spill.
+It fits on a *Bambu Lab A1* plate.
+
+The default model works with many common AC monblock devices, e.g.
+*Comfee PH1-08CRN1* (8000 BTU/h) and *MPPH-09CRN7* (9000 BTU/h),
+or the *Olimpia Splendid 01913 Dolceclima Compact 8P* (8000 BTU/h).
+
+The most important measurement here is the height of the pan and spout, which has to fit under the lower drain.
+You can print a test cuboid with several candidate dimensions to get an exact fit.
+I printed one sized 19×20×21 mm and wrote the sizes on the related side walls.
+
+> ![Drain Pan Preview](./assets/scad-preview.png)
+> ![Printed Model](./assets/Printed.jpg)
+> ![Supports](./assets/Supports.jpg)
+
+
 ## How It's Made
 
 - [MakerWorld's Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker)
@@ -37,13 +54,15 @@ Parameters:
 
 - wall thickness 2.5mm
 - chamfer size 1.5mm
-- box height 35mm
-- box width (top) 230mm
-- box depth (top) 180mm
-- box wall angle 75°
+- box height 19mm
+- box width (top) 240mm
+- box depth (top) 200mm
+- box wall angle 82°
 - spout width 30mm
 - spout length 25mm
 - handle length 120mm
 - handle width 5mm
 - handle height 25mm
 - handle radius 10mm
+
+Plus a little back & forth to get rid of the AIs spatial errors (they all suck at geometry).
