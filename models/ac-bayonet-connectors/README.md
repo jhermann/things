@@ -2,6 +2,7 @@
 
 These parts allow you to attach AC hoses securely to each other
 and to connectors on an AC device or window adapter. They use a bayonet mechanism for quick release and easy reattachment.
+The hoses are attached to the adapters by using a clamp.
 
 > 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
 
