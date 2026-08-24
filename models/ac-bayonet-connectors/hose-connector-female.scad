@@ -4,7 +4,7 @@
 
     /* [Hose Connector] */
     hose_diameter           = 150;   // Nominal outer diameter of the hose (mm)
-    hose_connector_height   = 55;    // Height of straight cylindrical section (mm)
+    hose_connector_height   = 65;    // Height of straight cylindrical section (mm)
     wall_thickness          = 2.5;   // Wall thickness for connector & top rim (mm)
     tolerance_gap           = 0.15;  // Subtracted from outer diameter for fit (mm)
 
@@ -21,6 +21,7 @@
     outer_radius = (hose_diameter / 2) - tolerance_gap;
     inner_radius = outer_radius - wall_thickness;
     edge_pad     = 0.2; // Padding to guarantee clean CSG subtractions
+    slot_cover   = 2 * wall_thickness;
 
     // ====================================================================
     // Main Assembly
@@ -28,13 +29,21 @@
     union() {
         // Main Hose Connector Cylinder
         difference() {
-            cylinder(r = outer_radius, h = hose_connector_height);
+            cylinder(r = outer_radius, h = hose_connector_height + 2 * locking_lug_size);
             translate([0, 0, -edge_pad])
-                cylinder(r = inner_radius, h = hose_connector_height + 2 * edge_pad);
+                cylinder(r = inner_radius, h = hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
+            translate([0, 0, -edge_pad])
+                cylinder(r = outer_radius, h = 2 * locking_lug_size + slot_cover + edge_pad);
+            rotate_extrude()
+                polygon([
+                    [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover + wall_thickness],
+                    [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover],
+                    [outer_radius + edge_pad, 2 * locking_lug_size + slot_cover]
+                ]);
         }
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
-        translate([0, 0, hose_connector_height])
+        translate([0, 0, hose_connector_height + 2 * locking_lug_size])
             top_lead_in_rim();
 
         // Continuous base ring around the outside of the tube
@@ -59,28 +68,101 @@
     }
 
     module outside_ring() {
-        ring_height = locking_lug_size + 4 * wall_thickness;
+        // Set ring_wall_thickness to 0 to expose bayonet slots
+        ring_wall_thickness = 1 * wall_thickness;
+        ring_height = 2 * locking_lug_size + 4 * wall_thickness;
         ring_outer_radius = hose_diameter / 2 + locking_lug_size;
         ring_chamfer = wall_thickness / 4;
 
         difference() {
-            cylinder(r = ring_outer_radius, h = ring_height);
+            cylinder(r = ring_outer_radius + ring_wall_thickness, h = ring_height);
 
+            // Top ring chamfer
             rotate_extrude()
                 polygon([
-                    [ring_outer_radius - ring_chamfer, ring_height],
-                    [ring_outer_radius + edge_pad, ring_height],
-                    [ring_outer_radius + edge_pad, ring_height - ring_chamfer - edge_pad]
+                    [ring_outer_radius + ring_wall_thickness - ring_chamfer, ring_height],
+                    [ring_outer_radius + ring_wall_thickness + edge_pad, ring_height],
+                    [ring_outer_radius + ring_wall_thickness + edge_pad, ring_height - ring_chamfer - edge_pad]
                 ]);
 
+            // Bottom ring chamfer
             rotate_extrude()
                 polygon([
-                    [ring_outer_radius - ring_chamfer, 0],
-                    [ring_outer_radius + edge_pad, 0],
-                    [ring_outer_radius + edge_pad, ring_chamfer + edge_pad]
+                    [ring_outer_radius + ring_wall_thickness - ring_chamfer, 0],
+                    [ring_outer_radius + ring_wall_thickness + edge_pad, 0],
+                    [ring_outer_radius + ring_wall_thickness + edge_pad, ring_chamfer + edge_pad]
                 ]);
+
+            bayonet_slots();
 
             translate([0, 0, -edge_pad])
                 cylinder(r = outer_radius, h = ring_height + 2 * edge_pad);
+        }
+
+        // Tube / ring chamfer
+        rotate_extrude()
+            polygon([
+                [outer_radius, ring_height],
+                [outer_radius + ring_chamfer, ring_height],
+                [outer_radius, ring_height + ring_chamfer]
+            ]);
+    }
+
+    module bayonet_slots() {
+        // L-shaped slots
+        ring_inner_radius = outer_radius;
+        slot_outer_radius = ring_inner_radius + locking_lug_size;
+        lug_center_radius = (ring_inner_radius + slot_outer_radius) / 2;
+        lug_angle = (locking_lug_length + edge_pad) / lug_center_radius * 180 / PI;
+        slot_depth = 2 * locking_lug_size + slot_cover;
+
+        for (slot_center = [45 : 90 : 315]) {
+            rotate([0, 0, slot_center - lug_angle / 2]) {
+                // Lug entry
+                rotate_extrude(angle = lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, -edge_pad],
+                        [slot_outer_radius + edge_pad, -edge_pad],
+                        [slot_outer_radius + edge_pad, slot_depth - locking_lug_size + edge_pad],
+                        [ring_inner_radius - edge_pad, slot_depth - locking_lug_size + edge_pad]
+                    ]);
+
+                // Tighter lug space
+                rotate_extrude(angle = 2 * lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, slot_cover - edge_pad],
+                        [slot_outer_radius + edge_pad, locking_lug_size + slot_cover + edge_pad],
+                        [ring_inner_radius - edge_pad, locking_lug_size + slot_cover + edge_pad]
+                    ]);
+                rotate_extrude(angle = 2 * lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, locking_lug_size + slot_cover - edge_pad],
+                        [slot_outer_radius + edge_pad, locking_lug_size + slot_cover - edge_pad],
+                        [ring_inner_radius - edge_pad, slot_depth + edge_pad]
+                    ]);
+            }
+
+            rotate([0, 0, slot_center + lug_angle]) {
+                // Locking lug space
+                rotate_extrude(angle = lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, slot_cover - edge_pad - wall_thickness / 2],
+                        [slot_outer_radius + edge_pad, locking_lug_size + slot_cover + edge_pad - wall_thickness / 2],
+                        [ring_inner_radius - edge_pad, locking_lug_size + slot_cover + edge_pad - wall_thickness / 2]
+                    ]);
+                rotate_extrude(angle = lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, slot_cover - edge_pad + locking_lug_size - wall_thickness / 2],
+                        [slot_outer_radius + edge_pad, slot_cover - edge_pad + locking_lug_size - wall_thickness / 2],
+                        [slot_outer_radius + edge_pad, slot_cover + edge_pad + locking_lug_size + wall_thickness / 2],
+                        [ring_inner_radius - edge_pad, slot_cover + edge_pad + locking_lug_size + wall_thickness / 2],
+                    ]);
+                rotate_extrude(angle = lug_angle, convexity = 2)
+                    polygon([
+                        [ring_inner_radius - edge_pad, locking_lug_size + slot_cover - edge_pad],
+                        [slot_outer_radius + edge_pad, locking_lug_size + slot_cover - edge_pad],
+                        [ring_inner_radius - edge_pad, slot_depth + edge_pad]
+                    ]);
+            }
         }
     }
