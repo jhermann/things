@@ -9,10 +9,10 @@ The hoses are attached to the adapters by using a clamp.
 **Interactive 3D Previews:**
 
 - [Male hose connector](./hose-connector-male.stl) (STL file)
-- [Female hose connector](./hose-connector-male.stl) (STL file)
+- [Female hose connector](./hose-connector-female.stl) (STL file)
 
 You can create your own customized versions using the OpenSCAD files in the
-[Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker?pageType=generator).
+**[Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker?pageType=generator)**.
 
 The male lugs have holes in them to add inner walls for more strength.
 They are chamfered on top so the female slots don't need supports.
@@ -20,3 +20,5 @@ They are chamfered on top so the female slots don't need supports.
 > ![Male Connector](assets/hose-connector-male.png)
 
 The female side has L-shaped slots the male lugs lock into.
+
+> ![Female Connector](assets/hose-connector-female.png)
