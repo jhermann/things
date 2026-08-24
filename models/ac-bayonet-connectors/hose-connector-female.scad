@@ -52,11 +52,12 @@
             extension_height = hose_connector_height - transition_height - slim_height;
             translate([0, 0, slim_height + 2 * locking_lug_size])
                 tube_transition(inner_radius, outer_radius + tolerance_gap, transition_height, wall_thickness);
-            translate([0, 0, slim_height + 2 * locking_lug_size + transition_height]) {
-                cylinder(r = outer_radius + wall_thickness + tolerance_gap, h = extension_height);
-                translate([0, 0, -edge_pad])
-                    cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * edge_pad);
-            }
+            translate([0, 0, slim_height + 2 * locking_lug_size + transition_height])
+                difference() {
+                    cylinder(r = outer_radius + wall_thickness + tolerance_gap, h = extension_height);
+                    translate([0, 0, -locking_lug_size])
+                        cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * locking_lug_size);
+                }
         }
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
