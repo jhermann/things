@@ -6,7 +6,9 @@ This complements an intake AC adapter as created by the
 [Parametric AC Hose Adapter Plate](https://makerworld.com/en/models/3002030-parametric-ac-hose-adapter-plate-adjustable)
 model. 
 
-> <img title="Model Preview" src="Slicer-View.png" width=480 />
+> 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
+
+> <a href="./Side-Extension-Box.stl"><img title="Model Preview" src="Slicer-View.png" width=480 /></a>
 >
 > [Use the Interactiev 3D Preview](./Side-Extension-Box.stl) (STL file)
 
@@ -25,6 +27,10 @@ Use a
 to measure the corner radius of your device, so you can set "arc radius" accordingly.
 
 If you device's surface is curved beyond a simple round corner, just apply more duct tape. 😃
+
+> [![Outside View](./assets/Printed-Outside.jpg)](./Side-Extension-Box.stl)
+> 
+> [![Inside View](./assets/Printed-Inside.jpg)](./Side-Extension-Box.stl)
 
 ## How It's Made
 
