@@ -10,6 +10,7 @@ The hoses are attached to the adapters by using a clamp.
 
 - [Male hose connector](./hose-connector-male.stl) (STL file)
 - [Female hose connector](./hose-connector-female.stl) (STL file)
+- [Female adapter](./hose-connector-adapter-H45.stl) (STL file)
 
 You can create your own customized versions using the OpenSCAD files in the
 **[Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker?pageType=generator)**.
@@ -22,3 +23,7 @@ They are chamfered on top so the female slots don't need supports.
 The female side has L-shaped slots the male lugs lock into.
 
 > [![Female Connector](assets/hose-connector-female.png)](./hose-connector-female.stl)
+
+To add the bayonet connector to a plain tube you have, use this adapter.
+
+> [![Female Adapter](assets/hose-connector-adapter-H45.png)](./hose-connector-adapter-H45.stl)

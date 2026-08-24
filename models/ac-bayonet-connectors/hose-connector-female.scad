@@ -5,6 +5,7 @@
     /* [Hose Connector] */
     hose_diameter           = 150;   // Nominal outer diameter of the hose (mm)
     hose_connector_height   = 65;    // Height of straight cylindrical section (mm)
+    tube_extension          = false; // Should this extend an existing tube?
     wall_thickness          = 2.5;   // Wall thickness for connector & top rim (mm)
     tolerance_gap           = 0.15;  // Subtracted from outer diameter for fit (mm)
 
@@ -28,8 +29,9 @@
     // ====================================================================
     union() {
         // Main Hose Connector Cylinder
+        slim_height = tube_extension ? (5 * wall_thickness) : hose_connector_height;
         difference() {
-            cylinder(r = outer_radius, h = hose_connector_height + 2 * locking_lug_size);
+            cylinder(r = outer_radius, h = slim_height + 2 * locking_lug_size);
             translate([0, 0, -edge_pad])
                 cylinder(r = inner_radius, h = hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
             translate([0, 0, -edge_pad])
@@ -42,20 +44,45 @@
                 ]);
         }
 
+        // Continuous base ring around the outside of the tube, with locking slots
+        outside_ring();
+
+        if (tube_extension) {
+            transition_height = 2 * locking_lug_size;
+            extension_height = hose_connector_height - transition_height - slim_height;
+            translate([0, 0, slim_height + 2 * locking_lug_size])
+                tube_transition(inner_radius, outer_radius + tolerance_gap, transition_height, wall_thickness);
+            translate([0, 0, slim_height + 2 * locking_lug_size + transition_height]) {
+                cylinder(r = outer_radius + wall_thickness + tolerance_gap, h = extension_height);
+                translate([0, 0, -edge_pad])
+                    cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * edge_pad);
+            }
+        }
+
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
         translate([0, 0, hose_connector_height + 2 * locking_lug_size])
             top_lead_in_rim();
+    }
 
-        // Continuous base ring around the outside of the tube
-        outside_ring();
+    module tube_transition(r1, r2, height, thickness) {
+        // Rotate_extrude spins a 2D profile 360 degrees around the Z-axis
+        rotate_extrude() {
+            polygon(points=[
+                [r1, 0],
+                [r2, height],
+                [r2 + thickness, height],
+                [r1 + thickness, 0]
+            ]);
+        }
     }
 
     // Convex Lead-In Rim
     // Profile: A solid 90° quarter-circle arc centered at (inner_radius, 0),
     // sweeping UPWARD and OUTWARD towards outer_radius.
     module top_lead_in_rim() {
+        top_ring_radius = tube_extension ? (outer_radius + tolerance_gap) : inner_radius;
         rotate_extrude() {
-            translate([inner_radius, 0, 0]) {
+            translate([top_ring_radius, 0, 0]) {
                 intersection() {
                     // Quarter circle bulging outward and upward
                     circle(r = wall_thickness, $fn = $fn);
