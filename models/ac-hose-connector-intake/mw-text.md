@@ -24,7 +24,11 @@ and the deflecting cover.
 
 See also the [Parametric AC Hose Adapter Plate](https://makerworld.com/en/models/3002030-parametric-ac-hose-adapter-plate-adjustable) and [AC Intake Cover - Side Extension Box](https://makerworld.com/en/models/3148775-ac-intake-cover-side-extension-box) models for a solution on the device's end.
 
+> 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for more related models.
+
 ## Assembly
+
+⚠️ Do **NOT** use PLA for your prints, you need a heat-resistant and UV-stable material like PCTG or PETG.
 
 What you need:
 
@@ -35,7 +39,7 @@ What you need:
 - *Optional:* self-adhesive foam tape (1mm thick, 10mm wide).
 - Hoses with clamps for attaching the hoses and keeping the connectors in place.
 
-As designed, you insert the connectors *from the outside* into the holes in your panel, and then attach the hoses using a clamp, securing both the hose and connector in place.
+As designed, you insert the connectors *from the outside* into the holes in your panel, and then attach the hoses using a clamp, securing both the hose and connector in place. You can also fix it to the window panel by using the optional M4 screw holes (and consider using a washer).
 
 Use the *exhaust cover* to direct the warm air away from the intake (usually upwards to the right or left).
 

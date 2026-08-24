@@ -3,10 +3,7 @@
 These are parts that allow you to connect AC hoses to a window or door panel
 with holes cut into it.
 
-**Model pages on MakerWorld:**
-
-- [Parametric AC Hose Connectors (Intake / Exhaust)](https://makerworld.com/en/models/3201549-parametric-ac-hose-connectors-intake-exhaust)
-- [Parametric AC Deflecting Grill](https://makerworld.com/en/models/3201677-parametric-ac-deflecting-grill)
+> 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
 
 **Interactive 3D Previews:**
 
