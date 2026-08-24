@@ -66,7 +66,7 @@
         lug_center_radius = (ring_inner_radius + ring_outer_radius) / 2;
         lug_angle = locking_lug_length / lug_center_radius * 180 / PI;
         gap_angle = 90 - lug_angle;
-        hole_count = floor(locking_lug_length / (3 * wall_thickness));
+        hole_count = 0; // floor(locking_lug_length / (3 * wall_thickness));
         hole_spacing = 3 * wall_thickness;
         hole_margin = (locking_lug_length - (hole_count * wall_thickness + (hole_count - 1) * 2 * wall_thickness)) / 2;
 
@@ -77,6 +77,13 @@
                     [ring_outer_radius, 0],
                     [ring_outer_radius, ring_height],
                     [ring_inner_radius, ring_height]
+                ]);
+
+            rotate_extrude(convexity = 2)
+                polygon([
+                    [ring_inner_radius, 0],
+                    [ring_outer_radius + edge_pad, 0],
+                    [ring_outer_radius + edge_pad, locking_lug_size]
                 ]);
 
             rotate_extrude(convexity = 2)
