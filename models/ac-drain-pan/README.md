@@ -15,7 +15,7 @@ The most important measurement here is the height of the pan and spout, which ha
 You can print a test cuboid with several candidate dimensions to get an exact fit.
 I printed one sized 19×20×21 mm and wrote the sizes on the related side walls.
 
-See the [Parametric AC Hose Connectors (Intake / Exhaust)](https://makerworld.com/en/models/3201549-parametric-ac-hose-connectors-intake-exhaust) model for more AC accessories.
+> 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
 
 > ![Drain Pan Preview](./assets/scad-preview.png)
 > ![Printed Model](./assets/Printed.jpg)
