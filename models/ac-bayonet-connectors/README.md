@@ -25,5 +25,6 @@ The female side has L-shaped slots the male lugs lock into.
 > [![Female Connector](assets/hose-connector-female.png)](./hose-connector-female.stl)
 
 To add the bayonet connector to a plain tube you have, use this adapter.
+The female model has a `tube extension` switch to enable this modified geometry.
 
 > [![Female Adapter](assets/hose-connector-adapter-H45.png)](./hose-connector-adapter-H45.stl)
