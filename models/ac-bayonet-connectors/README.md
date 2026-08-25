@@ -1,8 +1,8 @@
-# AC Hose Bayonet Quick Couplings
+# AC Hose Bayonet Quick Connectors
 
 These parts allow you to attach AC hoses securely to each other
 and to connectors on an AC device or window adapter. They use a bayonet mechanism for quick release and easy reattachment.
-The hoses are attached to the adapters by using a clamp.
+The hoses are fixed to the connectors by using a clamp.
 
 All models are designed to print without any supports, on a modern device that supports 45° overhangs.
 
@@ -23,7 +23,7 @@ The female side has L-shaped slots the male lugs lock into.
 
 > [![Female Connector](assets/hose-connector-female.png)](./hose-connector-female.stl)
 
-To add the bayonet connector to a plain tube you have, use this adapter.
+To add the bayonet connector to a plain tube you already have, use this adapter.
 The female model has a `tube extension` switch to enable this modified geometry.
 
 > [![Female Adapter](assets/hose-connector-adapter-H45.png)](./hose-connector-adapter-H45.stl)
