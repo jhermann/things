@@ -1,17 +1,17 @@
     // ====================================================================
-    // Parametric AC Hose Bayonet Connector (Female)
+    // Parametric AC Hose Bayonet Connector / Adapter (Female)
     // ====================================================================
 
     /* [Hose Connector] */
     hose_diameter           = 150;   // Nominal outer diameter of the hose (mm)
-    hose_connector_height   = 65;    // Height of straight cylindrical section (mm)
-    tube_extension          = false; // Should this extend an existing tube?
+    hose_connector_height   = 45;    // Height of straight cylindrical section (mm)
     wall_thickness          = 2.5;   // Wall thickness for connector & top rim (mm)
     tolerance_gap           = 0.15;  // Subtracted from outer diameter for fit (mm)
+    tube_extension          = false; // Should this extend an existing tube?
 
-    /* [Connector Ring] */
-    locking_lug_length      = 15;    // Circumferential arc length of each lug (mm)
-    locking_lug_size        = 5;     // Square radial and vertical cross-section (mm)
+    /* [Connector Slots] */
+    locking_lug_length      = 20;    // Circumferential arc length of each lug (mm)
+    locking_lug_size        = 7.5;   // Square radial and vertical cross-section (mm)
 
     /* [Quality] */
     $fn = 120;                       // Circle resolution parameter
@@ -21,8 +21,8 @@
     // ====================================================================
     outer_radius = (hose_diameter / 2) - tolerance_gap;
     inner_radius = outer_radius - wall_thickness;
-    edge_pad     = 0.2; // Padding to guarantee clean CSG subtractions
-    slot_cover   = 2 * wall_thickness;
+    edge_pad     = 0.25; // Padding to guarantee clean CSG subtractions
+    slot_cover   = 2 * wall_thickness; // retaining "roof" of the slot
 
     // ====================================================================
     // Main Assembly
@@ -124,7 +124,7 @@
             bayonet_slots();
 
             translate([0, 0, -edge_pad])
-                cylinder(r = outer_radius, h = ring_height + 2 * edge_pad);
+                cylinder(r = outer_radius + 1.5 * tolerance_gap, h = ring_height + 2 * edge_pad);
         }
 
         // Tube / ring chamfer
@@ -138,10 +138,10 @@
 
     module bayonet_slots() {
         // L-shaped slots
-        ring_inner_radius = outer_radius;
+        ring_inner_radius = outer_radius + 1.5 * tolerance_gap;
         slot_outer_radius = ring_inner_radius + locking_lug_size;
         lug_center_radius = (ring_inner_radius + slot_outer_radius) / 2;
-        lug_angle = (locking_lug_length + edge_pad) / lug_center_radius * 180 / PI;
+        lug_angle = (locking_lug_length + tolerance_gap + 2 * edge_pad) / lug_center_radius * 180 / PI;
         slot_depth = 2 * locking_lug_size + slot_cover;
 
         for (slot_center = [45 : 90 : 315]) {
