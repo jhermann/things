@@ -77,6 +77,7 @@
 
         // Continuous base ring around the outside of the tube, with locking slots
         outside_ring();
+        twist_indicators();
 
         if (tube_extension) {
             // Add slanted slim/wide tube connect
@@ -161,8 +162,12 @@
                 [ring_inner_radius + top_chamfer_size, ring_height - edge_pad],
                 [inner_radius + tolerance_gap, ring_height + .5 * top_chamfer_size]
             ]);
+    }
 
-        // Open / close indicators
+    // ====================================================================
+    // Symbols to indicate open/close direction for twisting
+    module twist_indicators() {
+        // Open / close indicators near each slot
         for (slot_center = [45 : 90 : 315]) {
             // Open (hollowed out circle)
             rotate([0, 0, slot_center - indicator_lug_angle]) {
@@ -210,7 +215,7 @@
     // outside_ring() module
     module bayonet_slots() {
         lug_angle = (locking_lug_length + tolerance_gap + 2 * edge_pad) / lug_center_radius * 180 / PI;
-        lug_angle_padded = (locking_lug_length + 2 * tolerance_gap + 4 * edge_pad) / lug_center_radius * 180 / PI;
+        lug_angle_padded = (1.1 * locking_lug_length + tolerance_gap) / lug_center_radius * 180 / PI;
         channel_angle = 2.5 * lug_angle_padded;
 
         // Create 4 slots
