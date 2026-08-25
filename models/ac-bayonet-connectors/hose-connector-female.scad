@@ -36,8 +36,9 @@
     slot_outer_radius    = ring_inner_radius + locking_lug_size;
     lug_center_radius    = (ring_inner_radius + slot_outer_radius) / 2;
     slot_depth           = 2 * locking_lug_size + slot_cover;
-    indicator_lug_angle  = (locking_lug_length + tolerance_gap + 2 * edge_pad)
+    indicator_lug_angle  = 1.1 * (locking_lug_length + tolerance_gap + 2 * edge_pad)
         / (outer_radius + 1.5 * tolerance_gap + locking_lug_size / 2) * 180 / PI;
+    indicator_zoom       = 1.5;
 
     // ====================================================================
     // Main Assembly
@@ -164,20 +165,21 @@
         // Open / close indicators
         for (slot_center = [45 : 90 : 315]) {
             // Open (hollowed out circle)
-            rotate([0, 0, slot_center - .75 * indicator_lug_angle]) {
-                translate([ring_outer_radius + .75 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
+            rotate([0, 0, slot_center - indicator_lug_angle]) {
+                translate([ring_outer_radius + .85 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
                     difference() {
-                        scale([.5, 2, 2])
+                        scale([.65, indicator_zoom * 2, indicator_zoom * 2])
                             sphere(r = ring_wall_thickness, $fn = $fn);
                         rotate([0, 90, 0])
-                            cylinder(r = 1.25 * ring_wall_thickness, h = 2 * ring_wall_thickness, $fn = $fn);
+                            cylinder(r = indicator_zoom * 1.25 * ring_wall_thickness,
+                                     h = 2 * ring_wall_thickness, $fn = $fn);
                     }
             }
 
             // Left / right arrows
-            rotate([0, 0, slot_center + 0 * indicator_lug_angle]) {
-                translate([ring_outer_radius + .75 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
-                    scale([.75, 6, 2])
+            rotate([0, 0, slot_center]) {
+                translate([ring_outer_radius + .85 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
+                    scale([.75, indicator_zoom * 6, indicator_zoom * 2])
                         rotate([0, 90, 0]) {
                             linear_extrude(height = ring_wall_thickness, center = true)
                                 polygon([
@@ -195,9 +197,9 @@
             }
 
             // Close (filled circle)
-            rotate([0, 0, slot_center + .75 * indicator_lug_angle]) {
-                translate([ring_outer_radius + .75 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
-                    scale([.5, 2, 2])
+            rotate([0, 0, slot_center + indicator_lug_angle]) {
+                translate([ring_outer_radius + .85 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
+                    scale([.65, indicator_zoom * 2, indicator_zoom * 2])
                         sphere(r = ring_wall_thickness, $fn = $fn);
             }
         }
