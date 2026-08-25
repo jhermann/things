@@ -140,12 +140,20 @@
             // The ring body, inner cylinders get subtracted later to make it hollow
             cylinder(r = ring_outer_radius + ring_wall_thickness, h = ring_height);
 
-            // Bottom ring chamfer (print bed)
+            // Outer bottom ring chamfer (print bed)
             rotate_extrude()
                 polygon([
                     [ring_outer_radius + ring_wall_thickness - ring_chamfer, 0],
                     [ring_outer_radius + ring_wall_thickness + edge_pad, 0],
                     [ring_outer_radius + ring_wall_thickness + edge_pad, ring_chamfer + edge_pad]
+                ]);
+
+            // Inner bottom ring chamfer (print bed)
+            rotate_extrude()
+                polygon([
+                    [ring_inner_radius + .33 * wall_thickness, -edge_pad],
+                    [ring_inner_radius - edge_pad, -edge_pad],
+                    [ring_inner_radius - edge_pad, .5 * wall_thickness]
                 ]);
 
             // Cut out the slots
@@ -215,8 +223,8 @@
     // outside_ring() module
     module bayonet_slots() {
         lug_angle = (locking_lug_length + tolerance_gap + 2 * edge_pad) / lug_center_radius * 180 / PI;
-        lug_angle_padded = (1.1 * locking_lug_length + tolerance_gap) / lug_center_radius * 180 / PI;
-        channel_angle = 2.5 * lug_angle_padded;
+        lug_angle_padded = (1.125 * locking_lug_length + tolerance_gap) / lug_center_radius * 180 / PI;
+        channel_angle = 3 * lug_angle_padded;
 
         // Create 4 slots
         for (slot_center = [45 : 90 : 315]) {
@@ -225,8 +233,8 @@
                 rotate_extrude(angle = lug_angle_padded, convexity = 2)
                     polygon([
                         [ring_inner_radius - edge_pad, -edge_pad],
-                        [slot_outer_radius + edge_pad, -edge_pad],
-                        [slot_outer_radius + edge_pad, slot_depth - locking_lug_size + edge_pad],
+                        [slot_outer_radius, -edge_pad],
+                        [slot_outer_radius, slot_depth - locking_lug_size + edge_pad],
                         [ring_inner_radius - edge_pad, slot_depth - locking_lug_size + edge_pad]
                     ]);
             }
@@ -234,20 +242,24 @@
             // Locking lug space (lowers bottom of the space to catch the lug)
             rotate([0, 0, slot_center - .5 * lug_angle]) {
                 // Lowered bottom triangle
-                rotate_extrude(angle = channel_angle, convexity = 2)
-                    polygon([
-                        [ring_inner_radius - edge_pad, slot_cover - edge_pad - wall_thickness / 2],
-                        [slot_outer_radius + edge_pad, locking_lug_size + slot_cover + edge_pad - wall_thickness / 2],
-                        [ring_inner_radius - edge_pad, locking_lug_size + slot_cover + edge_pad - wall_thickness / 2]
-                    ]);
+                translate([0, 0, slot_cover - .7 * wall_thickness])
+                    rotate_extrude(angle = channel_angle, convexity = 2)
+                        polygon([
+                            [ring_inner_radius - edge_pad, -edge_pad],
+                            [slot_outer_radius + edge_pad, locking_lug_size + edge_pad],
+                            [ring_inner_radius - edge_pad, locking_lug_size + edge_pad]
+                        ]);
+
                 // Rect space to meet the lowered bottom triangle
-                rotate_extrude(angle = channel_angle, convexity = 2)
-                    polygon([
-                        [ring_inner_radius - edge_pad, slot_cover - edge_pad + locking_lug_size - wall_thickness / 2],
-                        [slot_outer_radius + edge_pad, slot_cover - edge_pad + locking_lug_size - wall_thickness / 2],
-                        [slot_outer_radius + edge_pad, slot_cover + edge_pad + locking_lug_size + wall_thickness / 2],
-                        [ring_inner_radius - edge_pad, slot_cover + edge_pad + locking_lug_size + wall_thickness / 2],
-                    ]);
+                translate([0, 0, slot_cover + locking_lug_size - .7 * wall_thickness])
+                    rotate_extrude(angle = channel_angle, convexity = 2)
+                        polygon([
+                            [ring_inner_radius - edge_pad, .7 * wall_thickness],
+                            [slot_outer_radius + edge_pad, .7 * wall_thickness],
+                            [slot_outer_radius + edge_pad, 0],
+                            [ring_inner_radius - edge_pad, 0],
+                        ]);
+
                 // Upper triangle
                 rotate_extrude(angle = channel_angle, convexity = 2)
                     polygon([
