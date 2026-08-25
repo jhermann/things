@@ -9,8 +9,8 @@
     tolerance_gap           = 0.15;  // Subtracted from outer diameter for fit (mm)
 
     /* [Locking Lugs] */
-    locking_lug_length      = 15;    // Circumferential arc length of each lug (mm)
-    locking_lug_size        = 5;     // Square radial and vertical cross-section (mm)
+    locking_lug_length      = 20;    // Circumferential arc length of each lug (mm)
+    locking_lug_size        = 7.5;   // Square radial and vertical cross-section (mm)
 
     /* [Quality] */
     $fn = 120;                       // Circle resolution parameter
@@ -26,6 +26,8 @@
     // Main Assembly
     // ====================================================================
     union() {
+        bevel_size = wall_thickness;
+
         // Main Hose Connector Cylinder
         difference() {
             cylinder(r = outer_radius, h = hose_connector_height);
@@ -36,6 +38,13 @@
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
         translate([0, 0, hose_connector_height])
             top_lead_in_rim();
+
+        // Bevel to mark max. hose insertion
+        translate([0, 0, 2 * (locking_lug_size + bevel_size)])
+            rotate_extrude()
+                translate([outer_radius - wall_thickness / 3, 0, 0])
+                    scale([.66, 1, 1])
+                        circle(r = wall_thickness, $fn = $fn);
 
         // Square-section ring cut into four arced locking lugs, resting on the print plate
         locking_lugs();
@@ -74,23 +83,8 @@
             rotate_extrude(convexity = 2)
                 polygon([
                     [ring_inner_radius, 0],
-                    [ring_outer_radius, 0],
-                    [ring_outer_radius, ring_height],
+                    [ring_outer_radius, locking_lug_size],
                     [ring_inner_radius, ring_height]
-                ]);
-
-            rotate_extrude(convexity = 2)
-                polygon([
-                    [ring_inner_radius, 0],
-                    [ring_outer_radius + edge_pad, 0],
-                    [ring_outer_radius + edge_pad, locking_lug_size]
-                ]);
-
-            rotate_extrude(convexity = 2)
-                polygon([
-                    [ring_inner_radius, ring_height],
-                    [ring_outer_radius + edge_pad, locking_lug_size],
-                    [ring_outer_radius + edge_pad, ring_height]
                 ]);
 
             if (hole_count > 0)
@@ -120,4 +114,3 @@
                         ]);
         }
     }
-
