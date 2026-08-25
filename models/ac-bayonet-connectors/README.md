@@ -4,6 +4,8 @@ These parts allow you to attach AC hoses securely to each other
 and to connectors on an AC device or window adapter. They use a bayonet mechanism for quick release and easy reattachment.
 The hoses are attached to the adapters by using a clamp.
 
+All models are designed to print without any supports, on a modern device that supports 45° overhangs.
+
 > 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
 
 **Interactive 3D Previews:**
@@ -14,9 +16,6 @@ The hoses are attached to the adapters by using a clamp.
 
 You can create your own customized versions using the OpenSCAD files in the
 **[Parametric Model Maker](https://makerworld.com/en/makerlab/parametricModelMaker?pageType=generator)**.
-
-The male lugs have holes in them to add inner walls for more strength.
-They are chamfered on top so the female slots don't need supports.
 
 > [![Male Connector](assets/hose-connector-male.png)](./hose-connector-male.stl)
 
