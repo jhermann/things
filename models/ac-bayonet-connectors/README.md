@@ -41,3 +41,13 @@ The female model has a `tube extension` switch to enable this modified geometry.
 > [![Female Adapter](assets/hose-connector-adapter-H45.png)](./hose-connector-adapter-H45.stl)
 
 [female-connector-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?designId=3220030&from=model_page&modelName=hose-connector-female.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Fac-bayonet-connectors%2Fhose-connector-female.scad&unikey=f5a0b360-ef3e-4e34-942e-b1f3741da9e8
+
+## Create the Animation Sequence
+
+```
+"C:\Program Files\OpenSCAD (Nightly)\openscad.exe" -o frame.png --colorscheme "Nocturnal Gem" --animate 180 --camera=350,350,-300,0,0,30 hose-connector-female.scad
+
+convert -delay 5 -loop 0 frame*.png hose-connector-female.gif
+
+ffmpeg -framerate 12 -i frame%05d.png -c:v libx264 -pix_fmt yuv420p hose-connector-female.mp4
+```

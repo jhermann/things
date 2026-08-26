@@ -17,20 +17,29 @@
     $fn = 120;                       // Circle resolution parameter
 
     // ====================================================================
+    // Animation
+    // ====================================================================
+    anim_scene1 = (.25 < $t && $t <= .5) ? sin(360 * 4 * ($t - .25)) : 0;
+    anim_scene2 = (.5 < $t && $t <= .75) ? sin(360 * 2 * ($t - .5)) : 0;
+    anim_scene3 = (.75 < $t) ? sin(360 * 2 * ($t - .75)) : 0;
+    _hose_diameter = hose_diameter * (1 + .25 * anim_scene2);
+    _hose_connector_height = hose_connector_height * (1 + .5 * anim_scene3);
+
+    // ====================================================================
     // Derived Dimensions
     // ====================================================================
-    outer_radius = (hose_diameter / 2) - tolerance_gap;
+    outer_radius = (_hose_diameter / 2) - tolerance_gap;
     inner_radius = outer_radius - wall_thickness;
     edge_pad     = 0.25; // Padding to guarantee clean CSG subtractions
     slot_cover   = 2 * wall_thickness; // retaining "roof" of the slot
-    slim_height  = tube_extension ? (5 * wall_thickness) : hose_connector_height;
+    slim_height  = tube_extension ? (5 * wall_thickness) : _hose_connector_height;
     transition_height = 2 * locking_lug_size;
-    extension_height  = hose_connector_height - transition_height - slim_height;
+    extension_height  = _hose_connector_height - transition_height - slim_height;
     top_ring_radius   = tube_extension ? (outer_radius + tolerance_gap) : inner_radius;
     // Set ring_wall_thickness to 0 to expose bayonet slots
     ring_wall_thickness = 1 * wall_thickness;
     ring_height          = 2 * locking_lug_size + 4 * wall_thickness;
-    ring_outer_radius    = hose_diameter / 2 + locking_lug_size;
+    ring_outer_radius    = _hose_diameter / 2 + locking_lug_size;
     ring_inner_radius    = outer_radius + 1.5 * tolerance_gap;
     ring_chamfer         = wall_thickness / 4;
     slot_outer_radius    = ring_inner_radius + locking_lug_size;
@@ -41,15 +50,12 @@
     indicator_zoom       = 1.5;
 
     // ====================================================================
-    // Animation
-    // ====================================================================
-    main($t * 90);
-
-    // ====================================================================
     // Main Assembly
     // ====================================================================
+    main([45 * anim_scene1, 30 * anim_scene1, $t <= .25 ? $t * 360 : 0]);
+
     module main(view_angle) {
-        rotate([0, 0, view_angle])
+        rotate(view_angle)
         union() {
             // Main Hose Connector Cylinder
             difference() {
@@ -58,11 +64,11 @@
 
                 // Main hole (top to bottom)
                 translate([0, 0, -edge_pad])
-                    cylinder(r = inner_radius, h = hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
+                    cylinder(r = inner_radius, h = _hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
 
                 // Male adapter receiving space (room for its wall)
                 translate([0, 0, -edge_pad])
-                    cylinder(r = hose_diameter / 2 + edge_pad, h = 2 * locking_lug_size + slot_cover + 2 * edge_pad);
+                    cylinder(r = _hose_diameter / 2 + edge_pad, h = 2 * locking_lug_size + slot_cover + 2 * edge_pad);
 
                 // Connect tube and ring via a chamfer (so the inner tube needs no supports)
                 rotate_extrude()
@@ -101,7 +107,7 @@
             }
 
             // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
-            translate([0, 0, hose_connector_height + 2 * locking_lug_size])
+            translate([0, 0, _hose_connector_height + 2 * locking_lug_size])
                 top_lead_in_rim();
         }
     }
