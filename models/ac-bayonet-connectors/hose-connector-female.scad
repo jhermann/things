@@ -41,61 +41,69 @@
     indicator_zoom       = 1.5;
 
     // ====================================================================
+    // Animation
+    // ====================================================================
+    main($t * 90);
+
+    // ====================================================================
     // Main Assembly
     // ====================================================================
-    union() {
-        // Main Hose Connector Cylinder
-        difference() {
-            // Main tube body
-            cylinder(r = outer_radius, h = slim_height + 2 * locking_lug_size);
+    module main(view_angle) {
+        rotate([0, 0, view_angle])
+        union() {
+            // Main Hose Connector Cylinder
+            difference() {
+                // Main tube body
+                cylinder(r = outer_radius, h = slim_height + 2 * locking_lug_size);
 
-            // Main hole (top to bottom)
-            translate([0, 0, -edge_pad])
-                cylinder(r = inner_radius, h = hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
+                // Main hole (top to bottom)
+                translate([0, 0, -edge_pad])
+                    cylinder(r = inner_radius, h = hose_connector_height + 2 * locking_lug_size + 2 * edge_pad);
 
-            // Male adapter receiving space (room for its wall)
-            translate([0, 0, -edge_pad])
-                cylinder(r = hose_diameter / 2 + edge_pad, h = 2 * locking_lug_size + slot_cover + edge_pad);
+                // Male adapter receiving space (room for its wall)
+                translate([0, 0, -edge_pad])
+                    cylinder(r = hose_diameter / 2 + edge_pad, h = 2 * locking_lug_size + slot_cover + 2 * edge_pad);
 
-            // Connect tube and ring via a chamfer (so the inner tube needs no supports)
+                // Connect tube and ring via a chamfer (so the inner tube needs no supports)
+                rotate_extrude()
+                    polygon([
+                        [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover + wall_thickness],
+                        [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover],
+                        [outer_radius + edge_pad, 2 * locking_lug_size + slot_cover]
+                    ]);
+            }
+
+            // Fill a gap between ring and tube wall / tube chamfer
             rotate_extrude()
                 polygon([
-                    [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover + wall_thickness],
-                    [inner_radius - edge_pad, 2 * locking_lug_size + slot_cover],
-                    [outer_radius + edge_pad, 2 * locking_lug_size + slot_cover]
+                    [outer_radius + 2 * tolerance_gap, 2 * locking_lug_size + slot_cover + edge_pad],
+                    [outer_radius - edge_pad, 2 * locking_lug_size + slot_cover + edge_pad],
+                    [outer_radius - edge_pad, 2 * locking_lug_size + slot_cover + wall_thickness],
+                    [outer_radius + 2 * tolerance_gap, 2 * locking_lug_size + slot_cover + wall_thickness]
                 ]);
+
+            // Continuous base ring around the outside of the tube, with locking slots
+            outside_ring();
+            twist_indicators();
+
+            if (tube_extension) {
+                // Add slanted slim/wide tube connect
+                translate([0, 0, slim_height + 2 * locking_lug_size])
+                    tube_transition(inner_radius, outer_radius + tolerance_gap, transition_height, wall_thickness);
+
+                // Add wider tube
+                translate([0, 0, slim_height + 2 * locking_lug_size + transition_height])
+                    difference() {
+                        cylinder(r = outer_radius + wall_thickness + tolerance_gap, h = extension_height);
+                        translate([0, 0, -locking_lug_size])
+                            cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * locking_lug_size);
+                    }
+            }
+
+            // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
+            translate([0, 0, hose_connector_height + 2 * locking_lug_size])
+                top_lead_in_rim();
         }
-
-        // Fill a gap between ring and tube wall / tube chamfer
-        rotate_extrude()
-            polygon([
-                [outer_radius + 2 * tolerance_gap, 2 * locking_lug_size + slot_cover + edge_pad],
-                [outer_radius - edge_pad, 2 * locking_lug_size + slot_cover + edge_pad],
-                [outer_radius - edge_pad, 2 * locking_lug_size + slot_cover + wall_thickness],
-                [outer_radius + 2 * tolerance_gap, 2 * locking_lug_size + slot_cover + wall_thickness]
-            ]);
-
-        // Continuous base ring around the outside of the tube, with locking slots
-        outside_ring();
-        twist_indicators();
-
-        if (tube_extension) {
-            // Add slanted slim/wide tube connect
-            translate([0, 0, slim_height + 2 * locking_lug_size])
-                tube_transition(inner_radius, outer_radius + tolerance_gap, transition_height, wall_thickness);
-
-            // Add wider tube
-            translate([0, 0, slim_height + 2 * locking_lug_size + transition_height])
-                difference() {
-                    cylinder(r = outer_radius + wall_thickness + tolerance_gap, h = extension_height);
-                    translate([0, 0, -locking_lug_size])
-                        cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * locking_lug_size);
-                }
-        }
-
-        // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
-        translate([0, 0, hose_connector_height + 2 * locking_lug_size])
-            top_lead_in_rim();
     }
 
     // ====================================================================
@@ -160,7 +168,7 @@
             bayonet_slots();
 
             translate([0, 0, -edge_pad])
-                cylinder(r = outer_radius + 1.75 * tolerance_gap, h = ring_height + edge_pad);
+                cylinder(r = outer_radius + 1.75 * tolerance_gap, h = ring_height + 2 * edge_pad);
         }
 
         // Top ring chamfer
