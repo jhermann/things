@@ -27,7 +27,7 @@ or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and 
 
 > [![Parameters of Female Connector](./assets/hose-connector-female-params.png)][female-connector-model-maker]
 
-The male connector has lugs that go into slots of teh female one.
+The male connector has lugs that go into slots of the female one.
 
 > [![Male Connector](assets/hose-connector-male.png)](./hose-connector-male.stl)
 
