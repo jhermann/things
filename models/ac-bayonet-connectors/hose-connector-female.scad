@@ -50,6 +50,18 @@
     indicator_zoom       = 1.5;
 
     // ====================================================================
+    // Parts
+    // ====================================================================
+
+    // rotational extrusion of an ellipsoid with its center at `radius`
+    module torus(radius, rx, ry, arc=360) {
+        rotate_extrude(angle=arc, convexity=2)
+            translate([radius, 0, 0])
+                scale([rx, ry, 1])
+                    circle(r=1, $fn=$fn);
+    }
+
+    // ====================================================================
     // Main Assembly
     // ====================================================================
     main([45 * anim_scene1, 30 * anim_scene1, $t <= .25 ? $t * 360 : 0]);
@@ -191,16 +203,11 @@
     module twist_indicators() {
         // Open / close indicators near each slot
         for (slot_center = [45 : 90 : 315]) {
-            // Open (hollowed out circle)
+            // Open (torus)
             rotate([0, 0, slot_center - indicator_lug_angle]) {
                 translate([ring_outer_radius + .85 * ring_wall_thickness, 0, 1.5 * locking_lug_size])
-                    difference() {
-                        scale([.65, indicator_zoom * 2, indicator_zoom * 2])
-                            sphere(r = ring_wall_thickness, $fn = $fn);
-                        rotate([0, 90, 0])
-                            cylinder(r = indicator_zoom * 1.25 * ring_wall_thickness,
-                                     h = 2 * ring_wall_thickness, $fn = $fn);
-                    }
+                    rotate([0, 90,  0]) scale([indicator_zoom, indicator_zoom, 1]) scale(ring_wall_thickness)
+                        torus(1.65, .4, .4);
             }
 
             // Left / right arrows
