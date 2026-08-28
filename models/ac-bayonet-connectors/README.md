@@ -16,14 +16,14 @@ All models are designed to print without any supports, on a modern device that s
 
 **Interactive 3D Previews:**
 
-- [Male hose connector](./hose-connector-male.stl) (STL file)
-- [Female hose connector](./hose-connector-female.stl) (STL file)
-- [Female adapter](./hose-connector-adapter-H45.stl) (STL file)
+- Plate 1: [Female hose connector](./hose-connector-female.stl) (STL file)
+- Plate 2: [Male hose connector](./hose-connector-male.stl) (STL file)
+- Plate 3: [Female adapter](./hose-connector-adapter-H45.stl) (STL file)
 
 You can create your own customized versions using
 the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
 in the **[Parametric Model Maker][multi-plate-connector-model-maker]**
-or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and you want the *Nightly Builds* version).
+or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and you want the *Nightly Builds* version). Note that [hose-connector-multi-plate.scad](./hose-connector-multi-plate.scad) is a script enabled for MakerWorld's multi-plate feature, and your download will always be a 3MF with all three objects on their own plate.
 
 > [![Parameters of Female Connector](./assets/hose-connector-female-params.png)][multi-plate-connector-model-maker]
 
