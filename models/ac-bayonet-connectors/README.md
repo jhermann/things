@@ -22,7 +22,7 @@ All models are designed to print without any supports, on a modern device that s
 
 You can create your own customized versions using
 the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
-in the **[Parametric Model Maker][female-connector-model-maker]**
+in the **[Parametric Model Maker][multi-plate-connector-model-maker]**
 or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and you want the *Nightly Builds* version).
 
 > [![Parameters of Female Connector](./assets/hose-connector-female-params.png)][multi-plate-connector-model-maker]
