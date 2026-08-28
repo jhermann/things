@@ -1,6 +1,25 @@
 # things
 Models for 3D printing, mostly OpenSCAD.
 
+## What's in this repo?
+
+### Models
+
+- [AC Bayonet Connectors](models/ac-bayonet-connectors/README.md) - Quick-release bayonet connectors for joining AC hoses and attaching them to devices or window adapters.
+- [AC Drain Pan](models/ac-drain-pan/README.md) - A parametric condensate drain pan for draining a portable air conditioner before transport or storage.
+- [AC Hose Connector Intake](models/ac-hose-connector-intake/README.md) - Window and door panel connectors for AC intake and exhaust hoses, including an intake insect screen and an exhaust deflection cover.
+- [AC Intake Cover Side Extension](models/ac-intake-cover-side-extension/README.md) - A parametric side extension box for adapting an AC intake cover to a wider or rounded device.
+- [Eye Drops Holder](models/eye-drops/README.md) - A simple holder for eye-drop bottles.
+- [Sample OpenSCAD model](models/sample.scad) - A small example model for experimenting with OpenSCAD.
+
+See the [complete model index](models/README.md) for the collection overview.
+
+### Parts
+
+- [Rounded cubes](parts/rounded-cubes.scad) - OpenSCAD examples and modules for cubes with rounded and chamfered edges.
+- [Torus](parts/torus.scad) - A reusable torus module based on rotational extrusion, with configurable radii and arc angle.
+
+
 ## Articles / Blogs / Tips
 
 - [Bézier curves in OpenSCAD with Inkscape](https://robotix.ah-oui.org/site/main.php?found=260514-tea-pot-code)
