@@ -41,6 +41,7 @@ ring_height          = 2 * locking_lug_size + 4 * wall_thickness;
 ring_outer_radius    = _hose_diameter / 2 + locking_lug_size;
 ring_inner_radius    = outer_radius + 1.5 * tolerance_gap;
 ring_chamfer         = wall_thickness / 4;
+top_chamfer_size     = ring_outer_radius - ring_inner_radius + ring_wall_thickness;
 slot_outer_radius    = ring_inner_radius + locking_lug_size;
 lug_center_radius    = (ring_inner_radius + slot_outer_radius) / 2;
 slot_depth           = 2 * locking_lug_size + slot_cover;
@@ -75,6 +76,13 @@ module top_lead_in_rim(radius) {
             }
         }
     }
+}
+
+module tube_bevel(radius) {
+    rotate_extrude()
+        translate([radius - wall_thickness / 3, 0, 0])
+            scale([.66, 1, 1])
+                circle(r = wall_thickness);
 }
 
 // ====================================================================
@@ -159,6 +167,10 @@ module female_connector(view_angle, tube_extension=false) {
                     translate([0, 0, -locking_lug_size])
                         cylinder(r = outer_radius + tolerance_gap, h = extension_height + 2 * locking_lug_size);
                 }
+        } else {
+            // Bevel to mark max. hose insertion
+            translate([0, 0, ring_height + .5 * top_chamfer_size - wall_thickness / 2])
+                tube_bevel(outer_radius);
         }
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
@@ -184,8 +196,6 @@ module female_tube_transition(r1, r2, height, thickness) {
 // ====================================================================
 // The ring at the bottom holding the bayonet slots
 module female_outside_ring() {
-    top_chamfer_size = ring_outer_radius - ring_inner_radius + ring_wall_thickness;
-
     // The ring body
     difference() {
         // The ring body, inner cylinders get subtracted later to make it hollow
@@ -338,10 +348,7 @@ module male_connector(view_angle) {
 
         // Bevel to mark max. hose insertion
         translate([0, 0, 2 * (locking_lug_size + bevel_size)])
-            rotate_extrude()
-                translate([outer_radius - wall_thickness / 3, 0, 0])
-                    scale([.66, 1, 1])
-                        circle(r = wall_thickness, $fn = $fn);
+            tube_bevel(outer_radius);
 
         // Square-section ring cut into four arced locking lugs, resting on the print plate
         male_locking_lugs();
