@@ -23,7 +23,11 @@ See the [complete model index](models/README.md) for the collection overview.
 ## Articles / Blogs / Tips
 
 - [Bézier curves in OpenSCAD with Inkscape](https://robotix.ah-oui.org/site/main.php?found=260514-tea-pot-code)
+- [3D Printing Guides - Troubleshooting & How-Tos](https://www.fixmyprint3d.com/guides) (FixMyPrint)
+
 
 ## Tools & Apps
 
 - [etjones/scad2step](https://github.com/etjones/scad2step) - Convert an OpenSCAD file to a STEP file from the command line
+- [alpaco.it](https://alpaco.it/) - Parametric 3D print generators, a free web app that turns dimensions you type into printable 3D models (STL/3MF download)
+- [stl-er.com](https://www.stl-er.com/) - From Concept to CAD in Seconds (AI 3D Model Generator; commercial; free tier only allows downloads of exiting models, 5 per month)
