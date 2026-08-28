@@ -60,6 +60,23 @@ module torus(radius, rx, ry, arc=360) {
                 circle(r=1, $fn=$fn);
 }
 
+// Convex Lead-In Rim
+// Profile: A solid 90° quarter-circle arc centered at (inner_radius, 0),
+// sweeping UPWARD and OUTWARD towards outer_radius.
+module top_lead_in_rim(radius) {
+    rotate_extrude() {
+        translate([radius, 0, 0]) {
+            intersection() {
+                // Quarter circle bulging outward and upward
+                circle(r = wall_thickness, $fn = $fn);
+
+                // Keep only top-right quadrant (X >= 0, Y >= 0)
+                square([wall_thickness, wall_thickness]);
+            }
+        }
+    }
+}
+
 // ====================================================================
 // Main Assembly & Plates
 // ====================================================================
@@ -146,7 +163,7 @@ module female_connector(view_angle, tube_extension=false) {
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
         translate([0, 0, _hose_connector_height + 2 * locking_lug_size])
-            female_top_lead_in_rim(top_ring_radius);
+            top_lead_in_rim(top_ring_radius);
     }
 }
 
@@ -161,24 +178,6 @@ module female_tube_transition(r1, r2, height, thickness) {
             [r2 + thickness, height],
             [r1 + thickness, 0]
         ]);
-    }
-}
-
-// ====================================================================
-// Convex Lead-In Rim
-// Profile: A solid 90° quarter-circle arc centered at (inner_radius, 0),
-// sweeping UPWARD and OUTWARD towards outer_radius.
-module female_top_lead_in_rim(radius) {
-    rotate_extrude() {
-        translate([radius, 0, 0]) {
-            intersection() {
-                // Quarter circle bulging outward and upward
-                circle(r = wall_thickness, $fn = $fn);
-
-                // Keep only top-right quadrant (X >= 0, Y >= 0)
-                square([wall_thickness, wall_thickness]);
-            }
-        }
     }
 }
 
@@ -335,7 +334,7 @@ module male_connector(view_angle) {
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
         translate([0, 0, hose_connector_height])
-            male_top_lead_in_rim();
+            top_lead_in_rim(inner_radius);
 
         // Bevel to mark max. hose insertion
         translate([0, 0, 2 * (locking_lug_size + bevel_size)])
@@ -346,23 +345,6 @@ module male_connector(view_angle) {
 
         // Square-section ring cut into four arced locking lugs, resting on the print plate
         male_locking_lugs();
-    }
-}
-
-// Convex Lead-In Rim
-// Profile: A solid 90° quarter-circle arc centered at (inner_radius, 0),
-// sweeping UPWARD and OUTWARD towards outer_radius.
-module male_top_lead_in_rim() {
-    rotate_extrude() {
-        translate([inner_radius, 0, 0]) {
-            intersection() {
-                // Quarter circle bulging outward and upward
-                circle(r = wall_thickness, $fn = $fn);
-
-                // Keep only top-right quadrant (X >= 0, Y >= 0)
-                square([wall_thickness, wall_thickness]);
-            }
-        }
     }
 }
 
