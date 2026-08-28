@@ -1,4 +1,6 @@
-$fn = $preview ? 32 : 128; // Smoothes the round edges
+// Fast preview, smooth final curves
+$fa = $preview ? 8 : 1;
+$fs = $preview ? 1 : 0.1;
 
 // rotational extrusion of an ellipsoid with its center at `radius`
 module torus(radius, rx, ry, arc=360) {

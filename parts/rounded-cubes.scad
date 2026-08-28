@@ -1,4 +1,7 @@
-$fn = $preview ? 32 : 128; // Smoothes the round edges
+// Fast preview, smooth final curves
+$fa = $preview ? 8 : 1;
+$fs = $preview ? 1 : 0.1;
+
 size = 10; // Size of the cube
 height = 4; // Height of the cube
 chamfer = 1; // Width of the top and bottom chamfers
