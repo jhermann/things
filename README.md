@@ -26,4 +26,4 @@ See the [complete model index](models/README.md) for the collection overview.
 
 ## Tools & Apps
 
-- [etjones/scad2step](https://github.com/etjones/scad2step): Convert an OpenSCAD file to a STEP file from the command line
+- [etjones/scad2step](https://github.com/etjones/scad2step) - Convert an OpenSCAD file to a STEP file from the command line
