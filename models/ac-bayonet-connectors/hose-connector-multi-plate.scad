@@ -63,14 +63,14 @@ module torus(radius, rx, ry, arc=360) {
 // ====================================================================
 // Main Assembly & Plates
 // ====================================================================
-if ($preview) main_assembly();
+if ($preview) { // main assembly in Parametric Model Maker
+    union() {
+        rotate([0, 180, 45]) // turn around and place under the zero plane
+            mw_plate_2();
 
-module main_assembly() {
-    rotate([0, 180, 45])
-        mw_plate_2();
-
-    translate([0, 0, 1 * ring_height])
-        mw_plate_3();
+        translate([0, 0, 1 * ring_height]) // raise a bit above the zero plane
+            mw_plate_1();
+    }
 }
 
 module mw_plate_1() {
