@@ -25,7 +25,7 @@ the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
 in the **[Parametric Model Maker][female-connector-model-maker]**
 or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and you want the *Nightly Builds* version).
 
-> [![Parameters of Female Connector](./assets/hose-connector-female-params.png)][female-connector-model-maker]
+> [![Parameters of Female Connector](./assets/hose-connector-female-params.png)][multi-plate-connector-model-maker]
 
 The male connector has lugs that go into slots of the female one.
 
@@ -41,6 +41,7 @@ The female model has a `tube extension` switch to enable this modified geometry.
 > [![Female Adapter](assets/hose-connector-adapter-H45.png)](./hose-connector-adapter-H45.stl)
 
 [female-connector-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?designId=3220030&from=model_page&modelName=hose-connector-female.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Fac-bayonet-connectors%2Fhose-connector-female.scad&unikey=f5a0b360-ef3e-4e34-942e-b1f3741da9e8
+[multi-plate-connector-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?designId=3220030&from=model_page&modelName=hose-connector-female.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Fac-bayonet-connectors%2Fhose-connector-multi-plate.scad&unikey=f5a0b360-ef3e-4e34-942e-b1f3741da9e8
 
 ## Create the Animation Sequence
 
