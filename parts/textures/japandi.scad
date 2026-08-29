@@ -1,16 +1,16 @@
 // Japandi-inspired cylinder with quiet, organic vertical ripples.
-$preview = true;
-$fa = $preview ? 8 : 1;
-$fs = $preview ? 1 : 0.15;
+//$preview = true;
+$fa = $preview ? 16 : 2;
+$fs = $preview ? 3 : 0.3;
 
 height = 40;
 radius = 25;
 wall = 2.5;
 segments = 24;
-path_steps = 18;
+path_steps = 12;
 groove_radius = 1;
-
-japandi_cylinder();
+cutter_fa = $preview ? 18 : 12;
+cutter_fs = $preview ? 3 : 1.5;
 
 // A softly wandering centerline for one recessed ripple.
 function ripple_angle(index, z) =
@@ -26,6 +26,8 @@ function ripple_point(index, z) = [
 
 // Hulling neighboring spheres makes a continuous, rounded groove cutter.
 module ripple_cutter(index) {
+    $fa = cutter_fa;
+    $fs = cutter_fs;
     for (step = [0 : path_steps - 1]) {
         z0 = height * step / path_steps;
         z1 = height * (step + 1) / path_steps;
@@ -59,3 +61,5 @@ module japandi_cylinder() {
         ripple_cutters();
     }
 }
+
+japandi_cylinder();
