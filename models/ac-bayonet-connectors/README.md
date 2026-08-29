@@ -50,5 +50,5 @@ The female model has a `tube extension` switch to enable this modified geometry.
 
 convert -delay 7 -loop 0 frame*.png hose-connector-animation.gif
 
-ffmpeg -framerate 12 -i frame%05d.png -c:v libx264 -pix_fmt yuv420p hose-connector-animation.mp4
+ffmpeg -y -framerate 6 -i frame%05d.png -vf "subtitles=subtitles.srt" -c:v libx264 -pix_fmt yuv420p hose-connector-animation.mp4
 ```

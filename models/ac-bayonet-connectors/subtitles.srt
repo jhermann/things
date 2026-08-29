@@ -1,0 +1,40 @@
+1
+00:00:00,000 --> 00:00:03,000
+The female connector has bayonet slots on the inside.
+
+2
+00:00:03,000 --> 00:00:06,000
+Connect a hose of fitting size with a worm drive clamp (not shown).
+
+3
+00:00:06,000 --> 00:00:09,000
+Insert the male connector lugs into the slots of the female one.
+
+4
+00:00:09,000 --> 00:00:12,000
+Twist to close as indicated on the outside of the connector.
+
+5
+00:00:12,000 --> 00:00:15,000
+Twist in reverse to unlock the connection.
+
+6
+00:00:15,000 --> 00:00:18,000
+Remove the hose from the female connector by pulling,
+possibly applying tension in the open direction.
+
+7
+00:00:18,000 --> 00:00:21,000
+You can specify any hose diameter that fits onto your build plate.
+
+8
+00:00:21,000 --> 00:00:24,000
+The same goes for the hose fitting length, limited by the build volume you have.
+
+9
+00:00:24,000 --> 00:00:27,000
+The 3MF you download from customization has a plate for each part.
+
+10
+00:00:27,000 --> 00:00:30,000
+Good luck with printing your parts!
