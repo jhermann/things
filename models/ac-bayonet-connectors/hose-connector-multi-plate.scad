@@ -3,6 +3,8 @@
 // ====================================================================
 
 //$preview = true; // Override in VS Code
+animate = 0; local = 0;
+//animate = 1; local = 1; $preview = false;
 
 /* [Hose Connector] */
 hose_diameter           = 150;   // Nominal outer diameter of the hose (mm)
@@ -15,17 +17,37 @@ locking_lug_length      = 20;    // Circumferential arc length of each lug (mm)
 locking_lug_size        = 7.5;   // Square radial and vertical cross-section (mm)
 
 // Fast preview, smooth final curves
-$fa = $preview ? 8 : 1;
-$fs = $preview ? 1 : 0.1;
+$fa = $preview || (local && !animate) ? 8 : 1;
+$fs = $preview || (local && !animate) ? 1 : 0.1;
 
 // ====================================================================
 // Animation
 // ====================================================================
-anim_scene1 = (.25 < $t && $t <= .5) ? sin(360 * 4 * ($t - .25)) : 0;
-anim_scene2 = (.5 < $t && $t <= .75) ? sin(360 * 2 * ($t - .5)) : 0;
-anim_scene3 = (.75 < $t) ? sin(360 * 2 * ($t - .75)) : 0;
-_hose_diameter = hose_diameter * (1 + .25 * anim_scene2);
-_hose_connector_height = hose_connector_height * (1 + .5 * anim_scene3);
+scenes = 10; // Number of animation scenes
+anim_step = 1 / scenes;
+
+function sin_factor(n, slopes=2) =
+    (n * anim_step < $t && $t <= (n + 1) * anim_step) ?
+    sin(90 * slopes * ($t - n * anim_step) * scenes) : 0;
+function stay(n1, n2=scenes-1) =
+    (n1 * anim_step < $t && $t <= (n2 + 1) * anim_step) ? 1 : 0;
+
+scene = [
+    sin_factor(0, 1), // rotation (female)
+    sin_factor(1, 1) + stay(2), // hose rising
+    sin_factor(2, 1) + stay(3), // hose + male rising
+    sin_factor(3), // hose + male turning
+    0,
+    sin_factor(5, 1) + stay(6), // hose + male lowering
+    sin_factor(6),
+    sin_factor(7),
+    0
+];
+scene_turn = scene[3];
+scene_lower = scene[5];
+
+_hose_diameter = hose_diameter * (1 + .25 * scene[6]);
+_hose_connector_height = hose_connector_height * (1 + .5 * scene[7]);
 
 // ====================================================================
 // Derived Dimensions
@@ -88,18 +110,29 @@ module tube_bevel(radius) {
 // ====================================================================
 // Main Assembly & Plates
 // ====================================================================
-if ($preview) { // main assembly in Parametric Model Maker
+if ($preview || local) { // main assembly in Parametric Model Maker
+    parts_gap = 2.5 * ring_height + 2 * locking_lug_size + slot_cover;
+    hose_raise = parts_gap + 2 * locking_lug_size + slot_cover;
+
     union() {
-        rotate([0, 180, 45]) // turn around and place under the zero plane
+        color("Gray")
+        translate([0, 0, (scene[2] - scene_lower) * hose_raise])
+        rotate([0, 180, 45 + scene[3] * 3 * indicator_lug_angle]) // turn around and place under the zero plane
             mw_plate_2();
 
-        translate([0, 0, 1 * ring_height]) // raise a bit above the zero plane
+        color("White")
+        translate([0, 0, parts_gap]) // raise a bit above the zero plane
             mw_plate_1();
+
+        tube_z = scene[1] * 111 - 180 - hose_connector_height + scene[2] * hose_raise - scene_lower * (hose_raise + 111);
+        translate([0, 0, tube_z])
+        rotate([0, 0, scene_turn * 2 * indicator_lug_angle])
+            ac_hose(2 * hose_connector_height);
     }
 }
 
 module mw_plate_1() {
-    female_connector([45 * anim_scene1, 30 * anim_scene1, $t <= .25 ? $t * 360 : 0]);
+    female_connector([0, 0, scene[0] * 90]);
 }
 
 module mw_plate_2() {
@@ -337,9 +370,9 @@ module male_connector(view_angle) {
 
         // Main Hose Connector Cylinder
         difference() {
-            cylinder(r = outer_radius, h = hose_connector_height);
+            cylinder(r = outer_radius, h = _hose_connector_height);
             translate([0, 0, -edge_pad])
-                cylinder(r = inner_radius, h = hose_connector_height + 2 * edge_pad);
+                cylinder(r = inner_radius, h = _hose_connector_height + 2 * edge_pad);
         }
 
         // Convex Quarter-Circle Lead-in Rim (Points Upward & Outward)
@@ -401,4 +434,87 @@ module male_locking_lugs() {
                         [ring_inner_radius - edge_pad, ring_height + edge_pad]
                     ]);
     }
+}
+
+// ====================================================================
+// AC PVC Hose (for animation)
+// ====================================================================
+module ac_hose(
+        length=40,
+        cuff_len=locking_lug_size,
+        inne_diameter=_hose_diameter,
+        wall=wall_thickness,
+        wire_r=250,
+        pitch=12) {
+    cuff_radius = inne_diameter / 2 + wall + 0.8;
+    spot_count = 8;
+    spot_radius = 0.4 * cuff_len;
+
+    module cuff_stripe() {
+        color("#000")
+        intersection() {
+            // Slightly oversized black cuff ring.
+            difference() {
+                cylinder(h=cuff_len, r=cuff_radius + wall / 8);
+                translate([0, 0, -edge_pad])
+                    cylinder(h=cuff_len + 2 * edge_pad, r=inne_diameter / 2 + edge_pad);
+            }
+
+            // Rotated spheres leave discrete black spots around the cuff.
+            union()
+                for (spot_angle = [0 : 360 / spot_count : 359])
+                    rotate([0, 0, spot_angle])
+                        translate([cuff_radius, 0, cuff_len / 2])
+                            sphere(r=spot_radius);
+        }
+    }
+
+    // 1. Main Corrugated Body with Embedded Spiral
+    difference() {
+        intersection() {
+            // Bounds limit
+            translate([0, 0, cuff_len])
+                cylinder(h=length - (cuff_len * 2), r1=inne_diameter/2 + wall + 1, r2=inne_diameter/2 + wall + 1);
+
+            // Helix ribbing combined with base wall
+            union() {
+                // Thin inner liner
+                color("#fe9")
+                cylinder(h=length, r=inne_diameter/2 + wall);
+
+                // Spiral steel wire reinforcement encased in PVC rib
+                color("#4682B4")
+                translate([0, 0, cuff_len])
+                linear_extrude(height = length - (cuff_len * 2), twist = -360 * ((length - (cuff_len * 2)) / pitch), slices = 400)
+                    translate([inne_diameter/2 + wall + wire_r - 0.5, 0, 0])
+                        scale([1, 10, 1])
+                        circle(r=wire_r);
+            }
+        }
+
+        // Hollow interior
+        translate([0, 0, -1])
+            cylinder(h=length + 2, r=inne_diameter/2);
+    }
+
+    // 2. Smooth Terminal Cuffs (PVC Connectors)
+    // Bottom Cuff
+    difference() {
+        cylinder(h=cuff_len, r=cuff_radius);
+        translate([0, 0, -1])
+            cylinder(h=cuff_len + 2, r=inne_diameter/2);
+    }
+
+    cuff_stripe();
+
+    // Top Cuff
+    translate([0, 0, length - cuff_len])
+    difference() {
+        cylinder(h=cuff_len, r=cuff_radius);
+        translate([0, 0, -1])
+            cylinder(h=cuff_len + 2, r=inne_diameter/2);
+    }
+
+    translate([0, 0, length - cuff_len])
+        cuff_stripe();
 }
