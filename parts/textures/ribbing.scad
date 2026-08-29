@@ -29,10 +29,30 @@ module ribbing() {
             rounded_rib();
 }
 
+// Encircling band matching the rib's radial and vertical thickness.
+module rib_ring(z_center) {
+    translate([0, 0, z_center])
+        rotate_extrude($fn = base_fn)
+        translate([radius, 0, 0])
+        minkowski() {
+            square([
+                rib_height - 2 * rib_corner_radius,
+                rib_width - 2 * rib_corner_radius
+            ], center = true);
+            circle(r = rib_corner_radius, $fn = 12);
+        }
+}
+
+module rib_rings() {
+    rib_ring(rib_width / 2);
+    rib_ring(height - rib_width / 2);
+}
+
 module ribbed_cylinder() {
     union() {
         cylinder(r = radius, h = height, $fn = base_fn);
         ribbing();
+        rib_rings();
     }
 }
 

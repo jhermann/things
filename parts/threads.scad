@@ -219,10 +219,12 @@ module internal_thread(
 //
 
 // Ribs stop short of the top/bottom chamfers so they don't
-// poke through the sloped edges.
+// poke through the sloped edges, and stop a further rib
+// thickness short of that so their flat ends stay tucked
+// inside the rounded rings instead of poking past them.
 module lid_rib(radius, height) {
-    translate([radius, 0, chamfer])
-        linear_extrude(height = height - 2 * chamfer)
+    translate([radius, 0, chamfer + rib_height])
+        linear_extrude(height = height - 2 * chamfer - 2 * rib_height)
         minkowski() {
             square([
                 rib_height - 2 * rib_corner_radius,
@@ -236,6 +238,26 @@ module lid_ribbing(radius, height) {
     for (rib = [0 : rib_count - 1])
         rotate([0, 0, rib * 360 / rib_count])
             lid_rib(radius, height);
+}
+
+// Encircling band matching the rib's radial and vertical thickness,
+// flush with the top/bottom of the ribbed section.
+module lid_rib_ring(radius, z_center) {
+    translate([0, 0, z_center])
+        rotate_extrude()
+        translate([radius, 0, 0])
+        minkowski() {
+            square([
+                rib_height - 2 * rib_corner_radius,
+                rib_width - 2 * rib_corner_radius
+            ], center = true);
+            circle(r = rib_corner_radius, $fn = 12);
+        }
+}
+
+module lid_rib_rings(radius, height) {
+    lid_rib_ring(radius, chamfer + rib_width / 2);
+    lid_rib_ring(radius, height - chamfer - rib_width / 2);
 }
 
 
@@ -415,6 +437,11 @@ module threaded_lid() {
             );
 
             lid_ribbing(
+                radius = lid_outer_radius,
+                height = lid_height
+            );
+
+            lid_rib_rings(
                 radius = lid_outer_radius,
                 height = lid_height
             );
