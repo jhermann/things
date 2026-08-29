@@ -5,6 +5,9 @@
 #
 # Requires OpenSCAD Nightly at the configured Windows path, wslpath, and
 # ImageMagick's montage command. Run from WSL with: ./scripts/preview.sh
+#
+# To get a list of fonts:
+#   convert -list font | grep -i font: | cut -f2- -d:
 
 # Configuration
 openscad_windows_path='c:\Program Files\OpenSCAD (Nightly)\openscad.exe'
@@ -14,6 +17,7 @@ tile_columns=3
 colorscheme='Nocturnal Gem'
 background_color='black'
 text_color='white'
+text_font='Noto-Sans-Mono-Bold'
 preview_filename='preview.png'
 
 set -euo pipefail
@@ -52,6 +56,7 @@ for scad_dir in parts parts/textures examples; do
 		-geometry "${image_width}x${image_height}" \
 		-background "$background_color" \
 		-fill "$text_color" \
+		-font "$text_font" \
 		"$scad_dir/$preview_filename"
 done
 
