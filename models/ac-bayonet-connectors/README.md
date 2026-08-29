@@ -12,7 +12,7 @@ All models are designed to print without any supports, on a modern device that s
 ![Connected Parts](assets/assembled.jpg)
 
 
-> 💡 See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models.
+> 💡 **Related Content** <br />See my [Air Conditioning Collection on MakerWorld](https://makerworld.com/en/collections/33754690-air-conditioning) for related models. And check out [OpenSCAD Model With Animation Video and MakerWorld Multi-Plate Support](https://dev.to/jhermann/openscad-model-with-animation-video-and-makerworld-multi-plate-support-4834) for a deep-dive into how this was made.
 
 **Interactive 3D Previews:**
 
