@@ -46,9 +46,9 @@ The female model has a `tube extension` switch to enable this modified geometry.
 ## Create the Animation Sequence
 
 ```
-"C:\Program Files\OpenSCAD (Nightly)\openscad.exe" -o frame.png --colorscheme "Nocturnal Gem" --animate 180 --camera=350,350,-300,0,0,30 hose-connector-female.scad
+"C:\Program Files\OpenSCAD (Nightly)\openscad.exe" -o frame.png --colorscheme "Nocturnal Gem" --animate 180 --camera=400,400,-300,0,0,50 hose-connector-multi-plate.scad
 
-convert -delay 5 -loop 0 frame*.png hose-connector-female.gif
+convert -delay 7 -loop 0 frame*.png hose-connector-animation.gif
 
-ffmpeg -framerate 12 -i frame%05d.png -c:v libx264 -pix_fmt yuv420p hose-connector-female.mp4
+ffmpeg -framerate 12 -i frame%05d.png -c:v libx264 -pix_fmt yuv420p hose-connector-animation.mp4
 ```
