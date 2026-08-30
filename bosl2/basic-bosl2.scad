@@ -9,8 +9,8 @@ cube_size = 30; // [20:1:150]
 tube_radius = 5; // [5:1:25]
 tube_height = 15; // [10:1:50]
 
-// The primary layout shape
-cube_type = "round"; // [round, square]
+// Where to connect the shapes
+attach_face = "top"; // [top, bottom, left, right, front, back]
 
 /* [Hidden] */
 // Keep derived calculations down here so they do not clutter the MakerWorld UI
@@ -19,8 +19,15 @@ cube_type = "round"; // [round, square]
 $fa = $preview ? 8 : 1;
 $fs = $preview ? 1 : 0.1;
 
+attach_face_vector = attach_face == "top" ? TOP :
+                     attach_face == "bottom" ? BOTTOM :
+                     attach_face == "left" ? LEFT :
+                     attach_face == "right" ? RIGHT :
+                     attach_face == "front" ? FRONT :
+                     attach_face == "back" ? BACK : TOP;
+
 // Create the parent object and attach a child
 // to the TOP face of the parent.
-cuboid([cube_size, cube_size, cube_size], box_type=cube_type)
-    attach(TOP)
+cuboid([cube_size, cube_size, cube_size])
+    attach(attach_face_vector)
         cylinder(r=tube_radius, h=tube_height, center=true);
