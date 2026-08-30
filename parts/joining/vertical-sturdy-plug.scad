@@ -49,7 +49,8 @@ cross_arm_thickness = .66 * plug_wall_thickness;
 cross_arm_length = 2 * (plug_radius - 1.25 * plug_wall_thickness);
 cross_depth = plug_height + height * 0.6;
 
-// Chamfer applied to the plug's base, its tip, and the hole's outer rim
+// Chamfer applied to the plug's base, its tip, the hole's outer rim,
+// and the bottom perimeter of both cuboids
 chamfer_size = plug_wall_thickness / 3;
 
 // Ribs cut into the plug's outer wall for flex, sized and placed so they
@@ -85,6 +86,17 @@ module cross_hollow(length, depth) {
     }
 }
 
+module chamfered_base_cuboid(w, d, h, chamfer) {
+    // Bevels the bottom perimeter by hulling a smaller footprint at z=0
+    // up to the full footprint at z=chamfer
+    hull() {
+        translate([chamfer, chamfer, 0])
+            cube([w - 2 * chamfer, d - 2 * chamfer, 0.001]);
+        translate([0, 0, chamfer])
+            cube([w, d, h - chamfer]);
+    }
+}
+
 module plug_ribs() {
     for (i = [0 : rib_count - 1])
         rotate([0, 0, i * 360 / rib_count])
@@ -95,7 +107,7 @@ module plug_ribs() {
 module plug_cuboid() {
     difference() {
         union() {
-            cube([width, depth, height]);
+            chamfered_base_cuboid(width, depth, height, chamfer_size);
             translate([width / 2, depth / 2, height])
                 tapered_plug();
         }
@@ -108,7 +120,7 @@ module plug_cuboid() {
 
 module hole_cuboid() {
     difference() {
-        cube([width, depth, height]);
+        chamfered_base_cuboid(width, depth, height, chamfer_size);
         translate([width / 2, depth / 2, height - hole_depth])
             cylinder(h = hole_depth + 0.1, r = hole_radius);
         // Chamfer the outer rim of the hole
