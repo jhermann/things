@@ -19,6 +19,7 @@ background_color='black'
 text_color='white'
 text_font='Noto-Sans-Mono-Bold'
 preview_filename='preview.png'
+preview=false
 
 set -euo pipefail
 
@@ -45,7 +46,8 @@ for scad_dir in parts parts/textures examples; do
 		output_file="$output_dir/$scad_dir_count-$scad_count.png"
 		relative_file=${scad_file#"$search_dir/"}
 		echo "Rendering $relative_file..."
-		"$binary" --colorscheme "$colorscheme" --viewall \
+		"$binary" --colorscheme "$colorscheme" --viewall --backend=manifold \
+            -D '$preview='$preview --render \
 			--imgsize="$image_width,$image_height" -o "$output_file" "$scad_file"
 		montage_args+=(-label "$label" "$output_file")
 	done < <(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -print0 | sort -z)
