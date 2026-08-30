@@ -6,6 +6,7 @@ Using OpenSCAD together with the BOSL2 library.
 
 - [Belfry OpenSCAD Library v2](https://github.com/BelfrySCAD/BOSL2/wiki#belfry-openscad-library-v2) (BOSL2)
 - [BOSL2 Function Cheat Sheet](https://github.com/BelfrySCAD/BOSL2/wiki/Topics)
+- [MakerWorld PMM OpenSCAD Reference](https://nelsonjchen.github.io/unofficial-makerworld-parametric-model-maker-openscad-docs/) (unofficial, [GitHub][gh-mw-pmm-docs])
 
 **Models**
 
@@ -15,3 +16,4 @@ Using OpenSCAD together with the BOSL2 library.
 
 
 [mw-basic-bosl2]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=basic-bosl2.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fbosl2%2Fbasic-bosl2.scad
+[gh-mw-pmm-docs]: https://github.com/nelsonjchen/unofficial-makerworld-parametric-model-maker-openscad-docs/tree/main
