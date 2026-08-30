@@ -20,7 +20,7 @@
 // That cross-shaped hollow space penetrates the part (cuboid) the plug
 // connects, to give it more protections from separations at the joint.
 
-$preview = true;
+//$preview = true;
 $fa = $preview ? 8 : 1;
 $fs = $preview ? 1 : 0.1;
 
@@ -28,17 +28,17 @@ $fs = $preview ? 1 : 0.1;
 width = 30;
 depth = 30;
 height = 15;
-spacing = 50; // Gap between the two cubes
+spacing = 40; // Gap between the two cubes
 
 // Plug: tapers from a thick base to a thinner tip for easy starting insertion
 plug_height = 10;
 plug_radius = 5;
-plug_variance = .3;
+plug_variance = .25;
 plug_wall_thickness = 1.5;
 
 // Hole: vertical walls sized around the plug's tip, so the fit tightens
 // as the thicker part of the plug is pushed in
-hole_clearance = 0.2;
+hole_clearance = 0.05;
 hole_radius = plug_radius + hole_clearance;
 hole_depth = plug_height + 1;
 
@@ -131,5 +131,5 @@ module hole_cuboid() {
 
 plug_cuboid();
 
-translate([spacing, 0, 0])
+translate([-spacing, -spacing, 0])
     hole_cuboid();
