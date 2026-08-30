@@ -22,10 +22,11 @@ text_font='Noto-Sans-Mono-Bold'
 preview_filename='preview.png'
 preview=false
 scad_dirs=(
-	parts
-	parts/joining
-	parts/textures
-	examples
+    bosl2
+    examples
+    parts
+    parts/joining
+    parts/textures
 )
 
 set -euo pipefail
@@ -40,35 +41,43 @@ for scad_dir in "${scad_dirs[@]}"; do
     scad_dir="$search_dir/$scad_dir"
     [ -d "$scad_dir" ] || continue
 
-	montage_args=()
-	scad_count=0
-    echo "Processing directory: $scad_dir..."
+    montage_args=()
+    scad_count=0
+    echo "⚙️ Processing directory: $scad_dir..."
 
-	for scad_file in "$scad_dir"/*.scad; do
+    preview_path="$scad_dir/$preview_filename"
+    if [ -f "$preview_path" ] && \
+        [ -z "$(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -newer "$preview_path" -print -quit)" ]; then
+        echo "⏩ Skipping $scad_dir: $preview_filename is up to date"
+        ((scad_dir_count += 1))
+        continue
+    fi
+
+    for scad_file in "$scad_dir"/*.scad; do
         [ -e "$scad_file" ] || continue
-		filename=$(basename "$scad_file" .scad)
-		label=$(printf '%s' "$filename" | sed -E 's/([a-z])([A-Z])/\1 \2/g; s/-/ /g; s/(^| )([^ ])([a-z]*)/\1\U\2\L\3/g')
-		((scad_count += 1))
-		output_file="$output_dir/$scad_dir_count-$scad_count.png"
-		relative_file=${scad_file#"$search_dir/"}
-		echo "Rendering $relative_file..."
-		"$binary" --colorscheme "$colorscheme" --viewall --backend=manifold \
+        filename=$(basename "$scad_file" .scad)
+        label=$(printf '%s' "$filename" | sed -E 's/([a-z])([A-Z])/\1 \2/g; s/-/ /g; s/(^| )([^ ])([a-z]*)/\1\U\2\L\3/g')
+        ((scad_count += 1))
+        output_file="$output_dir/$scad_dir_count-$scad_count.png"
+        relative_file=${scad_file#"$search_dir/"}
+        echo "🧊 Rendering $relative_file..."
+        "$binary" --colorscheme "$colorscheme" --viewall --backend=manifold \
             -D '$preview='$preview --render \
-			--imgsize="$image_width,$image_height" -o "$output_file" "$scad_file"
-		montage_args+=(-label "$label" "$output_file")
-	done < <(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -print0 | sort -z)
+            --imgsize="$image_width,$image_height" -o "$output_file" "$scad_file"
+        montage_args+=(-label "$label" "$output_file")
+    done < <(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -print0 | sort -z)
 
-	((scad_dir_count += 1))
-	montage "${montage_args[@]}" \
-		-tile "${tile_columns}x" \
-		-geometry "${image_width}x${image_height}" \
-		-background "$background_color" \
-		-fill "$text_color" \
-		-font "$text_font" \
-		"$scad_dir/$preview_filename"
+    ((scad_dir_count += 1))
+    montage "${montage_args[@]}" \
+        -tile "${tile_columns}x" \
+        -geometry "${image_width}x${image_height}" \
+        -background "$background_color" \
+        -fill "$text_color" \
+        -font "$text_font" \
+        "$scad_dir/$preview_filename"
 done
 
 if ((scad_dir_count == 0)); then
-	echo "No SCAD files found under $search_dir" >&2
-	exit 1
+    echo "No SCAD files found under $search_dir" >&2
+    exit 1
 fi
