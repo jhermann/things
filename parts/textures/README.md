@@ -7,6 +7,7 @@ Reusable OpenSCAD texture patterns and sample plates or containers that demonstr
 > ![Tiled Preview](./preview.png)
 
 - [Diamond tread](diamond-tread.scad) - A raised diamond pattern on a flat plate.
+- [Diamonds](diamonds.scad) - A cylinder with a diamond knurl cut from crossed triangular grooves.
 - [Japandi](japandi.scad) - An organic, vertically rippled cylinder.
 - [Knurling](knurling.scad) - A repeating knurled surface pattern.
 - [Ribbing](ribbing.scad) - A repeating ribbed surface pattern.
