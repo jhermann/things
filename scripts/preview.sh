@@ -10,7 +10,8 @@
 #   convert -list font | grep -i font: | cut -f2- -d:
 
 # Configuration
-openscad_windows_path='c:\Program Files\OpenSCAD (Nightly)\openscad.exe'
+#openscad_path='c:\Program Files\OpenSCAD (Nightly)\openscad.exe'; binary=$(wslpath -u "$openscad_path")
+binary='openscad'
 image_width=320
 image_height=$image_width
 tile_columns=3
@@ -20,17 +21,22 @@ text_color='white'
 text_font='Noto-Sans-Mono-Bold'
 preview_filename='preview.png'
 preview=false
+scad_dirs=(
+	parts
+	parts/joining
+	parts/textures
+	examples
+)
 
 set -euo pipefail
 
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 search_dir="$(cd "$script_dir/.." && pwd)"
-binary=$(wslpath -u "$openscad_windows_path")
 output_dir=$(mktemp -d)
 trap 'rm -rf "$output_dir"' EXIT
 scad_dir_count=0
 
-for scad_dir in parts parts/textures examples; do
+for scad_dir in "${scad_dirs[@]}"; do
     scad_dir="$search_dir/$scad_dir"
     [ -d "$scad_dir" ] || continue
 
