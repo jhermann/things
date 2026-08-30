@@ -20,7 +20,7 @@ This skill can be explicitly triggered by using the `/scad` command with a promp
 - **Layer Height & Resolution:** Use `$fa` and `$fs` to control facet angle and size for high-quality prints, adjusting based on the complexity of the geometry. Features like chamfers should not be smaller than the standard layer height of 0.2mm.
 - **Consistent Dimensions:** Maintain consistent units (millimeters) and avoid mixing metric and imperial measurements. Use clear variable names to indicate the purpose of each dimension (e.g., `wall_thickness`, `hole_diameter`).
 - **Reduce Redundancy:** Use the same variable for the same dimension across different modules to ensure consistency, and if necessary use multiples to reduce configuration complexity for similar dimensions, like `ribbing_size = wall_thickness / 2`.
-
+- **Design Principles:** Additionally, consider the [Design Principles for Reliably Printable 3D Models](./design-principles.md).
 
 ## Code Structure
 
