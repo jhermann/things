@@ -47,3 +47,8 @@
 - Keep indexes flat, do not nest README links in subdirectories. Use the model's directory name as the link text, and do not include the `.scad` extension.
 - Ensure sub-level READMEs are self-contained and do not require the reader to navigate to parent directories for context. Each README should describe the model or part, its intended use, and any relevant parameters or assembly instructions.
 - A README should not be a copy of the root README or a generic OpenSCAD tutorial, and make any sub-level READMEs discoverable from the parent README. Use the root README to describe the repository as a whole, not individual models or parts.
+
+## Technical Details
+
+- OpenSCAD libraries are installed in `~/.local/share/OpenSCAD/libraries/`.
+- NEVER call `find / ...` to find things; ask the user for things you are missing.
