@@ -16,7 +16,7 @@ image_width=320
 image_height=$image_width
 tile_columns=3
 colorscheme='Nocturnal Gem'
-background_color='black'
+background_color='#333333'
 text_color='white'
 text_font='Noto-Sans-Mono-Bold'
 preview_filename='preview.png'
@@ -70,7 +70,7 @@ for scad_dir in "${scad_dirs[@]}"; do
     ((scad_dir_count += 1))
     montage "${montage_args[@]}" \
         -tile "${tile_columns}x" \
-        -geometry "${image_width}x${image_height}" \
+        -geometry "${image_width}x${image_height}+2+2" \
         -background "$background_color" \
         -fill "$text_color" \
         -font "$text_font" \
