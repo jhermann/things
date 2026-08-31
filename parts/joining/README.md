@@ -26,12 +26,15 @@ The design principles were mostly lifted from [this YouTube video](https://www.y
 
 ## Square Dowel
 
-This is a separately printed dowel — a flat, chamfered square block.
+This mechanism uses a separately printed dowel — a flat, chamfered square block.
 It features two small bumps for a better friction fit in the joined parts.
+Those also ensure you hear that satisfying snap when putting parts together. 👂😊
+
+> ![Sliced & Printed](./assets/square-dowel-print.png)
 
 To join two half-cubes at one of their square faces, they sandwich a full dowel between them, to align the seam and merge them using the dowel's friction.
 
-The slot in the objects to join is always printed vertically when on a side,
+The slot in the objects to join must always be printed vertically when on a side,
 so overhangs are guaranteed to not exceed 45°. When on the bottom or the top, it should be rotated 45° to maximize distance from the object's sides.
 
 > ![Modeler Preview](./assets/square-dowel.png)
