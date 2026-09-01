@@ -4,18 +4,18 @@
 include <BOSL2/std.scad>
 
 /* [Base + Shade Dimensions] */
-// Lamp base outer diameter
-base_size = 90; // [5:1:40]
+// Maximal diameter of the LED puck
+led_puck_diameter = 82; // [25:1:120]
 // Lamp base height
 base_height = 35; // [1:0.5:10]
 // Lamp shade height
 shade_height = 90; // [30:5:200]
 // Wall thickness of the lamp base and shade
-wall_thickness = 2; // [0.5:0.25:3]
+wall_thickness = 2.5; // [0.5:0.25:3]
 // Chamfer applied to the lamp base's top and bottom edges
 lamp_chamfer = .75; // [0.5:0.25:2]
 // Cable diameter for the lamp base's cable slot
-cable_diameter = 5; // [1:0.5:10]
+cable_diameter = 3; // [1:0.5:10]
 // Lug size
 lug_size = 5; // [1:0.5:10]
 
@@ -30,9 +30,14 @@ tolerance = 0.2;
 // Extra gap added to carve-out shapes
 edge_gap = 0.1;
 
-led_insert_diameter = base_size - 2 * wall_thickness - 2 * tolerance;
-lug_radius = base_size / 2 - 2 * lug_size - edge_gap;
+led_insert_diameter = led_puck_diameter + 2 * (wall_thickness);
+base_size = led_insert_diameter + 2 * (wall_thickness + lug_size + 2 * tolerance);
+led_insert_height = base_height - 2 * wall_thickness - lug_size;
+lug_radius = led_insert_diameter / 2;
 cable_sweep_angle = (180 / PI * 1.25 * cable_diameter / lug_radius);
+
+echo("OUTER base diameter:", base_size);
+echo("OUTER holder diameter:", led_insert_diameter);
 
 
 module see_through(base_color="grey") {
@@ -81,18 +86,23 @@ module all_lugs(radius, arc_scale=1, slot=false) {
 }
 
 module twist2lock() {
-    if (local)
+    if (local && 0)
         color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
             linear_extrude(height=wall_thickness / 2, convexity=10)
                 resize([.6 * led_insert_diameter, 0, 0], auto=[false, true, true])
                     import("./twist-lock.svg", center=true);
+    else {
+        for (angle=[0, 180])
+        color("red") zrot(angle)
+            back(.2 * led_insert_diameter) up(lamp_chamfer / 2 - edge_gap / 2)
+            yrot(180)
+            text3d("←Open / Close→", h=lamp_chamfer, size=5, font="Liberation Sans", anchor=CENTER);
+    }
 }
 
 module led_holder() {
-    // LED Insert
-    led_insert_height = base_height - 2 * wall_thickness - lug_size;
-
     twist2lock();
+
     solid() all_lugs(led_insert_diameter / 2);
 
     difference() {
@@ -117,18 +127,17 @@ module led_holder() {
                 anchor=BOTTOM);
 
         // Cable slot main slit
-        color("yellow")
+        //color("yellow")
         up(2 * wall_thickness + led_insert_height / 2)
         fwd(led_insert_diameter / 2 - 3 * wall_thickness)
             up(led_insert_height / 2 - lug_size)
             xrot(90) zrot(90)
             offset_sweep(
                 path = ellipse([
-                    led_insert_height - 2 * lug_size,
-                    cable_diameter + 2 * lug_size]),
+                    led_insert_height - .75 * lug_size,
+                    cable_diameter + 3 * lug_size]),
                 height = 3 * wall_thickness
             );
-
     }
 }
 
@@ -141,13 +150,13 @@ module lamp_base() {
 
         // Base cavity: Chamfered lower tube
         down(6 * lug_size + edge_gap)
-            cyl(d=base_size - 4 * lug_size,
+            cyl(d=led_insert_diameter + 4 * tolerance,
                 h=base_height + 4 * lug_size + 2 * edge_gap,
                 chamfer=lug_size, anchor=BOTTOM);
 
         // Base cavity: Remove sharp chamfer edge
         down(edge_gap)
-            cyl(d=base_size - 2 * wall_thickness + 2 * tolerance - 4 * lug_size,
+            cyl(d=led_insert_diameter - 1.25 * lug_size,
                 h=base_height + edge_gap, anchor=BOTTOM);
 
         // Base cavity: Carve upper space for lamp shade
@@ -173,7 +182,7 @@ module lamp_base() {
                         [lug_radius - edge_gap, base_height - 2 * lug_size]
                     ]);
 
-        color("yellow")
+        //color("yellow")
         zrot(cable_sweep_angle / 3)
         down(edge_gap)
         fwd(lug_radius - lug_size)
@@ -190,7 +199,6 @@ module lamp_base() {
             );
     }
 }
-
 
 
 // ====================================================================
