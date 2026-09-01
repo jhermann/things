@@ -21,7 +21,7 @@ lug_size = 5; // [1:0.5:10]
 
 /* [Hidden] */
 //$preview = true;
-local = 1;
+local = 0;
 $fa = $preview ? 16 : 1;
 $fs = $preview ? 2 : 0.1;
 
