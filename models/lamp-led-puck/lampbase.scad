@@ -29,6 +29,8 @@ $fs = $preview ? 2 : 0.1;
 tolerance = 0.2;
 // Extra gap added to carve-out shapes
 edge_gap = 0.1;
+// Font family for text engraving
+Font_family = "Helvetica:style=Bold";
 
 led_insert_diameter = led_puck_diameter + 2 * (wall_thickness);
 base_size = led_insert_diameter + 2 * (wall_thickness + lug_size + 2 * tolerance);
@@ -58,6 +60,23 @@ module solid(base_color="red") {
     }
 }
 
+module twist2lock() {
+    if (local && 0)
+        color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
+            linear_extrude(height=wall_thickness / 2, convexity=10)
+                resize([.6 * led_insert_diameter, 0, 0], auto=[false, true, true])
+                    import("./twist-lock.svg", center=true);
+    else {
+        for (angle=[0, 180])
+        for (shift=[0, .2]) {
+            color("red") zrot(angle) right(shift) fwd(shift)
+            back(.2 * led_insert_diameter) up(lamp_chamfer / 2 - edge_gap / 2)
+            yrot(180)
+            text3d("←Open / Close→", h=lamp_chamfer, size=5, font=Font_family, anchor=CENTER);
+         }
+    }
+}
+
 module one_lug(radius, angle=0, arc_scale=1, slot=false) {
     lug_sweep_angle = (180 / PI * 3 * lug_size / radius + (slot ? 3 : 0)) * arc_scale;
 
@@ -83,21 +102,6 @@ module one_lug(radius, angle=0, arc_scale=1, slot=false) {
 module all_lugs(radius, arc_scale=1, slot=false) {
     for (angle = [0, 120, 240])
         one_lug(radius, angle - 30, arc_scale, slot);
-}
-
-module twist2lock() {
-    if (local && 0)
-        color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
-            linear_extrude(height=wall_thickness / 2, convexity=10)
-                resize([.6 * led_insert_diameter, 0, 0], auto=[false, true, true])
-                    import("./twist-lock.svg", center=true);
-    else {
-        for (angle=[0, 180])
-        color("red") zrot(angle)
-            back(.2 * led_insert_diameter) up(lamp_chamfer / 2 - edge_gap / 2)
-            yrot(180)
-            text3d("←Open / Close→", h=lamp_chamfer, size=5, font="Liberation Sans", anchor=CENTER);
-    }
 }
 
 module led_holder() {
