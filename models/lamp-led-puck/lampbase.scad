@@ -81,10 +81,11 @@ module all_lugs(radius, arc_scale=1, slot=false) {
 }
 
 module twist2lock() {
-    color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
-        linear_extrude(height=wall_thickness / 2, convexity=10)
-            resize([.6 * led_insert_diameter, 0, 0], auto=[false, true, true])
-                import("./twist-lock.svg", center=true);
+    if (local)
+        color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
+            linear_extrude(height=wall_thickness / 2, convexity=10)
+                resize([.6 * led_insert_diameter, 0, 0], auto=[false, true, true])
+                    import("./twist-lock.svg", center=true);
 }
 
 module led_holder() {
@@ -208,8 +209,4 @@ module mw_plate_1() {
 
 module mw_plate_2() {
     led_holder();
-}
-
-module mw_plate_3() {
-    twist2lock();
 }
