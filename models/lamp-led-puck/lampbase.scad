@@ -9,7 +9,7 @@ led_puck_diameter = 82; // [25:1:120]
 // Maximal height of the LED puck
 led_puck_height = 21; // [10:5:40]
 // Lamp base height
-base_height = 35; // [1:0.5:10]
+base_height = 40; // [1:0.5:10]
 // Lamp shade height
 shade_height = 90; // [30:5:200]
 // Wall thickness of the lamp base and shade
@@ -62,6 +62,19 @@ module solid(base_color="red") {
     }
 }
 
+
+// ====================================================================
+// Parts
+// ====================================================================
+
+// rotational extrusion of an ellipsoid with its center at `radius`
+module torus(radius, rx, ry, arc=360) {
+    rotate_extrude(angle=arc, convexity=2)
+        translate([radius, 0, 0])
+            scale([rx, ry, 1])
+                circle(r=1, $fn=$fn);
+}
+
 module twist2lock() {
     if (local && 0)
         color("red") up(wall_thickness / 2 - .1 * edge_gap) yrot(180)
@@ -106,6 +119,11 @@ module all_lugs(radius, arc_scale=1, slot=false) {
         one_lug(radius, angle - 30, arc_scale, slot);
 }
 
+
+// ====================================================================
+// Objects
+// ====================================================================
+
 module led_holder() {
     twist2lock();
 
@@ -149,15 +167,17 @@ module led_holder() {
 
 module lamp_base() {
     // Base
+    upper_height = base_height - led_insert_height - lug_size;
+
     difference() {
         // Base main body
         cyl(d=base_size, h=base_height, chamfer=lamp_chamfer,
             anchor=BOTTOM);
 
         // Base cavity: Chamfered lower tube
-        down(6 * lug_size + edge_gap)
+        down(lug_size + edge_gap)
             cyl(d=led_insert_diameter + 4 * tolerance,
-                h=base_height + 4 * lug_size + 2 * edge_gap,
+                h=led_insert_height + 2 * lug_size + tolerance + edge_gap,
                 chamfer=lug_size, anchor=BOTTOM);
 
         // Base cavity: Remove sharp chamfer edge
@@ -166,9 +186,9 @@ module lamp_base() {
                 h=base_height + edge_gap, anchor=BOTTOM);
 
         // Base cavity: Carve upper space for lamp shade
-        up(base_height - 2 * lug_size - edge_gap)
+        up(base_height - upper_height - edge_gap)
             cyl(d=base_size - 2 * wall_thickness + 2 * tolerance,
-                h=2 * lug_size + 2 * edge_gap, anchor=BOTTOM);
+                h=upper_height + 2 * edge_gap, anchor=BOTTOM);
 
         // Lug slots
         up(tolerance)
@@ -184,8 +204,8 @@ module lamp_base() {
                     polygon([
                         [lug_radius - edge_gap, 0],
                         [lug_radius + lug_size, 0],
-                        [lug_radius + lug_size, base_height - 3 * lug_size],
-                        [lug_radius - edge_gap, base_height - 2 * lug_size]
+                        [lug_radius + lug_size, led_insert_height - lug_size - edge_gap],
+                        [lug_radius - edge_gap, led_insert_height - edge_gap]
                     ]);
 
         // Cable port
@@ -201,10 +221,14 @@ module lamp_base() {
                     [1.75 * cable_diameter, .5 * cable_diameter],
                     [1.25 * cable_diameter, 1.1 * cable_diameter],
                     [0, 1.1 * cable_diameter],
-                    ],
+                ],
                 height = 4 * lug_size
             );
     }
+
+    // Friction ring for lamp shade
+    up(base_height - upper_height / 2)
+        torus(base_size / 2 - wall_thickness + tolerance, 2 * tolerance, 1.25 * lamp_chamfer);
 }
 
 
