@@ -152,16 +152,14 @@ module led_holder() {
 
         // Cable slot main slit
         //color("yellow")
-        up(2 * wall_thickness + led_insert_height / 2)
-        fwd(led_insert_diameter / 2 - 3 * wall_thickness)
+        up(3 * wall_thickness + 4 * lamp_chamfer + tolerance)
             up(led_insert_height / 2 - lug_size)
             xrot(90) zrot(90)
-            offset_sweep(
-                path = ellipse([
-                    led_insert_height - .75 * lug_size,
-                    cable_diameter + 3 * lug_size]),
-                height = 3 * wall_thickness
-            );
+            cuboid([
+                1.1 * led_insert_height,
+                .6 * led_insert_diameter,
+                led_insert_diameter],
+                rounding=lamp_chamfer, anchor=BOTTOM);
     }
 }
 
