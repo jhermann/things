@@ -6,6 +6,8 @@ include <BOSL2/std.scad>
 /* [Base + Shade Dimensions] */
 // Maximal diameter of the LED puck
 led_puck_diameter = 82; // [25:1:120]
+// Maximal height of the LED puck
+led_puck_height = 21; // [10:5:40]
 // Lamp base height
 base_height = 35; // [1:0.5:10]
 // Lamp shade height
@@ -34,7 +36,7 @@ Font_family = "Helvetica:style=Bold";
 
 led_insert_diameter = led_puck_diameter + 2 * (wall_thickness);
 base_size = led_insert_diameter + 2 * (wall_thickness + lug_size + 2 * tolerance);
-led_insert_height = base_height - 2 * wall_thickness - lug_size;
+led_insert_height = led_puck_height + wall_thickness + 2 * tolerance;
 lug_radius = led_insert_diameter / 2;
 cable_sweep_angle = (180 / PI * 1.25 * cable_diameter / lug_radius);
 
@@ -186,6 +188,7 @@ module lamp_base() {
                         [lug_radius - edge_gap, base_height - 2 * lug_size]
                     ]);
 
+        // Cable port
         //color("yellow")
         zrot(cable_sweep_angle / 3)
         down(edge_gap)
@@ -194,9 +197,9 @@ module lamp_base() {
             offset_sweep(
                 path = [
                     [0, 0],
-                    [.5 * cable_diameter, 0],
-                    [1.25 * cable_diameter, .5 * cable_diameter],
-                    [.5 * cable_diameter, 1.1 * cable_diameter],
+                    [1.25 * cable_diameter, 0],
+                    [1.75 * cable_diameter, .5 * cable_diameter],
+                    [1.25 * cable_diameter, 1.1 * cable_diameter],
                     [0, 1.1 * cable_diameter],
                     ],
                 height = 4 * lug_size
