@@ -2,6 +2,12 @@
 
 All models are designed to print without any supports, on a modern device that supports 45° overhangs.
 
+LED Puck:
+
+- https://www.amazon.de/dp/B09YRN43F5)
+- Outer dimensions 82×21mm, inner ⌀32mm; 100g
+- The top of the cable sits at 1.2mm; cable ⌀3mm
+
 You can create your own customized versions using
 the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
 in the **[Parametric Model Maker][lampbase-model-maker]**
