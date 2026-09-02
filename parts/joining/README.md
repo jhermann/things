@@ -6,6 +6,8 @@ Reusable OpenSCAD geometries to join pieces together.
 
 ## Vertical Sturdy Plug
 
+[OpenSCAD source](vertical-sturdy-plug.scad) | [3MF download](vertical-sturdy-plug.3mf)
+
 The 'sturdy' in the plug comes from several micro-features:
 
 - the plug is rooted in the main object's infill,
@@ -25,6 +27,8 @@ and the outer hull of the plug is slightly slanted to increase friction the deep
 The design principles were mostly lifted from [this YouTube video](https://www.youtube.com/watch?v=vsHpiHhB3RU&t=1499s).
 
 ## Square Dowel
+
+[OpenSCAD source](square-dowel.scad) | [3MF download](square-dowel.3mf)
 
 This mechanism uses a separately printed dowel — a flat, chamfered square block.
 It features two small bumps for a better friction fit in the joined parts.
