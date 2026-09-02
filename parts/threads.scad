@@ -295,72 +295,105 @@ module threaded_container() {
 
     difference() {
 
-        union() {
+        // Clip flush with the rim; the thread's top cap and the
+        // neck's edge_pad both otherwise poke out past body_height.
+        intersection() {
 
-            // ------------------------------------------------
-            // Main body
-            // ------------------------------------------------
-            //
-            // Full 20 mm radius up to the start of the neck.
-            //
+            cylinder(r = outer_radius + edge_pad, h = body_height);
+            chamfer_cut(outer_radius, body_height, 42);
 
-            cylinder(
-                r = outer_radius,
-                h = thread_start
-            );
+            union() {
 
+                // ------------------------------------------------
+                // Main body
+                // ------------------------------------------------
+                //
+                // Full 20 mm radius up to the start of the neck.
+                //
 
-            // ------------------------------------------------
-            // RECESSED THREADED NECK
-            // ------------------------------------------------
-            //
-            // IMPORTANT:
-            // The neck starts BELOW the thread base.
-            //
-            // This gives the thread real supporting material.
-            //
-
-            translate([
-                0,
-                0,
-                thread_start - thread_overlap
-            ])
                 cylinder(
-                    r = neck_radius,
-                    h = thread_length + thread_overlap + edge_pad
+                    r = outer_radius,
+                    h = thread_start
                 );
 
 
-            // ------------------------------------------------
-            // EXTERNAL THREAD
-            // ------------------------------------------------
-            //
-            // Thread base penetrates neck by thread_overlap.
-            //
-            // This guarantees the thread is fused to the body.
-            //
+                // ------------------------------------------------
+                // RECESSED THREADED NECK
+                // ------------------------------------------------
+                //
+                // IMPORTANT:
+                // The neck starts BELOW the thread base.
+                //
+                // This gives the thread real supporting material.
+                //
 
-            translate([
-                0,
-                0,
-                thread_start
-            ])
-                external_thread(
-                    radius =
-                        neck_radius - thread_overlap,
+                translate([
+                    0,
+                    0,
+                    thread_start - thread_overlap
+                ])
+                    cylinder(
+                        r = neck_radius,
+                        h = thread_length + thread_overlap + edge_pad
+                    );
 
-                    height =
-                        thread_length,
 
-                    pitch =
-                        pitch,
+                // ------------------------------------------------
+                // THREAD SUPPORT RAMP
+                // ------------------------------------------------
+                //
+                // A solid cone spanning from the tube's OUTER wall
+                // up to the thread's own inner radius, seated just
+                // under the rim of the lower body section. Its top
+                // is pushed edge_pad past that rim, into the neck's
+                // own solid, so it truly overlaps instead of merely
+                // touching the body's top face at a coincident plane
+                // (which rendered as a dark non-manifold seam).
+                translate([0, 0, thread_start - chamfer])
+                    cylinder(
+                        r1 = outer_radius,
+                        r2 = neck_radius - thread_overlap,
+                        h = chamfer + edge_pad
+                    );
 
-                    thread_height =
-                        thread_height + thread_overlap,
 
-                    thread_z =
-                        thread_z
-                );
+                // ------------------------------------------------
+                // EXTERNAL THREAD
+                // ------------------------------------------------
+                //
+                // Thread base penetrates neck by thread_overlap,
+                // radially AND axially: the helix is started
+                // thread_overlap below thread_start, embedded inside
+                // already-solid body/neck material, instead of
+                // merely touching it at a coincident z-plane. A
+                // helix's first turn begins as a near-zero-width
+                // sliver (see thread_slice/hull), so without real
+                // axial overlap there is nothing but a razor-thin,
+                // non-manifold seam holding the thread's base up.
+                //
+
+                translate([
+                    0,
+                    0,
+                    thread_start - thread_overlap
+                ])
+                    external_thread(
+                        radius =
+                            neck_radius - thread_overlap,
+
+                        height =
+                            thread_length + thread_overlap,
+
+                        pitch =
+                            pitch,
+
+                        thread_height =
+                            thread_height + thread_overlap,
+
+                        thread_z =
+                            thread_z
+                    );
+            }
         }
 
 
@@ -407,9 +440,6 @@ module threaded_container() {
         // Top rim of the outer hull, just below the thread start,
         // where the outer wall meets the shoulder down to the neck.
         chamfer_cut(outer_radius, thread_start, chamfer, flip = true);
-
-        // Step up to the recessed threaded neck.
-        chamfer_cut(neck_radius, thread_start, chamfer);
     }
 }
 
@@ -474,11 +504,15 @@ module threaded_lid() {
         //
         // It is enlarged slightly for print clearance.
         //
+        // Anchored to the opening (top) rim, not the closed
+        // bottom, so it reaches flush with the rim just like the
+        // container's thread reaches flush with its neck's rim.
+        //
 
         translate([
             0,
             0,
-            wall - pitch * 0.20
+            lid_height - thread_length - pitch * 0.20
         ])
             internal_thread(
                 radius =
