@@ -15,6 +15,13 @@ Models for 3D printing, mostly OpenSCAD.
 
 See the [complete model index](models/README.md) for the collection overview.
 
+
+### Topics
+
+- [BOSL2 examples](bosl2/README.md) - OpenSCAD examples using the BOSL2 library.
+- [Joining parts](parts/joining/README.md) - Reusable geometries for joining printed pieces, including square dowels and sturdy plugs.
+- [Textures](parts/textures/README.md) - Reusable surface texture patterns and examples.
+
 ### Parts
 
 - [Disks and washers](parts/disks-and-washers.scad) - Approximates a solid of revolution as stacked disks/washers using the disk/washer method.
@@ -22,8 +29,6 @@ See the [complete model index](models/README.md) for the collection overview.
 - [Shells](parts/shells.scad) - Approximates a solid of revolution as stacked cylindrical shells using the shell method.
 - [Threads](parts/threads.scad) - A flush threaded container and lid with a recessed, overlapped trapezoidal thread profile.
 - [Torus](parts/torus.scad) - A reusable torus module based on rotational extrusion, with configurable radii and arc angle.
-- [Joining parts](parts/joining/README.md) - Reusable geometries for joining printed pieces, including square dowels and sturdy plugs.
-- [Textures](parts/textures/README.md) - Reusable surface texture patterns and examples.
 
 
 ## Articles / Blogs / Tips
