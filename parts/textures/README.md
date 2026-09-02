@@ -13,3 +13,4 @@ Reusable OpenSCAD texture patterns and sample plates or containers that demonstr
 - [Ribbing](ribbing.scad) - A repeating ribbed surface pattern.
 - [Stippling](stippling.scad) - A surface pattern made from small raised points.
 - [Waves](waves.scad) - A cylindrical grip with gently curving vertical ribs.
+  <br />![Printed](./assets/waves-printed.jpg)
