@@ -32,7 +32,6 @@ module support_fin(size, thickness) {
 
             // The actual triangular gusset
             color("red")
-            //back( / 2) zrot(45)
             linear_extrude(height = thickness, center = true)
                 offset(r = thickness / 3) offset(delta = -thickness / 3)
                 polygon(points = [
@@ -52,9 +51,7 @@ module support_fin(size, thickness) {
 
 
 color("grey")
-//move_to([0, 0, 0], anchor=BOT)
 translate([0, cuboid_size / 2, (cuboid_size - fin_thickness) / sqrt(2)])
-    //offset(r = fin_thickness) offset(delta = -fin_thickness)
     yrot(45)
         cuboid([cuboid_size, cuboid_size, cuboid_size], chamfer = fin_thickness);
 back(fin_thickness / 2) right(fin_gap / 3)
