@@ -8,8 +8,8 @@ corner_radius = 8; // [0:0.5:30]
 edge_chamfer = .6; // [0:0.1:5]
 
 /* [Hole Grid] */
-columns = 5; // [1:1:20]
-rows = 6; // [1:1:20]
+columns = 7; // [1:1:20]
+rows = 4; // [1:1:20]
 hole_diameter = 8; // [1:0.5:30]
 hole_spacing = 14; // [1:0.5:50]
 
@@ -88,7 +88,7 @@ module hole_grid() {
 }
 
 module perforated_plate() {
-    back(corner_radius) right(corner_radius)
+    left(hole_spacing * (columns - 1) / 2) fwd(hole_spacing * (rows - 1) / 2)
 	difference() {
         // chamfered top/bottom edges with rounded vertical edges
         minkowski() {
