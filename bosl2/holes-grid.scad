@@ -69,31 +69,26 @@ module chamfered_cube(width, depth, height, chamfer) {
 }
 
 module hole_grid() {
-	for (column = [0 : columns - 1])
-		for (row = [0 : rows - 1])
-			translate([
-				column * hole_spacing,
-				row * hole_spacing,
-				0
-			]) {
-					cyl(d=hole_diameter, h=plate_thickness + 2 * edge_gap, anchor=BOTTOM);
-                    cyl(
-                        r1=hole_diameter / 2 + hole_bevel,
-                        r2=hole_diameter / 2,
-                        h=hole_bevel,
-                        anchor=BOTTOM
-                    );
-					translate([0, 0, plate_thickness + 2 * edge_gap - hole_bevel])
-						cyl(
-							r1=hole_diameter / 2,
-							r2=hole_diameter / 2 + hole_bevel,
-							h=hole_bevel,
-							anchor=BOTTOM
-						);
-			}
+    grid_copies(spacing=[hole_spacing, hole_spacing], n=[columns, rows]) {
+        cyl(d=hole_diameter, h=plate_thickness + 2 * edge_gap, anchor=BOTTOM);
+        cyl(
+            r1=hole_diameter / 2 + hole_bevel,
+            r2=hole_diameter / 2,
+            h=hole_bevel,
+            anchor=BOTTOM
+        );
+        translate([0, 0, plate_thickness + 2 * edge_gap - hole_bevel])
+            cyl(
+                r1=hole_diameter / 2,
+                r2=hole_diameter / 2 + hole_bevel,
+                h=hole_bevel,
+                anchor=BOTTOM
+            );
+    }
 }
 
 module perforated_plate() {
+    back(corner_radius) right(corner_radius)
 	difference() {
         // chamfered top/bottom edges with rounded vertical edges
         minkowski() {
@@ -101,7 +96,8 @@ module perforated_plate() {
             cylinder(r=corner_radius, h=1); // The "rounding" tool
         }
 
-        down(edge_gap) hole_grid();
+        translate([grid_width / 2, grid_length / 2, -edge_gap])
+            hole_grid();
 	}
 }
 
