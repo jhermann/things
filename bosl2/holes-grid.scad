@@ -69,22 +69,8 @@ module chamfered_cube(width, depth, height, chamfer) {
 }
 
 module hole_grid() {
-    grid_copies(spacing=[hole_spacing, hole_spacing], n=[columns, rows]) {
-        cyl(d=hole_diameter, h=plate_thickness + 2 * edge_gap, anchor=BOTTOM);
-        cyl(
-            r1=hole_diameter / 2 + hole_bevel,
-            r2=hole_diameter / 2,
-            h=hole_bevel,
-            anchor=BOTTOM
-        );
-        translate([0, 0, plate_thickness + 2 * edge_gap - hole_bevel])
-            cyl(
-                r1=hole_diameter / 2,
-                r2=hole_diameter / 2 + hole_bevel,
-                h=hole_bevel,
-                anchor=BOTTOM
-            );
-    }
+    grid_copies(spacing=[hole_spacing, hole_spacing], n=[columns, rows])
+        cyl(d=hole_diameter, h=plate_thickness + 2 * edge_gap, chamfer=-hole_bevel, anchor=BOTTOM);
 }
 
 module perforated_plate() {
@@ -101,5 +87,5 @@ module perforated_plate() {
 	}
 }
 
-perforated_plate();
-//hole_grid();
+if (1) perforated_plate();
+else hole_grid();
