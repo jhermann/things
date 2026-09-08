@@ -27,6 +27,7 @@ See the [complete model index](models/README.md) for the collection overview.
 - [Disks and washers](parts/disks-and-washers.scad) - Approximates a solid of revolution as stacked disks/washers using the disk/washer method.
 - [Rounded cubes](parts/rounded-cubes.scad) - OpenSCAD examples and modules for cubes with rounded and chamfered edges.
 - [Shells](parts/shells.scad) - Approximates a solid of revolution as stacked cylindrical shells using the shell method.
+- [Support fin](parts/support-fin.scad) - A parametric triangular designed supports holding up objects printed on an edge or corner.
 - [Threads](parts/threads.scad) - A flush threaded container and lid with a recessed, overlapped trapezoidal thread profile.
 - [Torus](parts/torus.scad) - A reusable torus module based on rotational extrusion, with configurable radii and arc angle.
 
@@ -39,6 +40,7 @@ See the [complete model index](models/README.md) for the collection overview.
 
 ## Tools & Apps
 
+- [alos-source/openSCADSkill](https://github.com/alos-source/openSCADSkill/tree/master) - An agent for creating 3D models using OpenSCAD
 - [etjones/scad2step](https://github.com/etjones/scad2step) - Convert an OpenSCAD file to a STEP file from the command line
 - [alpaco.it](https://alpaco.it/) - Parametric 3D print generators, a free web app that turns dimensions you type into printable 3D models (STL/3MF download)
 - [stl-er.com](https://www.stl-er.com/) - From Concept to CAD in Seconds (AI 3D Model Generator; commercial; free tier only allows downloads of exiting models, 5 per month)

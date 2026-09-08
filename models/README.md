@@ -8,3 +8,4 @@ A collection of parametric 3D-printable models and accessories.
 - [AC Intake Cover Side Extension](./ac-intake-cover-side-extension/README.md) - A side extension box for adapting an AC intake cover to a wider device.
 - [Eye Drops](./eye-drops/README.md) - A simple holder for eye-drop bottles.
 - [Lamp Base for a LED Puck](./lamp-led-puck/README.md) - A support-free parametric lamp base for an LED puck light.
+- [Sample OpenSCAD model](./sample.scad) - A small example model for experimenting with OpenSCAD.
