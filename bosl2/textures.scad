@@ -28,3 +28,5 @@ linear_sweep(
     texture=custom_pattern,
     tex_size=[4, 4] // Scale of the grid in mm
 );
+
+// more... https://github.com/BelfrySCAD/BOSL2/wiki/skin.scad
