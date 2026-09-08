@@ -8,9 +8,13 @@ LED Puck:
 - Outer dimensions 82×21mm, inner ⌀32mm; 100g
 - The top of the cable sits at 1.2mm; cable ⌀3mm
 
-You can create your own customized versions using
-the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
+You can create your own customized versions using the [SCAD](https://www.youtube.com/watch?v=R6Xqeg6Q93k) files
 in the **[Parametric Model Maker][lampbase-model-maker]**
 or your local [OpenSCAD](https://openscad.org/downloads.html) installation (and you want the *Nightly Builds* version). Note that [lampbase.scad](./lampbase.scad) is a script enabled for MakerWorld's multi-plate feature, and your download will always be a 3MF with all objects on their own plate.
+
+## OpenSCAD files
+
+- [lampbase.scad](./lampbase.scad) - Main lamp base and shade assembly, including the MakerWorld multi-plate definitions.
+- [lampshade.scad](./lampshade.scad) - Standalone lamp shade variant for adjusting shade dimensions and appearance.
 
 [lampbase-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=lampbase.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Flampbase.scad

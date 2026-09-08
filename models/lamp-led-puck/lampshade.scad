@@ -11,9 +11,9 @@ led_puck_height = 21; // [10:5:40]
 // Lamp base height
 base_height = 40; // [1:0.5:10]
 // Lamp shade height
-shade_height = 140; // [30:5:200]
+shade_height = 120; // [30:5:200]
 // Wall thickness of the lamp base and shade
-wall_thickness = 2.5; // [0.5:0.25:3]
+wall_thickness = 1.25; // [0.5:0.25:3]
 // Corner radius for the lamp base and shade
 lamp_corner_radius = 15; // [0:1:25]
 // Chamfer applied to the lamp base's top and bottom edges
@@ -42,7 +42,7 @@ led_insert_height = led_puck_height + wall_thickness + 2 * tolerance;
 lug_radius = led_insert_diameter / 2;
 cable_sweep_angle = (180 / PI * 1.25 * cable_diameter / lug_radius);
 
-shade_size = 1.5 * base_size;
+shade_size = 1 * base_size;
 shade_wall_thickness = wall_thickness;
 
 echo("OUTER base diameter:", base_size);
@@ -158,8 +158,8 @@ module shade_cap(
 }
 
 module shade_struts(width = shade_size) {
-    strut_size = width / 2;
-    strut_shift = shade_size * sqrt(2) - 2 * strut_size + 4 * lamp_corner_radius + epsilon;
+    strut_size = .9 * width;
+    strut_shift = shade_size * sqrt(2) - width + 4 * lamp_corner_radius + epsilon;
 
     up(shade_height)
     for (angle = [45 : 90: 360])
