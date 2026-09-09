@@ -12,7 +12,7 @@ connector_height = 11; // [10:1:40]
 // Wall thickness of the lamp base and shade
 wall_thickness = 1.25; // [0.5:0.25:3]
 // Chamfer applied to top and bottom edges
-wall_chamfer = .5; // [0.5:0.25:2]
+wall_chamfer = .25; // [0.5:0.25:2]
 
 /* [Hidden] */
 //$preview = true;
@@ -25,6 +25,7 @@ tolerance = 0.2;
 // Extra gap added to carve-out shapes
 epsilon = 0.05;
 
+layer_height = .2;
 total_height = 2 * connector_height + wall_thickness;
 
 
@@ -79,8 +80,8 @@ module lamp_connector() {
         cyl(h = total_height + 2 * epsilon,
             r = connector_outer_diameter / 2 - wall_thickness,
             anchor=BOTTOM, chamfer = -wall_chamfer);
-        down(epsilon) zrot(-10) tongue_slots();
-        down(epsilon) zrot(10) tongue_slots();
+        up(2 * layer_height) zrot(-10) tongue_slots();
+        up(2 * layer_height) zrot(10) tongue_slots();
         up(total_height + epsilon) zrot(35) xrot(180) tongue_slots();
         up(total_height + epsilon) zrot(55) xrot(180) tongue_slots();
     }
