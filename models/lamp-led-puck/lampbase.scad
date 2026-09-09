@@ -40,6 +40,8 @@ led_insert_height = led_puck_height + wall_thickness + 2 * tolerance;
 lug_radius = led_insert_diameter / 2;
 cable_sweep_angle = (180 / PI * 1.25 * cable_diameter / lug_radius);
 
+tex = texture("rough");
+
 echo("OUTER base diameter:", base_size);
 echo("OUTER holder diameter:", led_insert_diameter);
 
@@ -169,8 +171,17 @@ module lamp_base() {
 
     difference() {
         // Base main body
-        cyl(d=base_size, h=base_height, chamfer=lamp_chamfer,
-            anchor=BOTTOM);
+        union() {
+            cyl(d=base_size, h=base_height, chamfer=lamp_chamfer,
+                anchor=BOTTOM);
+            up(lamp_chamfer)
+            cyl(d=base_size, h=base_height - 2 * lamp_chamfer,
+                texture = tex,
+                tex_inset = false, // false makes the texture protrude outward
+                tex_depth = 0.15,   // Depth/height of the brush strokes (keep low for 3D printing)
+                tex_size = [5, 55], style="min_edge",
+                anchor=BOTTOM);
+        }
 
         // Base cavity: Chamfered lower tube
         down(lug_size + edge_gap)
@@ -234,10 +245,8 @@ module lamp_base() {
 // Main Assembly & Plates
 // ====================================================================
 if ($preview || local) { // main assembly in Parametric Model Maker
-    right(.7 * base_size)
-        led_holder();
-    left(.7 * base_size)
-        lamp_base();
+    if (0) right(.7 * base_size) led_holder();
+    left(.7 * base_size) zrot(180) lamp_base();
 }
 
 module mw_plate_1() {
