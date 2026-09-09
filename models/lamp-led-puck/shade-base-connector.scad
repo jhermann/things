@@ -1,8 +1,7 @@
-// Lamp shade and base connector
+// Lamp shade and base friction-fit connector
 //
-// H: 2*11.2mm + ring; D: 98mm; friction ring: 11.2 - 2 * 4.7 = 1.8mm
+// H: 2*11.2mm + ring; D: 98mm (97mm); friction ring: 11.2 - 2 * 4.7 = 1.8mm
 // OUTER base diameter: 102.8 - 2 * 1.25 = 100.3 - 2 * .2 = 99.9
-// OUTER holder diameter: 87
 include <BOSL2/std.scad>
 
 /* [Connector Dimensions] */
@@ -50,7 +49,8 @@ module tongue_slots() {
                     polygon([
                         [-side/2, 0],
                         [side/2, 0],
-                        [0, connector_height - wall_thickness]
+                        [tolerance, connector_height - wall_thickness],
+                        [-tolerance, connector_height - wall_thickness]
                     ]);
     }
 }
