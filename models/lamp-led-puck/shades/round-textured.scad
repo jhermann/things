@@ -21,7 +21,8 @@ connector_height = 11; // [10:1:40]
 
 /* [Hidden] */
 //$preview = true;
-local = 1;
+local = 0;
+texture_preview = 0;
 $fa = $preview ? 16 : 1;
 $fs = $preview ? 2 : 0.1;
 
@@ -46,9 +47,6 @@ tex_config = [
     ["bricks_vnf", .15, [15, 15], .25], // 10
 ];
 
-tex_param = tex_config[tex_id];
-tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
-
 
 // ====================================================================
 // Parts
@@ -66,7 +64,8 @@ module torus(radius, rx, ry, arc=360) {
 // Objects
 // ====================================================================
 
-module lamp_shade() {
+module lamp_shade(tex_param = tex_config[tex_id]) {
+    tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
     connector_ring_radius = connector_outer_diameter / 2 + 2 * tolerance;
     strut_size = (outer_diameter - connector_outer_diameter) / 2;
 
@@ -125,8 +124,15 @@ module lamp_shade() {
 // Main Assembly & Plates
 // ====================================================================
 if ($preview || local) { // main assembly in Parametric Model Maker
-    up(total_height) xrot(180)
-    lamp_shade();
+    if (texture_preview) {
+        rows = 3;
+        grid_copies(spacing=[1.25 * outer_diameter, 1.75 * outer_diameter], n=[ceil(len(tex_config) / rows), rows])
+            if ($idx < len(tex_config))
+                lamp_shade(tex_param = tex_config[$idx]);
+    } else {
+        up(total_height) xrot(180)
+        lamp_shade();
+    }
 }
 
 module mw_plate_1() {
