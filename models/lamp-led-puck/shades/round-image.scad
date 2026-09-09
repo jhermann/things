@@ -31,9 +31,8 @@ tolerance = 0.2;
 epsilon = 0.05;
 layer_height = 0.2;
 
-svg_file = "../assets/owl-icon.svg";
-image_scale = 2.75;
-image_repeat = 3;
+//svg_file = "../assets/owl-icon.svg"; image_scale = 2.75; image_repeat = 3;
+svg_file = "../assets/Ice-Hockey.svg"; image_scale = .9; image_repeat = 2;
 
 
 // ====================================================================
