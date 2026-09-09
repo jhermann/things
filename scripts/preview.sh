@@ -27,6 +27,7 @@ scad_dirs=(
     parts
     parts/joining
     parts/textures
+    models/lamp-led-puck
 )
 
 set -euo pipefail
@@ -47,7 +48,10 @@ for scad_dir in "${scad_dirs[@]}"; do
 
     preview_path="$scad_dir/$preview_filename"
     if [ -f "$preview_path" ] && \
-        [ -z "$(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -newer "$preview_path" -print -quit)" ]; then
+        [ -z "$(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -newer "$preview_path" -print0 | while IFS= read -r -d '' scad_file; do
+            relative_file=${scad_file#"$search_dir/"}
+            git -C "$search_dir" log -1 --format='%H' -- "$relative_file" | grep -q . && printf 1 && break
+        done)" ]; then
         echo "⏩ Skipping $scad_dir: $preview_filename is up to date"
         ((scad_dir_count += 1))
         continue
@@ -55,14 +59,18 @@ for scad_dir in "${scad_dirs[@]}"; do
 
     for scad_file in "$scad_dir"/*.scad; do
         [ -e "$scad_file" ] || continue
+        relative_file=${scad_file#"$search_dir/"}
+        if ! git -C "$search_dir" log -1 --format='%H' -- "$relative_file" | grep -q .; then
+            echo "⏩ Skipping untracked file: $relative_file"
+            continue
+        fi
         filename=$(basename "$scad_file" .scad)
         label=$(printf '%s' "$filename" | sed -E 's/([a-z])([A-Z])/\1 \2/g; s/-/ /g; s/(^| )([^ ])([a-z]*)/\1\U\2\L\3/g')
         ((scad_count += 1))
         output_file="$output_dir/$scad_dir_count-$scad_count.png"
-        relative_file=${scad_file#"$search_dir/"}
         echo "🧊 Rendering $relative_file..."
         "$binary" --colorscheme "$colorscheme" --viewall --backend=manifold \
-            -D '$preview='$preview --render \
+            -D '$preview='$preview -D 'local=true' --render \
             --imgsize="$image_width,$image_height" -o "$output_file" "$scad_file"
         montage_args+=(-label "$label" "$output_file")
     done < <(find "$scad_dir" -maxdepth 1 -type f -name '*.scad' -print0 | sort -z)
