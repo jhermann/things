@@ -15,6 +15,7 @@ Using OpenSCAD together with the BOSL2 library.
 - [basic-bosl2.scad](./basic-bosl2.scad) - Minimal BOSL2 example that attaches a cylinder to the top face of a cuboid using `attach()`. [🧊✏️][mw-basic-bosl2]
 - [attach.scad](./attach.scad) - Demonstrates BOSL2 anchors and `attach()` by cutting an attached countersunk hole into a box.
 - [holes-grid.scad](./holes-grid.scad) - Perforated plate with a configurable rounded outline, chamfered edges, and repeated beveled holes. [🧊✏️][mw-holes-grid]
+- [texture-brushed-metal.scad](./texture-brushed-metal.scad) - Demonstrates a brushed-metal texture applied to OpenSCAD geometry. <br /> ![printed](./texture-brushed-metal.jpg) <br /> *Red Copper PLA • rows 30 • cols 20 • depth 0.25*
 - [textures.scad](./textures.scad) - Demonstrates built-in and custom BOSL2 textures on cylindrical and swept geometry.
 - [threads.scad](./threads.scad) - Flush threaded container and lid with a shared trapezoidal thread profile and ribbed grip. [🧊✏️][mw-threads]
 
