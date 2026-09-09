@@ -30,7 +30,25 @@ tolerance = 0.2;
 // Extra gap added to carve-out shapes
 epsilon = 0.05;
 
-tex = texture("tri_grid", border=.08);
+// name, border, size, depth
+tex_id = 0;
+tex_config = [
+    ["hex_grid", .1, [15, 20], .3], // 0
+    ["tri_grid", .08, [15, 25], .4], // 1
+    ["trunc_pyramids_vnf", .2, [15, 15], .4], // 2
+    ["trunc_diamonds", .16, [15, 25], .4], // 3
+    ["hills", 0, [10, 10], .45], // 4
+    ["rough", 0, [30, 70], .25], // 5
+    ["dots", .25, [7, 7], .3], // 6
+    ["cubes", 0, [10, 10], .45], // 7
+    ["cones", .15, [7, 7], .4], // 8
+    ["checkers", .1, [15, 15], .25], // 9
+    ["bricks_vnf", .15, [15, 15], .25], // 10
+];
+
+tex_param = tex_config[tex_id];
+tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
+
 
 // ====================================================================
 // Parts
@@ -90,8 +108,10 @@ module lamp_shade() {
         color("blue", alpha=1)
         cyl(h = total_height - 4 * wall_thickness + 2 * wall_chamfer,
             r = outer_diameter / 2,
-            texture = tex, tex_size = [15, 25],
-            tex_depth = .4, tex_inset = true,
+            texture = tex,
+            tex_size = tex_param[2],
+            tex_depth = tex_param[3],
+            tex_inset = true,
             anchor = BOTTOM);
         down(epsilon)
         cyl(h = total_height + 2 * epsilon,
@@ -105,7 +125,7 @@ module lamp_shade() {
 // Main Assembly & Plates
 // ====================================================================
 if ($preview || local) { // main assembly in Parametric Model Maker
-    //up(total_height) xrot(180)
+    up(total_height) xrot(180)
     lamp_shade();
 }
 
