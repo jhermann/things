@@ -2,7 +2,7 @@
 include <BOSL2/std.scad>
 
 /* [Plate] */
-plate_width = 25; // [20:1:200]
+plate_width = 40; // [20:1:200]
 plate_depth = 10; // [20:1:200]
 plate_height = 1; // [2:0.5:30]
 corner_radius = .6; // [0:0.5:20]
@@ -12,7 +12,7 @@ edge_chamfer = .3; // [0:0.1:5]
 recess_depth = .6; // [0:0.1:5]
 recess_border = .15; // [0:0.5:20]
 label_text = "SAMPLE";
-label_size = 3;
+label_size = 6;
 
 /* [Hidden] */
 $fa = $preview ? 16 : 1.5;
@@ -37,7 +37,7 @@ module plate_body() {
 
 module plate_text(depth = recess_depth, delta = 0) {
     up(depth)
-    back(label_size / 2) right(.15 * plate_width)
+    back(label_size / 2) right(.05 * plate_width)
     xrot(180)
         linear_extrude(height = depth + epsilon) {
             offset(r = delta) {
@@ -56,6 +56,8 @@ module name_plate() {
 		plate_body();
 		plate_text(recess_border, recess_border);
 	}
+    color("black")
+    plate_text();
 }
 
 name_plate();
