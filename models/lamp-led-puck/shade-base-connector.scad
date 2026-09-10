@@ -1,4 +1,5 @@
 // Lamp shade and base friction-fit connector
+// Print in PETG due to mechanical stress for better durability.
 //
 // H: 2*11.2mm + ring; D: 98mm (97mm); friction ring: 11.2 - 2 * 4.7 = 1.8mm
 // OUTER base diameter: 102.8 - 2 * 1.25 = 100.3 - 2 * .2 = 99.9
@@ -16,7 +17,7 @@ wall_chamfer = .25; // [0.5:0.25:2]
 
 /* [Hidden] */
 //$preview = true;
-local = 1;
+local = 0;
 $fa = $preview ? 16 : 1;
 $fs = $preview ? 2 : 0.1;
 
@@ -33,7 +34,7 @@ total_height = 2 * connector_height + wall_thickness;
 // Parts
 // ====================================================================
 
-// rotational extrusion of an ellipsoid with its center at `radius`
+// Rotational extrusion of an ellipsoid with its center at `radius`
 module torus(radius, rx, ry, arc=360) {
     rotate_extrude(angle=arc, convexity=2)
         translate([radius, 0, 0])
@@ -41,6 +42,7 @@ module torus(radius, rx, ry, arc=360) {
                 circle(r=1, $fn=$fn);
 }
 
+// Tongue slots for better friction fit
 module tongue_slots() {
     side = 2 * (connector_height - wall_thickness) / sqrt(3);
     for(angle = [0 : 90 : 360]) {
@@ -56,6 +58,7 @@ module tongue_slots() {
     }
 }
 
+// Elliptical bumps to increase compliance, placed on the outside of the tongues
 module friction_dots() {
     dot_scale = .2;
     for(angle = [0 : 90 : 360]) {
@@ -70,21 +73,28 @@ module friction_dots() {
 // ====================================================================
 
 module lamp_connector() {
+    // Torus protruding partially from the outside wall, between the lower and upper part
     color("red")
     up(connector_height + wall_thickness / 2)
     torus(radius=(connector_outer_diameter - wall_thickness) / 2, rx=wall_thickness, ry=wall_thickness);
 
     difference() {
+        // The main tube of the connector, with chamfered inner and outer edges
         cyl(h = total_height, r = connector_outer_diameter / 2, anchor=BOTTOM, chamfer = wall_chamfer);
         down(epsilon)
         cyl(h = total_height + 2 * epsilon,
             r = connector_outer_diameter / 2 - wall_thickness,
             anchor=BOTTOM, chamfer = -wall_chamfer);
+
+        // Triangular cuts at +/- 10 degrees, to form the friction fit tongues;
+        // the lower ones are raised slightly to ensure a uniform 1st layer for good bed adhesion
         up(2 * layer_height) zrot(-10) tongue_slots();
         up(2 * layer_height) zrot(10) tongue_slots();
         up(total_height + epsilon) zrot(35) xrot(180) tongue_slots();
         up(total_height + epsilon) zrot(55) xrot(180) tongue_slots();
     }
+
+    // Lower & upper friction dots
     friction_dots();
     up(total_height + epsilon) zrot(45) xrot(180) friction_dots();
 }
@@ -93,10 +103,11 @@ module lamp_connector() {
 // ====================================================================
 // Main Assembly & Plates
 // ====================================================================
-if ($preview || local) { // main assembly in Parametric Model Maker
+if ($preview || local) { // main assembly in Parametric Model Maker & local preview
     lamp_connector();
 }
 
+// Plate 1 on MakerWorld (via magic naming)
 module mw_plate_1() {
     lamp_connector();
 }
