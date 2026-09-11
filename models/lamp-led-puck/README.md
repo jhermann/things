@@ -19,7 +19,7 @@ Note that [lampbase.scad](./lampbase.scad) is a script enabled for MakerWorld's 
 ## OpenSCAD files
 
 - [lampbase.scad](./lampbase.scad) - Main lamp base and shade assembly, including the MakerWorld multi-plate definitions. [🧊✏️][lampbase-model-maker] <br /><br /> ![holder printed](./assets/holder.jpg) <br /><br /> ![base printed](./assets/base.jpg)
-- [shades/round-textured.scad](./shades/round-textured.scad) - Cylindrical lamp shade with selectable texture choices. <br /> ![textures preview](assets/shade-textures.png)
+- [shades/round-textured.scad](./shades/round-textured.scad) - Cylindrical lamp shade with selectable texture choices. [🧊✏️][round-textured-model-maker] <br /> ![textures preview](assets/shade-textures.png)
 
   You can select these textures in the customizer by their index:
 	- 0: hex grid
@@ -36,5 +36,5 @@ Note that [lampbase.scad](./lampbase.scad) is a script enabled for MakerWorld's 
 - [shade-base-connector.scad](./shade-base-connector.scad) - Friction-fit connector joining the lamp base and shade. [🧊✏️][shade-base-connector-model-maker]
 
 [lampbase-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=lampbase.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Flampbase.scad
-[lampshade-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=lampshade.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Flampshade.scad
+[round-textured-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=round-textured.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Fshades%2Fround-textured.scad
 [shade-base-connector-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=shade-base-connector.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Fshade-base-connector.scad
