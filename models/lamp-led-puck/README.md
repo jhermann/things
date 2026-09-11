@@ -19,7 +19,20 @@ Note that [lampbase.scad](./lampbase.scad) is a script enabled for MakerWorld's 
 ## OpenSCAD files
 
 - [lampbase.scad](./lampbase.scad) - Main lamp base and shade assembly, including the MakerWorld multi-plate definitions. [🧊✏️][lampbase-model-maker] <br /><br /> ![holder printed](./assets/holder.jpg) <br /><br /> ![base printed](./assets/base.jpg)
-- [shades/round-textured.scad](./shades/round-textured.scad) - Cylindrical lamp shade with selectable tetxure choices. <br /> ![textures preview](assets/shade-textures.png)
+- [shades/round-textured.scad](./shades/round-textured.scad) - Cylindrical lamp shade with selectable texture choices. <br /> ![textures preview](assets/shade-textures.png)
+
+  You can select these textures in the customizer by their index:
+	- 0: hex grid
+	- 1: tri grid
+	- 2: truncated pyramids
+	- 3: truncated diamonds
+	- 4: hills
+	- 5: rough
+	- 6: dots
+	- 7: cubes
+	- 8: cones
+	- 9: checkers
+	- 10: bricks
 - [shade-base-connector.scad](./shade-base-connector.scad) - Friction-fit connector joining the lamp base and shade. [🧊✏️][shade-base-connector-model-maker]
 
 [lampbase-model-maker]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=lampbase.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fmodels%2Flamp-led-puck%2Flampbase.scad

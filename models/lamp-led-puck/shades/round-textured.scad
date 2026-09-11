@@ -1,23 +1,29 @@
-// Lamp shade: round with diamond pattern
-//
-// Connector H: 11.2mm
-include <BOSL2/std.scad>
+/*  Lamp shade: round with diamond pattern
+
+    TODO:
+    - Top cap with inset image, in white
+    - Top cap with same texture as base
+*/include <BOSL2/std.scad>
 
 /* [Lamp Shade Dimensions] */
-// Outer diameter
-outer_diameter = 130; // [100:1:150]
+// Outer diameter (common: 102, 130)
+outer_diameter = 102; // [100:1:150]
 // Height of the shade
 total_height = 160; // [10:1:40]
 // Wall thickness of the lamp shade
 wall_thickness = 1; // [0.5:0.25:3]
 // Chamfer applied to top and bottom edges
 wall_chamfer = .3; // [0.2:0.1:2]
+// Texture selection index (see description)
+texture_id = 0; // [0:1:10]
 
 /* [Connector Dimensions] */
 // Outer diameter of the connector
 connector_outer_diameter = 97; // [50:.5:150]
 // Height of the connector on each side
 connector_height = 11; // [10:1:40]
+// Print upright?
+upright = true;
 
 /* [Hidden] */
 //$preview = true;
@@ -32,7 +38,6 @@ tolerance = 0.2;
 epsilon = 0.05;
 
 // name, border, size, depth
-tex_id = 0;
 tex_config = [
     ["hex_grid", .1, [15, 20], .3], // 0
     ["tri_grid", .08, [15, 25], .4], // 1
@@ -70,7 +75,7 @@ module shade_top(tex, tex_param) {
         anchor=TOP, chamfer = wall_chamfer) {
 
         // Attach to the bottom face
-        attach(BOTTOM, BOTTOM, overlap=-epsilon)
+        attach(upright ? TOP : BOTTOM, BOTTOM, overlap=-epsilon)
         intersection() {
             // The pattern
             textured_tile(tex,
@@ -80,7 +85,7 @@ module shade_top(tex, tex_param) {
             );
 
             // Clip to the top face shape
-            cyl(h = 2 * wall_thickness, r = outer_diameter / 2 - wall_chamfer, anchor=TOP);
+            cyl(h = 2 * tex_param[3], r = outer_diameter / 2 - (upright ? 2 : 1) * wall_chamfer, chamfer = upright ? -wall_chamfer : wall_chamfer, anchor=TOP);
         }
     }
 }
@@ -94,7 +99,7 @@ module shade_bottom() {
         // Connector ring
         union() {
             if (1) color("red")
-            down(2 * wall_thickness)
+            down(upright ? connector_height / 2 - wall_thickness : 2 * wall_thickness)
             cyl(h = connector_height / 2,
                 r = connector_ring_radius + 2 * wall_thickness,
                 anchor=BOTTOM, chamfer = 2 * wall_chamfer);
@@ -135,7 +140,7 @@ module shade_bottom() {
 // Objects
 // ====================================================================
 
-module lamp_shade(tex_param = tex_config[tex_id]) {
+module lamp_shade(tex_param = tex_config[texture_id]) {
     tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
 
     shade_top(tex, tex_param);
@@ -172,6 +177,9 @@ if ($preview || local) { // main assembly in Parametric Model Maker
         grid_copies(spacing=[1.25 * outer_diameter, 1.75 * outer_diameter], n=[ceil(len(tex_config) / rows), rows])
             if ($idx < len(tex_config))
                 lamp_shade(tex_param = tex_config[$idx]);
+    } else if (upright) {
+        up(connector_height / 2 - wall_thickness)
+        lamp_shade();
     } else {
         up(total_height) xrot(180)
         lamp_shade();
