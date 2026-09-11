@@ -99,16 +99,23 @@ module shade_bottom() {
                 r = connector_ring_radius + 2 * wall_thickness,
                 anchor=BOTTOM, chamfer = 2 * wall_chamfer);
 
-            // Upside-down print strut
-            color("yellow")
-            up(wall_chamfer)
-            rotate_extrude(convexity=2)
-                left(outer_diameter / 2 - wall_thickness + epsilon)
-                polygon(points=[
-                    [0, 0],
-                    [strut_size, 0],
-                    [0, strut_size]
-                ]);
+            // Upside-down print strut, with inner walls
+            difference() {
+                color("yellow")
+                up(wall_chamfer)
+                rotate_extrude(convexity=2)
+                    left(outer_diameter / 2 - wall_thickness + epsilon)
+                    polygon(points=[
+                        [0, 0],
+                        [strut_size, 0],
+                        [0, strut_size]
+                   ]);
+
+                // Force inner wall creation
+                for (offset = [.15, .4, .65])
+                    torus(radius=outer_diameter / 2 - wall_thickness - offset * strut_size,
+                          rx=tolerance, ry=(1 - offset) * strut_size - tolerance);
+            }
 
             // Bottom face
             color("orange")
