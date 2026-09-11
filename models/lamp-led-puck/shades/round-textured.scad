@@ -16,14 +16,16 @@ wall_thickness = 1; // [0.5:0.25:3]
 wall_chamfer = .3; // [0.2:0.1:2]
 // Texture selection index (see description)
 texture_id = 0; // [0:1:10]
+// Print upright?
+upright = false;
+// Print without a cap?
+topless = true;
 
 /* [Connector Dimensions] */
 // Outer diameter of the connector
 connector_outer_diameter = 97; // [50:.5:150]
 // Height of the connector on each side
 connector_height = 11; // [10:1:40]
-// Print upright?
-upright = true;
 
 /* [Hidden] */
 //$preview = true;
@@ -36,6 +38,8 @@ $fs = $preview ? 2 : 0.1;
 tolerance = 0.2;
 // Extra gap added to carve-out shapes
 epsilon = 0.05;
+
+top_height = 1.25 * wall_thickness;
 
 // name, border, size, depth
 tex_config = [
@@ -67,25 +71,26 @@ module torus(radius, rx, ry, arc=360) {
 
 // the top plate (placed on the print bed)
 module shade_top(tex, tex_param) {
-    if (1) color("orange") up(total_height)
-    //diff()
-    // Top face
-    cyl(h = 2 * wall_thickness,
-        r = outer_diameter / 2,
-        anchor=TOP, chamfer = wall_chamfer) {
+    if (!topless) {
+        color("orange") up(total_height)
+        // Top face
+        cyl(h = top_height,
+            r = outer_diameter / 2,
+            anchor=TOP, chamfer = wall_chamfer) {
 
-        // Attach to the bottom face
-        attach(upright ? TOP : BOTTOM, BOTTOM, overlap=-epsilon)
-        intersection() {
-            // The pattern
-            textured_tile(tex,
-                size=[outer_diameter, outer_diameter],
-                tex_size = tex_param[2],
-                tex_depth = tex_param[3],
-            );
+            // Attach to the bottom face
+            attach(upright ? TOP : BOTTOM, BOTTOM, overlap=-epsilon)
+            intersection() {
+                // The pattern
+                textured_tile(tex,
+                    size=[outer_diameter, outer_diameter],
+                    tex_size = tex_param[2],
+                    tex_depth = tex_param[3],
+                );
 
-            // Clip to the top face shape
-            cyl(h = 2 * tex_param[3], r = outer_diameter / 2 - (upright ? 2 : 1) * wall_chamfer, chamfer = upright ? -wall_chamfer : wall_chamfer, anchor=TOP);
+                // Clip to the top face shape
+                cyl(h = 2 * tex_param[3], r = outer_diameter / 2 - (upright || topless ? 2 : 1) * wall_chamfer, chamfer = upright ? -wall_chamfer : wall_chamfer, anchor=TOP);
+            }
         }
     }
 }
@@ -177,15 +182,19 @@ if ($preview || local) { // main assembly in Parametric Model Maker
         grid_copies(spacing=[1.25 * outer_diameter, 1.75 * outer_diameter], n=[ceil(len(tex_config) / rows), rows])
             if ($idx < len(tex_config))
                 lamp_shade(tex_param = tex_config[$idx]);
-    } else if (upright) {
-        up(connector_height / 2 - wall_thickness)
-        lamp_shade();
     } else {
-        up(total_height) xrot(180)
-        lamp_shade();
+        mw_plate_1();
     }
 }
 
 module mw_plate_1() {
-    up(total_height) xrot(180) lamp_shade();
+    gap = topless ? top_height : 0;
+
+    if (upright) {
+        up(connector_height / 2 - wall_thickness)
+        lamp_shade();
+    } else {
+        up(total_height - gap) xrot(180)
+        lamp_shade();
+    }
 }
