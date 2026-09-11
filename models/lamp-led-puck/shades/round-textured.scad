@@ -9,13 +9,13 @@ outer_diameter = 130; // [100:1:150]
 // Height of the shade
 total_height = 160; // [10:1:40]
 // Wall thickness of the lamp shade
-wall_thickness = 1.25; // [0.5:0.25:3]
+wall_thickness = 1; // [0.5:0.25:3]
 // Chamfer applied to top and bottom edges
-wall_chamfer = .5; // [0.5:0.25:2]
+wall_chamfer = .3; // [0.2:0.1:2]
 
 /* [Connector Dimensions] */
 // Outer diameter of the connector
-connector_outer_diameter = 98; // [50:1:150]
+connector_outer_diameter = 97; // [50:.5:150]
 // Height of the connector on each side
 connector_height = 11; // [10:1:40]
 
@@ -66,15 +66,17 @@ module torus(radius, rx, ry, arc=360) {
 
 module lamp_shade(tex_param = tex_config[tex_id]) {
     tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
-    connector_ring_radius = connector_outer_diameter / 2 + 2 * tolerance;
+    connector_ring_radius = connector_outer_diameter / 2 + 1.9 * tolerance;
     strut_size = (outer_diameter - connector_outer_diameter) / 2;
 
+    // Top face
     if (1) color("orange") up(total_height)
     cyl(h = 2 * wall_thickness,
         r = outer_diameter / 2,
         anchor=TOP, chamfer = wall_chamfer);
 
     difference() {
+        // Connector ring
         union() {
             if (1) color("red")
             down(2 * wall_thickness)
@@ -82,6 +84,7 @@ module lamp_shade(tex_param = tex_config[tex_id]) {
                 r = connector_ring_radius + 2 * wall_thickness,
                 anchor=BOTTOM, chamfer = 2 * wall_chamfer);
 
+            // Upside-down print strut
             color("yellow")
             up(wall_chamfer)
             rotate_extrude(convexity=2)
@@ -92,18 +95,23 @@ module lamp_shade(tex_param = tex_config[tex_id]) {
                     [0, strut_size]
                 ]);
 
+            // Bottom face
             color("orange")
             cyl(h = 2 * wall_thickness,
                 r = outer_diameter / 2,
                 anchor=BOTTOM, chamfer = wall_chamfer);
         }
+
+        // Bottom hole
         cyl(h = 4 * connector_height,
             r = connector_ring_radius,
             anchor=CENTER,);
     }
 
+    // Main tube with texture
     if (1) up(2 * wall_thickness - wall_chamfer)
     difference() {
+        // Main wall
         color("blue", alpha=1)
         cyl(h = total_height - 4 * wall_thickness + 2 * wall_chamfer,
             r = outer_diameter / 2,
@@ -112,6 +120,8 @@ module lamp_shade(tex_param = tex_config[tex_id]) {
             tex_depth = tex_param[3],
             tex_inset = true,
             anchor = BOTTOM);
+
+        // Empty space
         down(epsilon)
         cyl(h = total_height + 2 * epsilon,
             r = outer_diameter / 2 - 2 * wall_thickness,
