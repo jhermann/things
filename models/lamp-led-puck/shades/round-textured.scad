@@ -60,20 +60,35 @@ module torus(radius, rx, ry, arc=360) {
                 circle(r=1, $fn=$fn);
 }
 
-// ====================================================================
-// Objects
-// ====================================================================
-
-module lamp_shade(tex_param = tex_config[tex_id]) {
-    tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
-    connector_ring_radius = connector_outer_diameter / 2 + 1.9 * tolerance;
-    strut_size = (outer_diameter - connector_outer_diameter) / 2;
-
-    // Top face
+// the top plate (placed on the print bed)
+module shade_top(tex, tex_param) {
     if (1) color("orange") up(total_height)
+    //diff()
+    // Top face
     cyl(h = 2 * wall_thickness,
         r = outer_diameter / 2,
-        anchor=TOP, chamfer = wall_chamfer);
+        anchor=TOP, chamfer = wall_chamfer) {
+
+        // Attach to the bottom face
+        attach(BOTTOM, BOTTOM, overlap=-epsilon)
+        intersection() {
+            // The pattern
+            textured_tile(tex,
+                size=[outer_diameter, outer_diameter],
+                tex_size = tex_param[2],
+                tex_depth = tex_param[3],
+            );
+
+            // Clip to the top face shape
+            cyl(h = 2 * wall_thickness, r = outer_diameter / 2 - wall_chamfer, anchor=TOP);
+        }
+    }
+}
+
+// the bottom plate and connecting hole
+module shade_bottom() {
+    connector_ring_radius = connector_outer_diameter / 2 + 1.9 * tolerance;
+    strut_size = (outer_diameter - connector_outer_diameter) / 2;
 
     difference() {
         // Connector ring
@@ -107,6 +122,17 @@ module lamp_shade(tex_param = tex_config[tex_id]) {
             r = connector_ring_radius,
             anchor=CENTER,);
     }
+}
+
+// ====================================================================
+// Objects
+// ====================================================================
+
+module lamp_shade(tex_param = tex_config[tex_id]) {
+    tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
+
+    shade_top(tex, tex_param);
+    shade_bottom();
 
     // Main tube with texture
     if (1) up(2 * wall_thickness - wall_chamfer)
