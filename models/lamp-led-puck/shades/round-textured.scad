@@ -9,14 +9,12 @@
 include <BOSL2/std.scad>
 
 /* [Lamp Shade Dimensions] */
-// Outer diameter (common: 102, 130)
-outer_diameter = 102; // [100:1:150]
 // Height of the shade
 total_height = 160; // [10:1:40]
 // Wall thickness of the lamp shade
 wall_thickness = 1.5; // [0.5:0.25:3]
 // Texture selection index (see description)
-texture_id = 0; // [0:1:10]
+texture_id = 4; // [0:1:10]
 
 /* [Connector Dimensions] */
 // Outer diameter of the connector
@@ -38,6 +36,7 @@ epsilon = 0.05;
 // Layer height
 layer_height = .2;
 
+outer_diameter = connector_outer_diameter + 2 * (wall_thickness + tolerance);
 wall_chamfer = wall_thickness - layer_height;
 top_height = 1.25 * wall_thickness;
 plug_radius = connector_outer_diameter / 2 - tolerance;
@@ -108,6 +107,67 @@ module cap_dots() {
     }
 }
 
+// Tongue slots for better friction fit
+module tongue_slots() {
+    side = 2 * (connector_height - 1.5 * wall_thickness) / sqrt(3);
+    for(angle = [0 : 90 : 360]) {
+        zrot(angle)
+            fwd(connector_outer_diameter / 2 - wall_thickness) xrot(90)
+                linear_extrude(height = 4 * wall_thickness, center = true)
+                    polygon([
+                        [-side/2, 0],
+                        [side/2, 0],
+                        [tolerance, connector_height - 1.5 * wall_thickness],
+                        [-tolerance, connector_height - 1.5 * wall_thickness]
+                    ]);
+    }
+}
+
+// Elliptical bumps to increase compliance, placed on the outside of the tongues
+module friction_dots() {
+    dot_scale = .2;
+    for(angle = [0 : 90 : 360]) {
+        up(dot_scale * connector_height + 1.75 * wall_chamfer)
+        zrot(angle) fwd(connector_outer_diameter / 2)
+            spheroid([dot_scale * connector_height, wall_thickness / 2, dot_scale * connector_height]);
+    }
+}
+
+module lamp_connector() {
+    chamfer = wall_thickness / 6;
+
+    //up(chamfer)
+    difference() {
+        // The main tube of the connector, with chamfered inner and outer edges
+        cyl(h = connector_height + tolerance,
+            r = connector_outer_diameter / 2,
+            anchor=BOTTOM, chamfer = chamfer);
+
+        down(epsilon)
+        cyl(h = connector_height + tolerance + 2 * epsilon,
+            r = connector_outer_diameter / 2 - wall_thickness,
+            anchor=BOTTOM, chamfer = -chamfer);
+
+        // Triangular cuts at +/- 8 degrees, to form the friction fit tongues;
+        // the lower ones are raised slightly to ensure a uniform 1st layer for good bed adhesion
+        up(2 * layer_height) zrot(-8) tongue_slots();
+        up(2 * layer_height) zrot(8) tongue_slots();
+    }
+
+    up(connector_height + tolerance - epsilon)
+    difference() {
+        cyl(h = 2 * wall_thickness + epsilon,
+            r = outer_diameter / 2,
+            anchor=BOTTOM, chamfer = wall_thickness - epsilon);
+
+        down(wall_thickness)
+        cyl(h = 4 * wall_thickness,
+            r = connector_outer_diameter / 2 - wall_thickness,
+            anchor=BOTTOM);
+    }
+
+    friction_dots();
+}
 
 // ====================================================================
 // Objects
@@ -121,7 +181,7 @@ module lamp_shade(tex_param = tex_config[texture_id]) {
     difference() {
         // Main wall
         union() {
-            color("skyblue")
+            color("navy")
             cyl(h = wall_thickness + epsilon,
                 r = outer_diameter / 2,
                 anchor = BOTTOM);
@@ -136,7 +196,7 @@ module lamp_shade(tex_param = tex_config[texture_id]) {
                 tex_inset = true,
                 anchor = BOTTOM);
 
-            color("skyblue")
+            color("navy")
             up(total_height)
             cyl(h = wall_thickness + epsilon,
                 r = outer_diameter / 2,
@@ -170,7 +230,9 @@ if ($preview || local) { // main assembly in Parametric Model Maker
 
 // Plate 1: Shade Body
 module mw_plate_1() {
+    up(connector_height + tolerance + wall_thickness - epsilon)
     lamp_shade();
+    lamp_connector();
 }
 
 // Plate 2: Textured Cap
