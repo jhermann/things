@@ -61,14 +61,6 @@ tex_config = [
 // Parts
 // ====================================================================
 
-// rotational extrusion of an ellipsoid with its center at `radius`
-module torus(radius, rx, ry, arc=360) {
-    rotate_extrude(angle=arc, convexity=2)
-        translate([radius, 0, 0])
-            scale([rx, ry, 1])
-                circle(r=1, $fn=$fn);
-}
-
 // the top plate (placed on the print bed)
 module shade_top(tex, tex_param) {
     color("orange")
@@ -148,10 +140,10 @@ module lamp_connector() {
             r = connector_outer_diameter / 2 - wall_thickness,
             anchor=BOTTOM, chamfer = -chamfer);
 
-        // Triangular cuts at +/- 8 degrees, to form the friction fit tongues;
+        // Triangular cuts at +/- 12 degrees, to form the friction fit tongues;
         // the lower ones are raised slightly to ensure a uniform 1st layer for good bed adhesion
-        up(2 * layer_height) zrot(-8) tongue_slots();
-        up(2 * layer_height) zrot(8) tongue_slots();
+        up(2 * layer_height) zrot(-12) tongue_slots();
+        up(2 * layer_height) zrot(12) tongue_slots();
     }
 
     up(connector_height + tolerance - epsilon)
