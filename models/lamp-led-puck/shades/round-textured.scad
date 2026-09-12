@@ -2,7 +2,6 @@
     with selectable texture and integrated connector
 
     TODO:
-    - Integrate connector
     - Top cap with inset image, in white
     - Top cap with same texture as base
 */
@@ -128,7 +127,6 @@ module friction_dots() {
 module lamp_connector() {
     chamfer = wall_thickness / 6;
 
-    //up(chamfer)
     difference() {
         // The main tube of the connector, with chamfered inner and outer edges
         cyl(h = connector_height + tolerance,
@@ -145,20 +143,24 @@ module lamp_connector() {
         up(2 * layer_height) zrot(-12) tongue_slots();
         up(2 * layer_height) zrot(12) tongue_slots();
     }
+    friction_dots();
 
+    // Triangular ring, chamfered almost to the inner shade wall perimeter;
+    // the upper part fuses the conenctor to the wall (they overlap), the
+    // lower part serves as a support for printing the wall on (no overhang).
     up(connector_height + tolerance - epsilon)
     difference() {
+        // Cylinder with triangular outer rim
         cyl(h = 2 * wall_thickness + epsilon,
             r = outer_diameter / 2,
             anchor=BOTTOM, chamfer = wall_thickness - epsilon);
 
+        // Hole compatible to the shade tube
         down(wall_thickness)
         cyl(h = 4 * wall_thickness,
             r = connector_outer_diameter / 2 - wall_thickness,
             anchor=BOTTOM);
     }
-
-    friction_dots();
 }
 
 // ====================================================================
@@ -222,8 +224,8 @@ if ($preview || local) { // main assembly in Parametric Model Maker
 
 // Plate 1: Shade Body
 module mw_plate_1() {
-    up(connector_height + tolerance + wall_thickness - epsilon)
-    lamp_shade();
+    if (1) up(connector_height + tolerance + wall_thickness - epsilon)
+        lamp_shade();
     lamp_connector();
 }
 
