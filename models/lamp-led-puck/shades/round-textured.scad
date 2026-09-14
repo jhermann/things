@@ -91,7 +91,7 @@ module cap_dots() {
 
     echo("DOT diameter:", 2 * dot_shift + wall_thickness);
 
-    for (angle = [45: 90: 360]) {
+    for (angle = [45: 45: 360]) {
         color("red")
         zrot(angle) down(tolerance / 2) right(dot_shift)
         spheroid(d=[wall_thickness, dot_size, dot_size], anchor=BOTTOM);
