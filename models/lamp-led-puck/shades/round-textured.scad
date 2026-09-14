@@ -86,15 +86,15 @@ module shade_top(tex, tex_param) {
 
 // Friction dots for the cap
 module cap_dots() {
-    dot_size = top_height - wall_chamfer - tolerance;
-    dot_shift = plug_radius - tolerance;
+    dot_size = top_height - tolerance / 2;
+    dot_shift = plug_radius - tolerance / 4;
 
     echo("DOT diameter:", 2 * dot_shift + wall_thickness);
 
     for (angle = [45: 90: 360]) {
         color("red")
-        zrot(angle) up(dot_size / 2 + tolerance / 2) right(dot_shift)
-        spheroid(d=[dot_size, wall_thickness, dot_size], anchor=BOTTOM);
+        zrot(angle) down(tolerance / 2) right(dot_shift)
+        spheroid(d=[wall_thickness, dot_size, dot_size], anchor=BOTTOM);
     }
 }
 
@@ -229,8 +229,46 @@ module mw_plate_1() {
     lamp_connector();
 }
 
-// Plate 2: Textured Cap
+// Plate 2: Plain (non-textured) Cap
 module mw_plate_2() {
+    shrink_factor = (outer_diameter - tolerance) / outer_diameter;
+    clean_factor = (outer_diameter + wall_thickness / 2) / outer_diameter;
+
+    up(wall_thickness)
+    cap_dots();
+
+    if (1) xrot(180)
+    difference() {
+        union() {
+            cyl(h = wall_thickness + tolerance + epsilon,
+                r = outer_diameter / 2 - tolerance,
+                anchor = TOP);
+            down(wall_thickness + tolerance)
+            cyl(h = wall_thickness,
+                r = (outer_diameter - wall_thickness) / 2,
+                anchor = TOP);
+        }
+
+        // Use lamp shade as the cutting tool
+        down(total_height + tolerance - epsilon)
+        union() {
+            scale([shrink_factor, shrink_factor, 1]) lamp_shade();
+            scale([clean_factor, clean_factor, 1]) lamp_shade();
+        }
+    }
+}
+
+// Plate 3: Thick plain (non-textured) Cap
+module mw_plate_3() {
+    up(wall_thickness - 4 * epsilon) mw_plate_2();
+    cyl(h = wall_thickness,
+        r = outer_diameter / 2 - tolerance,
+        anchor = BOTTOM, chamfer = tolerance);
+}
+
+
+// Plate 4: Textured Cap
+module mw_plate_4() {
     tex_param = tex_config[texture_id];
     tex = tex_param[1] ? texture(tex_param[0], border=tex_param[1]) : texture(tex_param[0]);
 
@@ -255,29 +293,6 @@ module mw_plate_2() {
             cyl(h = top_height + wall_chamfer,
                 r = plug_radius,
                 anchor=BOTTOM, chamfer = wall_chamfer);
-        }
-    }
-}
-
-// Plate 3: Cap with SVG Image (TODO)
-module mw_plate_3() {
-     up(top_height) {
-        cap_dots();
-
-        color("orange")
-        cyl(h = top_height,
-            r = outer_diameter / 2,
-            anchor=TOP, chamfer = wall_chamfer);
-
-        down(wall_chamfer)
-        difference() {
-            color("yellow")
-            cyl(h = top_height + wall_chamfer,
-                r = outer_diameter / 2 - wall_thickness - tolerance,
-                anchor=BOTTOM, chamfer = wall_chamfer);
-            cyl(h = top_height + wall_chamfer + epsilon,
-                r = outer_diameter / 2 - 2 * wall_thickness - tolerance,
-                anchor=BOTTOM, chamfer = -wall_chamfer);
         }
     }
 }
