@@ -12,6 +12,7 @@ Reusable OpenSCAD parts and helper modules for building models.
 > ![Tiled Preview](./preview.png)
 
 - [Disks and washers](disks-and-washers.scad) - Approximates a solid of revolution as stacked disks/washers using the disk/washer method.
+- [Hinge](hinge.scad) - A parametric design for a print-in-place vertical conical hinge. <br /> ![hinge gallery](assets/hinge-gallery.jpg)
 - [Rounded cubes](rounded-cubes.scad) - Rounded cube primitives.
 - [Shells](shells.scad) - Approximates a solid of revolution as stacked cylindrical shells using the shell method.
 - [Support fin](support-fin.scad) - A parametric triangular designed supports holding up objects printed on an edge or corner.

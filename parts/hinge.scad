@@ -2,13 +2,13 @@ include <BOSL2/std.scad>
 
 /* [Hinge] */
 // Outside diameter of the hinge cones
-outer_diameter = 15; // [4:0.5:40]
+outer_diameter = 25; // [4:0.5:40]
 // Inner diameter of the hinge cones
-inner_diameter = 8; // [2:0.5:35]
+inner_diameter = 15; // [2:0.5:35]
 // Overall height of the hinge
-height = 8; // [5:1:100]
+height = 15; // [5:1:100]
 // Cube size
-size = 15; // [1:1:100]
+size = 30; // [1:1:100]
 
 /* [Hidden] */
 //$preview = true;
@@ -16,7 +16,7 @@ $fa = $preview ? 8 : 1;
 $fs = $preview ? 1 : 0.1;
 
 layer_height = 0.2;
-tolerance = 0.15;
+tolerance = 0.25;
 epsilon = 0.05;
 
 module hinge(outer_diameter=outer_diameter, inner_diameter=inner_diameter, height=height) {
@@ -62,7 +62,7 @@ if (1) up(height / 2) {
             cuboid([size, size, height - .4 * size]); // Main body
             sphere(r=.2 * size); // The "rounding" tool
         }
-        scale((height + tolerance) / height)
+        scale((height + 3 * tolerance) / height)
             hinge();
     }
 }
