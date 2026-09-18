@@ -16,7 +16,7 @@ for the [TP-Link Tapo C230 camera][mw-tapo-c230-wall-mount]. It uses the
 same camera interface as the standalone wall mount, but replaces the wall
 plate with a mount for the A1 traversal.
 
-![Camera Mounting Bracket](image-c230-model.png)
+![Camera Mounting Bracket](./assets/image-c230-model.png)
 
 The holder dimensions and the bracket dimensions are parameters in
 [upper-traversal-mount.scad](./upper-traversal-mount.scad), so the model can
@@ -32,12 +32,14 @@ Steps to mount the camera on the *right* side of the traversal:
 6. Apply gentle pressure directed to the back and the right, to slide the front piece into the dovetail grooves.
 7. Try it out, pan & tilt for a full view of the print bed.
 
+> ![Mounted Camera](./assets/c230-mounted-tiles.jpg)
+
 | | |
 |---|---|
 |⚠️ | Make sure that a model you plan to print is not full-height in the back-right quadrant of the print plate, otherwise the camera might collide with it. If in doubt, remove the camera. |
 | | |
 
-> ![Printed Mounting Bracket](./camera-bracket-printed.jpg)
+> ![Printed Mounting Bracket](./assets/c230-mount-printed-1.jpg)
 >
 > *Printed Mounting Bracket*
 
