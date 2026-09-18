@@ -3,8 +3,9 @@ include <BOSL2/std.scad>
 
 /* [Bracket Dimensions (mm)] */
 bracket_thickness = 5; // [3:1:10]
-bracket_width = 50; // [10:1:50]
-dovetail_depth = 5; // [10:1:30]
+bracket_width = 44; // [10:1:50]
+arm_length = 30; // [10:1:90]
+dovetail_depth = 6; // [10:1:30]
 dovetail_gap = .6; // [.1:.1:1]
 
 /* [Hidden] */
@@ -26,10 +27,10 @@ chamfer = 0.3;
 
 
 // Generates an open 2D path that wraps left/right along the front wall face
-function dovetail_flanged_wall_path(width=dovetail_depth / 4, depth=dovetail_depth, angle=45, flange_width=35, tolerance=tolerance) =
+function dovetail_flanged_wall_path(width=dovetail_depth / 4, depth=dovetail_depth, angle=45, flange_width=c230_arm_angle, tolerance=tolerance) =
     let(
         w_neck = width + (2 * tolerance),
-        w_base = w_neck + (2 * depth * tan(angle)),
+        w_base = w_neck + (2 * depth * tan(c230_arm_angle)),
 
         // Coordinates for the flanged track running along the face and into the socket:
         p1 = [-w_neck/2 - flange_width, 0], // Far Left Flange (on the face)
@@ -56,6 +57,8 @@ module rounded_layer(size) {
 // A1 Mounting Bracket
 // ====================================================================
 
+bracket_dove_thickness = 2 * dovetail_depth + bracket_thickness;
+
 module bracket_block(chamfer=0, extend_y=0, extend_z=0) {
     cuboid([bracket_width,
             a1_inner_width + 2 * extend_y,
@@ -74,7 +77,7 @@ module a1_bracket() {
     difference() {
         //color("lime", alpha=.3)
             bracket_block(extend_y=bracket_thickness,
-                          extend_z=2 * dovetail_depth + bracket_thickness,
+                          extend_z=bracket_dove_thickness,
                           chamfer=2 * chamfer);
 
         yrot(90)
@@ -95,11 +98,12 @@ module a1_bracket() {
 // Tapo C230 Camera Mount
 // ====================================================================
 
-c230_bar_diameter = 44; // [30:1:100]
+c230_bar_diameter = bracket_width - epsilon;
 c230_bar_width = 7; // [3:1:30]
 c230_top_diameter = 29; // [10:0.1:50]
 c230_bottom_diameter = 31; // [10:0.1:50]
 c230_cone_height = 6; // [2:0.25:20]
+c230_arm_angle = 35;
 
 c230_bar_height = wall_thickness;
 
@@ -151,6 +155,30 @@ module c230_camera_holder() {
     }
 }
 
+module c230_camera_arm() {
+    diameter = c230_bar_diameter;
+    points = [
+        [0, -arm_length],
+        [0, diameter * tan(c230_arm_angle)],
+        [diameter, 0],
+        [diameter, -arm_length],
+    ];
+
+    union() {
+        //color("red")
+        zrot(45)
+        up(arm_length)
+        back(diameter / 2) left(diameter / 2)
+        xrot(90)
+            offset_sweep(height=diameter,
+                path=points,
+                ends = os_chamfer(width = 2 * chamfer));
+
+        xrot(180)
+            c230_camera_holder();
+    }
+}
+
 
 // ====================================================================
 // Main Assembly & Plates
@@ -163,12 +191,16 @@ module mw_plate_1() {
 module mw_plate_2() {
     up(bracket_width / 2) yrot(90) union() {
         a1_bracket();
-        fwd(a1_inner_width / 2 + bracket_thickness - epsilon)
-        yrot(90) xrot(90)
-        c230_camera_holder();
+
+        up(bracket_dove_thickness + a1_inner_height / 3 + 6.6 * chamfer)
+        fwd(a1_inner_width + a1_inner_width / 2)
+        yrot(90) zrot(55) yrot(90) zrot(45)
+        c230_camera_arm();
     }
 }
 
 if ($preview || local) { // main assembly in Parametric Model Maker
-    mw_plate_1();
+    mw_plate_2();
+    //c230_camera_arm();
+    //zrot(35) xrot(90) c230_camera_holder();
 }

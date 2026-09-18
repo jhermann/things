@@ -20,6 +20,8 @@ for the [TP-Link Tapo C230 camera](../camera-tapo-230/README.md). It uses the
 same camera interface as the standalone wall mount, but replaces the wall
 plate with a mount for the A1 traversal.
 
+![Camera Mounting Bracket](image-c230-model.png)
+
 The holder dimensions and the bracket dimensions are parameters in
 [upper-traversal-mount.scad](./upper-traversal-mount.scad), so the model can
 be adjusted for fit before slicing.
