@@ -211,16 +211,6 @@ module lamp_shade(tex_param = tex_config[texture_id]) {
 // ====================================================================
 // Main Assembly & Plates
 // ====================================================================
-if ($preview || local) { // main assembly in Parametric Model Maker
-    if (texture_preview) {
-        rows = 3;
-        grid_copies(spacing=[1.25 * outer_diameter, 1.75 * outer_diameter], n=[ceil(len(tex_config) / rows), rows])
-            if ($idx < len(tex_config))
-                lamp_shade(tex_param = tex_config[$idx]);
-    } else {
-        mw_plate_1();
-    }
-}
 
 // Plate 1: Shade Body
 module mw_plate_1() {
@@ -294,5 +284,16 @@ module mw_plate_4() {
                 r = plug_radius,
                 anchor=BOTTOM, chamfer = wall_chamfer);
         }
+    }
+}
+
+if ($preview || local) { // main assembly in Parametric Model Maker
+    if (texture_preview) {
+        rows = 3;
+        grid_copies(spacing=[1.25 * outer_diameter, 1.75 * outer_diameter], n=[ceil(len(tex_config) / rows), rows])
+            if ($idx < len(tex_config))
+                lamp_shade(tex_param = tex_config[$idx]);
+    } else {
+        mw_plate_1();
     }
 }
