@@ -37,7 +37,7 @@ Steps to mount the camera on the *right* side of the gantry:
 
 | | |
 |---|---|
-|⚠️ | Make sure that a model you plan to print is not full-height in the back-right quadrant of the print plate, otherwise the camera might collide with it. If in doubt, remove the camera. |
+|⚠️ | Make sure that a model you plan to print is not full-height in the back-right quadrant of the print plate, otherwise the camera might collide with it. If in doubt, remove the camera. However, my measurements with a Tapo C230 indicate a clearance of 32cm, so this might be overly cautious. |
 | | |
 
 > ![Printed Mounting Bracket](./assets/c230-mount-printed-1.jpg)
