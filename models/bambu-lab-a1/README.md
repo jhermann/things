@@ -30,7 +30,8 @@ Steps to mount the camera on the *right* side of the gantry:
 4. Make sure the camera power cable position is convenient (points to the right, away from the bed).
 5. Slide on the smaller piece of the bracket, left of the other piece.
 6. Apply gentle pressure directed to the back and the right, to slide the front piece into the dovetail grooves.
-7. Try it out, pan & tilt for a full view of the print bed.
+7. ⚠️ Leave 2cm of clearance to the end of the gantry, so the part connecting the toolhead rail to the Z screw has enough space.
+8. Try it out, pan & tilt for a full view of the print bed.
 
 > ![Mounted Camera](./assets/c230-mounted-tiles.jpg)
 

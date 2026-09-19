@@ -1,8 +1,11 @@
-// BambuLab A1 Mounting Bracket
+// BambuLab A1 Gantry Mounting Bracket
+//
+// Note that bracket_thickness cannot go beyond 5mm, in order to
+// leave enough clearance to the toolhead.
 include <BOSL2/std.scad>
 
 /* [Bracket Dimensions (mm)] */
-bracket_thickness = 5; // [3:1:10]
+bracket_thickness = 5; // [3:1:5]
 bracket_width = 44; // [10:1:50]
 arm_length = 30; // [10:1:90]
 dovetail_depth = 6; // [10:1:30]
