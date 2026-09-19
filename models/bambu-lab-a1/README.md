@@ -50,7 +50,7 @@ Steps to mount the camera on the *right* side of the gantry:
 
 These are already set in [gantry-mount.3mf](./gantry-mount.3mf).
 
-1. Quality > Wall generator: Arachne
-2. Strength > Sparse infill pattern: Gyroid
+1. Quality > Wall generator: *Arachne*
+2. Strength > Sparse infill pattern: *Gyroid*
 3. Support > Enable support: ✅
-4. Support > Type: tree(auto)
+4. Support > Type: *tree(auto)*

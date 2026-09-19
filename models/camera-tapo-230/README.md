@@ -28,10 +28,10 @@ The main parameters are the plate diameter, twist-lock bar dimensions, wall thic
 
 These are already set in [wall-mount.3mf](./wall-mount.3mf).
 
-1. Quality > Wall generator: Arachne
-2. Strength > Sparse infill pattern: Gyroid
+1. Quality > Wall generator: *Arachne*
+2. Strength > Sparse infill pattern: *Gyroid*
 3. Support > Enable support: ✅
-4. Support > Type: tree(auto)
-5. Others > Brim type: Outer brim
-6. Others > Brim width: 8
-7. Others > Brim-object gap: 0.15
+4. Support > Type: *tree(auto)*
+5. Others > Brim type: *Outer brim*
+6. Others > Brim width: *8*
+7. Others > Brim-object gap: *0.15*
