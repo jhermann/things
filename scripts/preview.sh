@@ -27,6 +27,7 @@ scad_dirs=(
     parts
     parts/joining
     parts/textures
+    models/bambu-lab-a1
     models/lamp-led-puck
 )
 
