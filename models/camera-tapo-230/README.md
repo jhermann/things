@@ -23,3 +23,15 @@ app or the [MakerWorld Parametric Model Maker](https://makerworld.com/en/makerla
 The main parameters are the plate diameter, twist-lock bar dimensions, wall thickness, and mounting-hole spacing.
 
 > 💡 The SCAD file can also be integrated into models for mounting the camera to other things.
+
+## Recommended Print Settings
+
+These are already set in [wall-mount.3mf](./wall-mount.3mf).
+
+1. Quality > Wall generator: Arachne
+2. Strength > Sparse infill pattern: Gyroid
+3. Support > Enable support: ✅
+4. Support > Type: tree(auto)
+5. Others > Brim type: Outer brim
+6. Others > Brim width: 8
+7. Others > Brim-object gap: 0.15
