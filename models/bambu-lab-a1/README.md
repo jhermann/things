@@ -44,6 +44,10 @@ Steps to mount the camera on the *right* side of the gantry:
 >
 > *Printed Mounting Bracket*
 
+> ![Printed Clearance Guard](./assets/c230-mount-guard.jpg)
+>
+> *Clearance Guard (20mm)*
+
 [mw-tapo-c230-wall-mount]: https://makerworld.com/en/models/3321183-tapo-c230-c2xx-camera-wall-mount
 
 ## Recommended Print Settings

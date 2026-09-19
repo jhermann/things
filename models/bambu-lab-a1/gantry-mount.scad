@@ -10,6 +10,7 @@ bracket_width = 44; // [10:1:50]
 arm_length = 30; // [10:1:90]
 dovetail_depth = 6; // [10:1:30]
 dovetail_gap = .6; // [.1:.1:1]
+gantry_clearance = 20; // [20:1:50]
 
 /* [Hidden] */
 //$preview = true;
@@ -76,12 +77,38 @@ module dovetail_cutter() {
         stroke(smooth_path, width=dovetail_gap, closed=false);
 }
 
+module clearance_guard() {
+    module clearance_block(wall=0, cdir=1) {
+        right(chamfer)
+        cuboid([gantry_clearance + 3 * chamfer,
+                a1_inner_width / 4 + wall,
+                a1_inner_height + 2 * wall],
+            chamfer = cdir * chamfer);
+    }
+
+    left((bracket_width + gantry_clearance) / 2 - epsilon)
+    back(a1_inner_width / 8 * 3 + wall_thickness - epsilon)
+    fwd(2 * chamfer + 2 * epsilon)
+    round3d(r=2 * chamfer, $fn=5) {
+        difference() {
+            right(chamfer)
+            clearance_block(wall_thickness, 1);
+
+            fwd(wall_thickness / 2 + epsilon)
+            xscale(1.1)
+            clearance_block(-epsilon / 2, 0);
+        }
+    }
+}
+
 module a1_bracket() {
+    clearance_guard();
+
     difference() {
         //color("lime", alpha=.3)
-            bracket_block(extend_y=bracket_thickness,
-                          extend_z=bracket_dove_thickness,
-                          chamfer=2 * chamfer);
+        bracket_block(extend_y=bracket_thickness,
+                      extend_z=bracket_dove_thickness,
+                      chamfer=2 * chamfer);
 
         yrot(90)
         cuboid([a1_inner_height,
@@ -205,5 +232,4 @@ module mw_plate_2() {
 if ($preview || local) { // main assembly in Parametric Model Maker
     mw_plate_2();
     //c230_camera_arm();
-    //zrot(35) xrot(90) c230_camera_holder();
 }
