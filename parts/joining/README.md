@@ -45,3 +45,12 @@ so overhangs are guaranteed to not exceed 45°. When on the bottom or the top, i
 
 The slots are created using the dowel shape with a small tolerance gap added.
 The dowel shape is used twice, so the small groove for the bump is on both sides.
+
+## Dovetail
+
+[dovetail.scad](./dovetail.scad) defines a cutter tool applicable
+to any wall thick enough to contain the dovetail shape.
+
+It is suitable for inplace printing since you apply the cutter to an existing object that just gets split, but does not change its dimensions in any way.
+
+> ![Model Preview](./dovetail-preview.png)
