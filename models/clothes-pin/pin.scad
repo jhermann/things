@@ -71,7 +71,7 @@ module chamfer_cutter(length) {
 }
 
 module rift_cutter(height, gap, length) {
-    freq = 2.5;
+    freq = 3.75;
 
     for (dir = [1, -1])
     xrot(90)
@@ -81,7 +81,7 @@ module rift_cutter(height, gap, length) {
     textured_tile(size = [length, height, gap / 2 + epsilon],
         texture = "wave_ribs",
         tex_size = [freq * gap, freq * gap],
-        tex_depth = gap / 2,
+        tex_depth = 1.2 * gap,
         tex_inset = false);
 }
 
@@ -124,6 +124,7 @@ module chamfer_tool() {
 
 module pin_body() {
     difference() {
+        see_through("lime")
         right(pin_width / 4)
         minkowski($fn=$preview ? 8 : 32) {
             linear_extrude(height = pin_depth - 2 * chamfer, center = true, convexity = 10)
