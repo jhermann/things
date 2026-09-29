@@ -1,6 +1,8 @@
 // A tall squarish bar with chamfers, that can be placed where two wall meet;
 // with a vertical screw hole from the top, and a horizontal side slot for the nut at its lower end.
 
+// TODO: Use incremental bridging planes to build a flatter roof for the nut slot
+
 include <BOSL2/std.scad>
 
 /* [Post Dimensions] */
