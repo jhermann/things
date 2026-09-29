@@ -16,12 +16,12 @@ Using OpenSCAD together with the BOSL2 library.
 - [attach.scad](./attach.scad) - Demonstrates BOSL2 anchors and `attach()` by cutting an attached countersunk hole into a box.
 - [holes-grid.scad](./holes-grid.scad) - Perforated plate with a configurable rounded outline, chamfered edges, and repeated beveled holes. [🧊✏️][mw-holes-grid]
 - [name-plate.scad](./name-plate.scad) - Configurable rounded name plate with recessed text. [🧊✏️][mw-name-plate] <br /><br /> ![printed](./name-plate.jpg)
+- [screw-post.scad](./screw-post.scad) - Chamfered square post for wall corners with a vertical screw hole from the top and a side slot for a retained nut. Prints without any supports. <br /><br /> ![screw post preview](./screw-post-model.png)
 - [sphere-top-textured.scad](./sphere-top-textured.scad) - Demonstrates a rough texture applied to a revolved sphere cap, kept using `top_half()`. Sliced with adaptive layer heights. <br /> ![printed cap](./sphere-top-textured-printed.jpg)
 - [texture-brushed-metal.scad](./texture-brushed-metal.scad) - Demonstrates a brushed-metal texture applied to OpenSCAD geometry. <br /><br /> ![printed](./texture-brushed-metal.jpg) <br /> *Red Copper PLA • rows 30 • cols 20 • depth 0.25*
 - [texture-rough.scad](./texture-rough.scad) - Demonstrates the built-in rough texture applied to a cylindrical print. <br /><br /> ![printed](./texture-rough.jpg) <br /> *Red Copper PLA • size 5×55 • depth 0.15*
 - [textures.scad](./textures.scad) - Demonstrates built-in and custom BOSL2 textures on cylindrical and swept geometry.
 - [threads.scad](./threads.scad) - Flush threaded container and lid with a shared trapezoidal thread profile and ribbed grip. [🧊✏️][mw-threads]
-
 
 [mw-basic-bosl2]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=basic-bosl2.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fbosl2%2Fbasic-bosl2.scad
 [mw-holes-grid]: https://makerworld.com/en/makerlab/parametricModelMaker?from=model_page&modelName=holes-grid.scad&scadUrl=https%3A%2F%2Fraw.githubusercontent.com%2Fjhermann%2Fthings%2Frefs%2Fheads%2Fmain%2Fbosl2%2Fholes-grid.scad
