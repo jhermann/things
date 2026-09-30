@@ -38,9 +38,9 @@ ring_mid_radius = ring_diameter / 2 - ring_wall / 2;
 ring_center_x = spring_length / 2 + ring_attach_x(pair_offset);
 
 
-module see_through(base_color="grey") {
+module see_through(base_color="grey", alpha=0.6) {
     if ($preview) {
-        color(base_color, 0.6)
+        color(base_color, alpha)
             children();
     } else {
         children();

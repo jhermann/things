@@ -85,9 +85,9 @@ stub_end = handle_end + [band_width * tan(handle_angle) + 1, 0];
 bar_corner = [handle_end.x, handle_end.y - band_width / 2 - (stub_end.x - handle_end.x) * tan(handle_angle)];
 
 
-module see_through(base_color="grey") {
+module see_through(base_color="grey", alpha=0.6) {
     if ($preview) {
-        color(base_color, 0.6)
+        color(base_color, alpha)
             children();
     } else {
         children();

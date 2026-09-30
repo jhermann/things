@@ -42,9 +42,9 @@ winding_length = spring_length / windings;
 corner_offset = winding_length * asin(1 / squareness) / 360;
 
 
-module see_through(base_color="grey") {
+module see_through(base_color="grey", alpha=0.6) {
     if ($preview) {
-        color(base_color, 0.6)
+        color(base_color, alpha)
             children();
     } else {
         children();
