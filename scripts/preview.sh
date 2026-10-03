@@ -26,6 +26,8 @@ scad_dirs=(
     examples
     parts
     parts/joining
+    parts/mechanisms
+    parts/springs
     parts/textures
     models/bambu-lab-a1
     models/lamp-led-puck
