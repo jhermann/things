@@ -5,6 +5,8 @@ Reusable OpenSCAD parts and helper modules for building models.
 ## Subtopics
 
 - [Joining](joining/README.md) - Reusable geometries for joining printed pieces.
+- [Mechanisms](mechanisms/README.md) - Reusable mechanisms, including a print-in-place conical hinge.
+- [Springs](springs/README.md) - Parametric spring and flexure mechanisms.
 - [Textures](textures/README.md) - Reusable surface texture patterns and examples.
 
 ## Parts
