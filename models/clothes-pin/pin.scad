@@ -122,7 +122,45 @@ module chamfer_tool() {
     }
 }
 
+module pin_chamfers() {
+    // Chamfer the grip rift from all 4 sides
+    solid()
+    fwd(.4 * pin_length_approx)
+    down(pin_depth / 2 + epsilon)
+    chamfer_cutter(pin_length_approx / 3);
+
+    solid()
+    fwd(.4 * pin_length_approx)
+    up(pin_depth / 2 + epsilon) yrot(180)
+    chamfer_cutter(pin_length_approx / 3);
+
+    solid()
+    fwd(.5 * pin_length_approx - chamfer)
+    xrot(-90)
+    chamfer_cutter(pin_depth);
+
+    solid()
+    fwd(.31 * pin_length_approx - 2 * tolerance - eps2)
+    xrot(90)
+    chamfer_cutter(pin_depth);
+}
+
+module pin_cutters() {
+    solid()
+    fwd(.4 * pin_length_approx - 6 * epsilon)
+    rift_cutter(pin_depth, pin_gap / 3, pin_length_approx / 3);
+
+    // Add the finger grips
+    for (dir = [1, -1])
+        solid()
+        back(.16 * pin_length_approx)
+        left(.86 * pin_width * dir)
+        grip_cutter(pin_depth, pin_width);
+}
+
 module pin_body() {
+    //pin_cutters(); pin_chamfers();
+
     difference() {
         see_through("lime")
         right(pin_width / 4)
@@ -134,25 +172,8 @@ module pin_body() {
             chamfer_tool();
         };
 
-        solid()
-        fwd(.4 * pin_length_approx)
-        down(pin_depth / 2 + epsilon)
-        chamfer_cutter(pin_length_approx / 3);
-
-        solid()
-        fwd(.4 * pin_length_approx)
-        up(pin_depth / 2 + epsilon) yrot(180)
-        chamfer_cutter(pin_length_approx / 3);
-
-        for (dir = [1, -1])
-            solid()
-            back(.16 * pin_length_approx)
-            left(.86 * pin_width * dir)
-            grip_cutter(pin_depth, pin_width);
-
-        solid()
-        fwd(.4 * pin_length_approx)
-        rift_cutter(pin_depth, pin_gap / 3, pin_length_approx / 3);
+        pin_cutters();
+        pin_chamfers();
     }
 }
 
