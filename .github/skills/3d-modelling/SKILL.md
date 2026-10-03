@@ -12,7 +12,7 @@ This skill can be explicitly triggered by using the `/scad` command with a promp
 
 ## Core Directives
 
-- **Library Inclusion:** Always begin scripts by importing the standard BOSL2 environment via `include <BOSL2/std.scad>`. Never mix legacy BOSL v1 syntax with BOSL2.
+- **Library Inclusion:** Always begin scripts by importing the standard BOSL2 environment via `include <BOSL2/std.scad>`. Never mix legacy BOSL v1 syntax with BOSL2. Refer to the [BOSL2 cheat sheet](./bosl2-cheat-sheet.md) for guidance.
 - **Parametric Design:** Define all core dimensions, tolerances, and configuration parameters as variables at the top of the file.
 - **Leverage BOSL2 Primitives:** Replace native OpenSCAD primitives with BOSL2 equivalents (`cuboid`, `cyl`, `sphere`) which natively support arguments like `rounding`, `chamfer`, `or`, and `anchor`.
 - **Attachment System:** Use BOSL2's attachment and positioning functions (`position()`, `orient()`, `edge_profile()`) instead of manual translation/rotation arithmetic for complex sub-assembly alignments.
