@@ -26,6 +26,21 @@ and the outer hull of the plug is slightly slanted to increase friction the deep
 
 The design principles were mostly lifted from [this YouTube video](https://www.youtube.com/watch?v=vsHpiHhB3RU&t=1499s).
 
+## Grip Fins
+
+[OpenSCAD source](grip-fins.scad)
+
+`grip-fins.scad` defines a parametric hole with inward-facing fins
+for gripping a cylindrical insert or pin. The example subtracts the finned hole from
+a cube.
+
+> ![Model Preview & Sliced Hole Floor](./assets/grip-fins-gallery.png)
+
+Use the `gripping_hole(depth, radius, fin_size, angle=75)` module as a cutter in a
+`difference()` with the object that needs the grip hole. Its main parameters are the
+hole radius, fin size, and hole depth; the example defaults to a 4 mm hole in a
+10 mm cube with 1 mm fins.
+
 ## Square Dowel
 
 [OpenSCAD source](square-dowel.scad) | [3MF download](square-dowel.3mf)
