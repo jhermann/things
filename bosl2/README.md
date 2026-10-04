@@ -14,7 +14,7 @@ Using OpenSCAD together with the BOSL2 library.
 
 - [basic-bosl2.scad](./basic-bosl2.scad) - Minimal BOSL2 example that attaches a cylinder to the top face of a cuboid using `attach()`. [🧊✏️][mw-basic-bosl2]
 - [attach.scad](./attach.scad) - Demonstrates BOSL2 anchors and `attach()` by cutting an attached countersunk hole into a box.
-- [bridged-hole.scad](./bridged-hole.scad) - Cuboid with a hexagonal nut pocket at the bottom and a screw hole on top; the pocket roof is closed by one-layer bridging planes that step in alternately along X and Y, so it prints without supports.
+- [bridged-hole.scad](./bridged-hole.scad) - Cuboid with a hexagonal nut pocket at the bottom and a screw hole on top; the pocket roof is closed by one-layer bridging planes that step in alternately along X and Y, so it prints without supports. <br /><br /> ![bridged-hole views](assets/bridged-hole-gallery.jpg)
 - [holes-grid.scad](./holes-grid.scad) - Perforated plate with a configurable rounded outline, chamfered edges, and repeated beveled holes. [🧊✏️][mw-holes-grid]
 - [name-plate.scad](./name-plate.scad) - Configurable rounded name plate with recessed text. [🧊✏️][mw-name-plate] <br /><br /> ![printed](assets/name-plate.jpg)
 - [screw-post.scad](./screw-post.scad) - Chamfered square post for wall corners with a vertical screw hole from the top and a side slot for a retained nut. Prints without any supports. <br /><br /> ![screw post preview](assets/screw-post-model.png)
