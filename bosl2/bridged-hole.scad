@@ -126,7 +126,7 @@ module nut_cavity() {
 }
 
 module screw_hole() {
-    cyl(d=hole_d, h=block_height + 2 * edge_pad, anchor=BOTTOM);
+    cyl(d=hole_d, h=block_height + 2 * edge_pad, chamfer2=-chamfer, anchor=BOTTOM);
 }
 
 module cavity() {
