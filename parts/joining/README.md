@@ -45,7 +45,7 @@ hole radius, fin size, and hole depth; the example defaults to a 4 mm hole in a
 
 [OpenSCAD source](heat-insert.scad)
 
-![Model View](assets/heat-insert-model.png)
+![Model + Slicer View](assets/heat-insert-gallery.png)
 
 `heat-insert.scad` defines a cutter for a 4.7 mm diameter, 15 mm deep
 heat-set insert hole. Its default pattern adds two concentric rings of
@@ -54,8 +54,6 @@ perimeter paths when sliced. The slits stop 0.4 mm short of the hole's top
 and bottom so they remain enclosed. The file shows the cutter subtracting
 from a sample block; use `heat_insert_hole(depth, diameter)` in a
 `difference()` to apply it to another part.
-
-![Slicer View](assets/heat-insert-sliced.png)
 
 ## Square Dowel
 
