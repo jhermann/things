@@ -41,6 +41,22 @@ Use the `gripping_hole(depth, radius, fin_size, angle=75)` module as a cutter in
 hole radius, fin size, and hole depth; the example defaults to a 4 mm hole in a
 10 mm cube with 1 mm fins.
 
+## Heat-Insert Hole
+
+[OpenSCAD source](heat-insert.scad)
+
+![Model View](assets/heat-insert-model.png)
+
+`heat-insert.scad` defines a cutter for a 4.7 mm diameter, 15 mm deep
+heat-set insert hole. Its default pattern adds two concentric rings of
+24 radial, 0.2 mm-wide slits around the hole to encourage additional
+perimeter paths when sliced. The slits stop 0.4 mm short of the hole's top
+and bottom so they remain enclosed. The file shows the cutter subtracting
+from a sample block; use `heat_insert_hole(depth, diameter)` in a
+`difference()` to apply it to another part.
+
+![Slicer View](assets/heat-insert-sliced.png)
+
 ## Square Dowel
 
 [OpenSCAD source](square-dowel.scad) | [3MF download](square-dowel.3mf)
