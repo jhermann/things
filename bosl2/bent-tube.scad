@@ -5,17 +5,19 @@
 
 include <BOSL2/std.scad>
 
+// TODO: Use bend_angle instead of bend_rise
+
 /* [Main Settings] */
 // Outer radius of the tube
 outer_radius = 15; // [2:0.5:50]
 // Wall thickness of the tube
 wall_thickness = 1.5; // [0.4:0.1:5]
 // Height of the straight section
-straight_length = 15; // [1:1:100]
+straight_length = 5; // [1:1:100]
 // Horizontal offset of the bend
-bend_offset = 15; // [1:1:100]
+bend_offset = 10; // [1:1:100]
 // Vertical rise of the bend
-bend_rise = 15; // [1:1:100]
+bend_rise = 10; // [1:1:100]
 
 /* [Hidden] */
 //$preview = true;
@@ -35,13 +37,17 @@ inner_radius = outer_radius - wall_thickness;
 // ====================================================================
 
 module tube_shape(radius, eps=0) {
+    offset_r = bend_offset + outer_radius;
+    radius_b = max(outer_radius, bend_rise);
+    length_s = straight_length + outer_radius;
+    height = straight_length + outer_radius + bend_rise;
     tube_path = round_corners(
         [
             [0, 0, -eps],
-            [0, 0, straight_length],
-            [bend_offset + eps, 0, straight_length + bend_rise + eps],
+            [0, 0, length_s],
+            [offset_r + eps, 0, height + eps],
         ],
-        method = "circle", radius = max(radius, 0.25 * bend_rise),
+        method = "circle", radius = radius_b,
         closed = false,
     );
 
@@ -70,7 +76,8 @@ module mw_plate_1() {
 
 if ($preview) {
     back_half() mw_plate_1();
-    up(straight_length + + bend_offset + bend_rise) zrot(90)
+
+    left(2.5 * outer_radius) zrot(90)
     right_half()mw_plate_1();
 
     tube_shape(tolerance / 2);
