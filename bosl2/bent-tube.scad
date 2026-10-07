@@ -77,7 +77,7 @@ module deconstruct(what_part="back") {
 
         up(outer_radius) back(epsilon)
         zrot(what_part == "back" ? 0 : 90)
-        cuboid([4 * outer_radius, tolerance, 4 * outer_radius], center=true);
+        cuboid([6 * outer_radius, tolerance, 6 * outer_radius], center=true);
     }
 
     color("ivory")
