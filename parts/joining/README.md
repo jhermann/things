@@ -1,6 +1,15 @@
-# Joining Parts
+# Joining Parts <!-- omit from toc -->
 
-Reusable OpenSCAD geometries to join pieces together.
+> Reusable OpenSCAD geometries to join pieces together.
+
+**Contents**
+
+- [Vertical Sturdy Plug](#vertical-sturdy-plug)
+- [Grip Fins](#grip-fins)
+- [Heat-Insert Hole](#heat-insert-hole)
+- [Square Dowel](#square-dowel)
+- [Dovetail](#dovetail)
+
 
 > ![Tiled Preview](./preview.png)
 
