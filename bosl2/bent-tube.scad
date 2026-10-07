@@ -19,9 +19,9 @@ bend_rise = 15; // [1:1:100]
 
 /* [Hidden] */
 //$preview = true;
-local = 1;
-$fa = $preview ? 8 : 1;
-$fs = $preview ? 1 : 0.2;
+local = 0;
+$fa = $preview ? 8 : 2;
+$fs = $preview ? 1 : 0.4;
 
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
