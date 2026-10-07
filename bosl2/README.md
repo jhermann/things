@@ -15,7 +15,7 @@ Using OpenSCAD together with the BOSL2 library.
 - [basic-bosl2.scad](./basic-bosl2.scad) - Minimal BOSL2 example that attaches a cylinder to the top face of a cuboid using `attach()`. [🧊✏️][mw-basic-bosl2]
 - [attach1.scad](./attach1.scad) - Demonstrates BOSL2 anchors and `attach()` by cutting an attached countersunk hole into a box. [🧊✏️][mw-attach1]
 - [attach2.scad](./attach2.scad) - Demonstrates BOSL2 anchors and `attach()` by cutting a hole into the bottom of a cube. [🧊✏️][mw-attach2]
-- [bent-tube.scad](./bent-tube.scad) - Hollow round tube swept along a polyline path with `path_sweep()`: a straight section followed by a bend. [🧊✏️][mw-bent-tube]
+- [bent-tube.scad](./bent-tube.scad) - Hollow round tube swept along a polyline smooth path with `path_sweep()`, consisting of a straight section followed by a bend. [🧊✏️][mw-bent-tube] <br /><br /> ![bent-tube preview](assets/bent-tube.png)
 - [bridged-hole.scad](./bridged-hole.scad) - Cuboid with a hexagonal nut pocket at the bottom and a screw hole on top; the pocket roof is closed by one-layer bridging planes that step in alternately along X and Y, so it prints without supports. [🧊✏️][mw-bridged-hole] <br /><br /> ![bridged-hole views](assets/bridged-hole-gallery.jpg)
 - [holes-grid.scad](./holes-grid.scad) - Perforated plate with a configurable rounded outline, chamfered edges, and repeated beveled holes. [🧊✏️][mw-holes-grid]
 - [name-plate.scad](./name-plate.scad) - Configurable rounded name plate with recessed text. [🧊✏️][mw-name-plate] <br /><br /> ![printed](assets/name-plate.jpg)

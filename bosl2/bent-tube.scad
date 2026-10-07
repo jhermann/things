@@ -70,17 +70,33 @@ module bent_tube() {
 // Plates
 // ====================================================================
 
+module deconstruct(what_part="back") {
+    color("crimson")
+    intersection() {
+        mw_plate_1();
+
+        up(outer_radius) back(epsilon)
+        zrot(what_part == "back" ? 0 : 90)
+        cuboid([4 * outer_radius, tolerance, 4 * outer_radius], center=true);
+    }
+
+    color("ivory")
+    if (what_part == "back") back_half() mw_plate_1();
+    else right_half() mw_plate_1();
+
+}
+
 module mw_plate_1() {
     bent_tube();
 }
 
 if ($preview) {
-    back_half() mw_plate_1();
+    deconstruct("back");
 
     left(2.5 * outer_radius) zrot(90)
-    right_half()mw_plate_1();
+    deconstruct("right");
 
-    tube_shape(tolerance / 2);
+    color("crimson") tube_shape(tolerance / 2);
 } else {
     mw_plate_1();
 }
