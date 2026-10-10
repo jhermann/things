@@ -26,9 +26,11 @@ This example is a simple open-top container with:
 - internal relief grooves to reduce stress and shrinkage in the shell
 - a preview mode that keeps the geometry light while rendering in OpenSCAD
 
+> ![See-through View](assets/anti-shrink-model.png)
+
 It is useful as a compact example of combining BOSL2 primitives, subtraction, and parametric part tuning.
 
-![Box Bottom](assets/anti-shrink-bottom.png)
+> ![Box Bottom](assets/anti-shrink-bottom.png)
 
 ## MakerWorld multi-plate template
 
