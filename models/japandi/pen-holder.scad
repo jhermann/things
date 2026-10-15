@@ -25,9 +25,9 @@ bottom_rounding = 1.25; // [0:0.25:10]
 
 /* [Hidden] */
 //$preview = true;
-local = 1;
+local = 0;
 $fa = $preview ? 24 : 4;
-$fs = $preview ? 2 : 0.2;
+$fs = $preview ? 2 : 0.8;
 
 tolerance = 0.2;
 epsilon = 0.05;
@@ -89,7 +89,7 @@ module body() {
             texture=tex,
             tex_inset=false,
             tex_depth=0.10,
-            tex_size=[5, 5], style="min_edge",
+            tex_size=[8, 8], style="min_edge",
             chamfer1=bottom_rounding + rib_radius, anchor=BOTTOM);
 
         // Cuts off the upper part
@@ -111,7 +111,7 @@ module body() {
             texture=tex,
             tex_inset=false,
             tex_depth=0.10,
-            tex_size=[3, 3], style="min_edge",
+            tex_size=[6, 6], style="min_edge",
             rounding2=wall_thickness / 3, anchor=BOTTOM);
         zcyl(h=rim_height, d=outer_diameter + 2 * rib_radius,
             rounding2=wall_thickness / 3, anchor=BOTTOM);
