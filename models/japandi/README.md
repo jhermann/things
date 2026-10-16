@@ -46,11 +46,11 @@ The default model has a base side of 110 mm, a height of 100 mm, and a 22 × 30 
 
 [tealight-holder.scad](./tealight-holder.scad) is a fluted, rounded holder with a chamfered recess for a standard tea light.
 
-- `height`, `diameter`, and `slice_angle` set the holder's rounded body.
-- `hole_diameter` and `hole_depth` set the tea-light recess.
-- `wall_chamfer`, `flute_count`, `flute_depth`, and `flute_chamfer` adjust the rim and flutes.
+> ![tealight holder print and model](./assets/tealight-holder.png)
 
-The default model is 65 mm in diameter and 30 mm tall, with a 40 × 20 mm recess.
+The default model is 64 mm in diameter and 30 mm tall, with a 40 × 25 mm recess.
+
+> 💡**Getting the LED back out** <br />The recess is marginally conical for a good grip, so wiggle the tealight a bit to get it out, once you lifted it even slightly it comes out easy.
 
 ## Printing
 
