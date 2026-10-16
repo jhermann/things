@@ -11,6 +11,8 @@ length = 190; // [40:1:200]
 height = 20; // [40:1:200]
 // Height of upper rim
 rim_height = 5; // [0:1:200]
+// Radius of the ribs around the main body
+rib_radius = 1; // [0.25:0.25:9]
 
 // Wall thickness of the holder
 wall_thickness = 1.5; // [1.25:0.25:10]
@@ -32,7 +34,6 @@ $fs = $preview ? 2 : 0.2;
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
 
-rib_radius = wall_thickness / 2;
 body_width = width - 2 * rib_radius;
 body_length = length - 2 * rib_radius;
 inner_width = body_width - 2 * wall_thickness;
