@@ -1,4 +1,4 @@
-// Tealight Holder
+// LED Tealight Holder
 //
 // A tealight candle holder with a spheroid hull
 // (outer shape is the vertical middle slice of a sphere).
@@ -20,6 +20,8 @@ hole_diameter = 40; // [10:0.5:60]
 hole_depth = 20; // [5:1:100]
 // Chamfer of the hole's top edge
 wall_chamfer = 2; // [0:0.25:8]
+// Add "LED" hint text?
+led_hint = true; // [true,false]
 
 /* [Flutes] */
 // Number of flutes around the holder
@@ -37,6 +39,9 @@ epsilon = 0.05;
 tolerance = 0.2;
 flute_steps = $preview ? 48 : 96; // angular samples per flute
 profile_steps = $preview ? 40 : 120; // samples along the arc
+font_family = "Impact";
+emboss_size = 12;
+emboss_height = wall_chamfer / 2;
 
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
@@ -111,6 +116,14 @@ module tealight_hole() {
             chamfer1=wall_chamfer / 2, chamfer2=-wall_chamfer, anchor=BOTTOM);
 }
 
+module led_label() {
+    up(height - safe_depth - emboss_height + epsilon)
+    color("red") xscale(1.25)
+        linear_extrude(height=emboss_height + epsilon)
+            text("LED!", size=emboss_size, font=str(font_family, ":style=Bold"),
+                halign="center", valign="center");
+}
+
 // ====================================================================
 // Main Assembly
 // ====================================================================
@@ -119,6 +132,7 @@ module tealight_holder() {
     difference() {
         fluted_hull();
         tealight_hole();
+        if (led_hint) led_label();
     }
 }
 
