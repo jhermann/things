@@ -9,15 +9,15 @@ include <BOSL2/std.scad>
 // Total height of the holder
 height = 30; // [40:1:200]
 // Outer diameter at the widest point (the middle)
-diameter = 65; // [40:1:200]
+diameter = 64; // [40:1:200]
 // Angle of the slice taken out of the sphere to form the wall (degrees)
 slice_angle = 50; // [20:1:120]
 
 /* [Tealight Hole] */
 // Diameter of the tealight hole
-hole_diameter = 40; // [10:0.5:60]
+hole_diameter = 39.5; // [10:0.5:60]
 // Depth of the tealight hole
-hole_depth = 20; // [5:1:100]
+hole_depth = 25; // [5:1:100]
 // Chamfer of the hole's top edge
 wall_chamfer = 2; // [0:0.25:8]
 // Add "LED" hint text?
@@ -25,11 +25,11 @@ led_hint = true; // [true,false]
 
 /* [Flutes] */
 // Number of flutes around the holder
-flute_count = 24; // [3:1:60]
+flute_count = 48; // [3:1:60]
 // Depth of the flutes at the widest point (they scale with the radius)
-flute_depth = 3; // [0.5:0.25:8]
+flute_depth = 2.5; // [0.5:0.25:8]
 // Size of the transition where the flutes round into the top (at least the flute depth)
-flute_chamfer = 3.5; // [0:0.25:8]
+flute_chamfer = 2.75; // [0:0.25:8]
 
 /* [Hidden] */
 $fa = $preview ? 24 : 2;
@@ -38,7 +38,7 @@ $fs = $preview ? 2 : 0.2;
 epsilon = 0.05;
 tolerance = 0.2;
 flute_steps = $preview ? 48 : 96; // angular samples per flute
-profile_steps = $preview ? 40 : 120; // samples along the arc
+profile_steps = $preview ? 48 : 96; // samples along the arc
 font_family = "Impact";
 emboss_size = 12;
 emboss_height = wall_chamfer / 2;
@@ -112,7 +112,8 @@ module fluted_hull() {
 module tealight_hole() {
     up(height - safe_depth)
         cyl(h=safe_depth + 1,
-            d1=hole_diameter - 2 * tolerance, d2=hole_diameter + tolerance,
+            d1=hole_diameter - tolerance,
+            d2=hole_diameter + 2 * tolerance,
             chamfer1=wall_chamfer / 2, chamfer2=-wall_chamfer, anchor=BOTTOM);
 }
 
