@@ -1,6 +1,18 @@
-# Japandi
+# Japandi <!-- omit from toc -->
 
-Minimalist, Japandi-inspired desk and home accessories.
+> Minimalist, Japandi-inspired desk and home accessories.
+
+> ![model preview](./preview.png)
+
+**Contents**
+
+- [Pen Holder](#pen-holder)
+- [Tray](#tray)
+- [Candle Holder](#candle-holder)
+- [Tea Light Holder](#tea-light-holder)
+- [Printing](#printing)
+
+> ![tray + holder set](assets/japandi-set.jpg)
 
 ## Pen Holder
 
@@ -17,8 +29,29 @@ The default model has a diameter of 65 mm and a height of 90 mm.
 
 The default model's dimensions are L190 × W100 × H20 mm.
 
-> ![sliced](assets/tray-sliced.png)
+> ![tray views](assets/tray.png)
+
+## Candle Holder
+
+[candle-holder.scad](./candle-holder.scad) is a three-sided pyramid with its tip cut off, leaving a flat top that holds the candle hole. The lower part has vertical flutes along the slope; the upper part has a rough texture and is exactly as high as the hole is deep.
+
+- `base_side` and `height` set the side length of the triangular base and the total height.
+- `hole_diameter` and `hole_depth` set the candle hole; `hole_depth` also sets the height of the rough section.
+- `top_margin` is the material kept around the hole, which determines how much of the tip is cut off.
+- `flute_count`, `flute_depth`, `bottom_chamfer` (bottom edge of the fluted section), `rough_depth` and `texture_size` adjust the textures.
+
+The default model has a base side of 110 mm, a height of 100 mm, and a 22 × 30 mm candle hole.
+
+## Tea Light Holder
+
+[tealight-holder.scad](./tealight-holder.scad) is a fluted, rounded holder with a chamfered recess for a standard tea light.
+
+- `height`, `diameter`, and `slice_angle` set the holder's rounded body.
+- `hole_diameter` and `hole_depth` set the tea-light recess.
+- `wall_chamfer`, `flute_count`, `flute_depth`, and `flute_chamfer` adjust the rim and flutes.
+
+The default model is 65 mm in diameter and 30 mm tall, with a 40 × 20 mm recess.
 
 ## Printing
 
-Print the models upright with the open end on top; no supports are needed.
+Print both holders upright with the recess facing up; the candle holder stands on its triangular base, and the tea-light holder on its flat bottom. No supports are needed.
