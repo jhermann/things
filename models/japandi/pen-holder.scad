@@ -11,17 +11,24 @@ outer_diameter = 65; // [40:1:150]
 height = 90; // [40:1:200]
 // Height of upper rim
 rim_height = 7; // [0:1:200]
+// Radius of the ribs around the main body
+rib_radius = 1; // [0.25:0.25:9]
+// Position of the transition line (in percent of height)
+transition_pos = 50; // [5:5:95]
+// Angle of the transition line between rough and ribbed surfaces
+transition_angle = 20; // [0:1:45]
 
+/* [Walls and Edges] */
 // Wall thickness of the holder
 wall_thickness = 1.5; // [1.25:0.25:10]
 // Floor thickness below the fillet
 floor_thickness = 2.5; // [1:0.2:10]
 // Radius of the fillet between inner floor and inner wall
 floor_fillet = 8; // [0.4:0.2:30]
-
-/* [Edges] */
 // Rounding of the outer bottom edge
 bottom_rounding = 1.25; // [0:0.25:10]
+// Size of the texture pattern
+texture_size = 8; // [4:1:20]
 
 /* [Hidden] */
 //$preview = true;
@@ -37,7 +44,6 @@ tex = texture("rough");
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
 
-rib_radius = wall_thickness / 2;
 inner_diameter = outer_diameter - 2 * wall_thickness;
 inner_height = height - floor_thickness;
 // The fillet cannot exceed the inner radius or the cavity height
@@ -72,8 +78,7 @@ module ribs() {
 // Outer body, rounded at the bottom edge only
 module body() {
     slant_factor = .99;
-    transition_angle = 20;
-    rib_start = .5 * height;
+    rib_start = transition_pos / 100 * height;
 
     // Outer body
     color("#aaa")
@@ -89,7 +94,7 @@ module body() {
             texture=tex,
             tex_inset=false,
             tex_depth=0.10,
-            tex_size=[8, 8], style="min_edge",
+            tex_size=[texture_size, texture_size], style="min_edge",
             chamfer1=bottom_rounding + rib_radius, anchor=BOTTOM);
 
         // Cuts off the upper part
@@ -111,7 +116,7 @@ module body() {
             texture=tex,
             tex_inset=false,
             tex_depth=0.10,
-            tex_size=[6, 6], style="min_edge",
+            tex_size=[texture_size, texture_size], style="min_edge",
             rounding2=wall_thickness / 3, anchor=BOTTOM);
         zcyl(h=rim_height, d=outer_diameter + 2 * rib_radius,
             rounding2=wall_thickness / 3, anchor=BOTTOM);
