@@ -20,8 +20,6 @@ hole_diameter = 39.5; // [10:0.5:60]
 hole_depth = 25; // [5:1:100]
 // Chamfer of the hole's top edge
 wall_chamfer = 2; // [0:0.25:8]
-// Add "LED" hint text?
-led_hint = true; // [true,false]
 
 /* [Flutes] */
 // Number of flutes around the holder
@@ -37,11 +35,15 @@ $fs = $preview ? 2 : 0.2;
 
 epsilon = 0.05;
 tolerance = 0.2;
+layer_line = 0.4;
 flute_steps = $preview ? 48 : 96; // angular samples per flute
 profile_steps = $preview ? 48 : 96; // samples along the arc
-font_family = "Impact";
-emboss_size = 12;
-emboss_height = wall_chamfer / 2;
+
+// Add "LED" hint text?
+// led_hint = true; // [true,false]
+// font_family = "Impact";
+// emboss_size = 12;
+// emboss_height = wall_chamfer / 2;
 
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
@@ -111,7 +113,7 @@ module fluted_hull() {
 
 module tealight_hole() {
     up(height - safe_depth)
-        cyl(h=safe_depth + 1,
+        cyl(h=safe_depth + epsilon,
             d1=hole_diameter - tolerance,
             d2=hole_diameter + 2 * tolerance,
             chamfer1=wall_chamfer / 2, chamfer2=-wall_chamfer, anchor=BOTTOM);
@@ -125,6 +127,13 @@ module led_label() {
                 halign="center", valign="center");
 }
 
+module access_release() {
+    down(epsilon) color("red")
+    cyl(h=height - safe_depth + 2 * epsilon,
+        d=hole_diameter - 3 * wall_chamfer,
+        chamfer=-layer_line, anchor=BOTTOM);
+}
+
 // ====================================================================
 // Main Assembly
 // ====================================================================
@@ -133,7 +142,8 @@ module tealight_holder() {
     difference() {
         fluted_hull();
         tealight_hole();
-        if (led_hint) led_label();
+        //if (led_hint) led_label();
+        access_release();
     }
 }
 
