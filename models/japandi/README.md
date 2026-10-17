@@ -50,8 +50,6 @@ The default model has a base side of 110 mm, a height of 100 mm, and a 22 × 30 
 
 The default model is 64 mm in diameter and 30 mm tall, with a 40 × 25 mm recess.
 
-> 💡 **Getting the LED back out** <br />The recess is marginally conical for a good grip, so wiggle the tealight a bit to get it out, once you lifted it even slightly it comes out easy.
-
 > 🕳️ **Release & Access Hole** <br />The bottom of the tealight recess just has a rim to securely hold the tealight, but still allows easy releasing and accessing an on/off switch and charging port.
 
 > ![fuzzy skin settings](assets/fuzzy-skin.png)
