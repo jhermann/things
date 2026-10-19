@@ -6,15 +6,15 @@ include <BOSL2/std.scad>
 // Outer width of the tray
 width = 100; // [30:1:220]
 // Outer length of the tray
-length = 190; // [30:1:220]
+length = 100; // [30:1:220]
 // Total height of the tray
 height = 20; // [10:1:220]
 // Height of upper rim
 rim_height = 5; // [1:1:10]
 // Radius of the rounding of vertical tray edges
-corner_radius = 15; // [0:1:110]
+corner_radius = 48; // [0:1:110]
 // Radius of the ribs around the tray walls
-rib_radius = 1; // [0.25:0.25:9]
+rib_radius = 0.9; // [0.25:0.25:9]
 
 /* [Edges & Walls] */
 // Wall thickness of the holder
@@ -32,6 +32,8 @@ local = 1;
 $fa = $preview ? 24 : 4;
 $fs = $preview ? 2 : 0.2;
 
+epsilon = 0.05;
+
 // Keep derived calculations below this line,
 // so they are hidden from the user interface
 
@@ -39,8 +41,8 @@ body_width = width - 2 * rib_radius;
 body_length = length - 2 * rib_radius;
 inner_width = body_width - 2 * wall_thickness;
 inner_length = body_length - 2 * wall_thickness;
-corner_radius_safe = min(corner_radius, body_width / 2, body_length / 2);
-inner_corner_radius = max(0, corner_radius - wall_thickness);
+corner_radius_safe = min(corner_radius, body_width / 2, body_length / 2) - epsilon;
+inner_corner_radius = max(0, corner_radius_safe - wall_thickness);
 inner_height = height - floor_thickness;
 
 // The chamfer / fillet cannot exceed either inner footprint dimension or the cavity height
@@ -91,7 +93,7 @@ module ribs() {
 
         offset_sweep(
             path=rect([body_width + 2 * rib_radius, body_length + 2 * rib_radius],
-                rounding=corner_radius + rib_radius),
+                rounding=corner_radius_safe + rib_radius),
             height=height - rim_height,
             bottom=os_chamfer(safe_chamfer + rib_radius),
             anchor="base"
