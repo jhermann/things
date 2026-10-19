@@ -4,22 +4,22 @@ include <BOSL2/std.scad>
 
 /* [Main Settings] */
 // Outer width of the tray
-width = 100; // [40:1:200]
+width = 100; // [30:1:200]
 // Outer length of the tray
-length = 190; // [40:1:200]
+length = 190; // [30:1:200]
 // Total height of the tray
-height = 20; // [40:1:200]
+height = 20; // [10:1:200]
 // Height of upper rim
-rim_height = 5; // [0:1:200]
+rim_height = 5; // [1:1:10]
 // Radius of the ribs around the main body
 rib_radius = 1; // [0.25:0.25:9]
 
 // Wall thickness of the holder
 wall_thickness = 1.5; // [1.25:0.25:10]
 // Floor thickness below the fillet
-floor_thickness = 2.5; // [1:0.2:10]
+floor_thickness = 2.5; // [1.5:0.25:10]
 // Radius of the fillet between inner floor and inner wall
-floor_fillet = 4; // [0.4:0.2:30]
+floor_fillet = 4; // [0.4:0.2:10]
 
 /* [Edges] */
 // Rounding of the outer bottom edge
