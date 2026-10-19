@@ -6,15 +6,15 @@ include <BOSL2/std.scad>
 // Outer width of the tray
 width = 100; // [30:1:220]
 // Outer length of the tray
-length = 100; // [30:1:220]
+length = 190; // [30:1:220]
 // Total height of the tray
 height = 20; // [10:1:220]
 // Height of upper rim
 rim_height = 5; // [1:1:10]
 // Radius of the rounding of vertical tray edges
-corner_radius = 48; // [0:1:110]
+corner_radius = 15; // [0:1:110]
 // Radius of the ribs around the tray walls
-rib_radius = 0.9; // [0.25:0.25:9]
+rib_radius = 1; // [0.25:0.25:9]
 
 /* [Edges & Walls] */
 // Wall thickness of the holder
