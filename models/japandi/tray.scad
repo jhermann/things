@@ -4,26 +4,27 @@ include <BOSL2/std.scad>
 
 /* [Main Settings] */
 // Outer width of the tray
-width = 100; // [30:1:200]
+width = 100; // [30:1:220]
 // Outer length of the tray
-length = 190; // [30:1:200]
+length = 190; // [30:1:220]
 // Total height of the tray
-height = 20; // [10:1:200]
+height = 20; // [10:1:220]
 // Height of upper rim
 rim_height = 5; // [1:1:10]
-// Radius of the ribs around the main body
+// Radius of the rounding of vertical tray edges
+corner_radius = 15; // [0:1:110]
+// Radius of the ribs around the tray walls
 rib_radius = 1; // [0.25:0.25:9]
 
+/* [Edges & Walls] */
 // Wall thickness of the holder
 wall_thickness = 1.5; // [1.25:0.25:10]
 // Floor thickness below the fillet
 floor_thickness = 2.5; // [1.5:0.25:10]
 // Radius of the fillet between inner floor and inner wall
 floor_fillet = 4; // [0.4:0.2:10]
-
-/* [Edges] */
-// Rounding of the outer bottom edge
-bottom_rounding = 1.25; // [0:0.25:10]
+// Chamfer for the outer bottom edge
+bottom_chamfer = 1.25; // [0:0.25:10]
 
 /* [Hidden] */
 //$preview = true;
@@ -38,11 +39,13 @@ body_width = width - 2 * rib_radius;
 body_length = length - 2 * rib_radius;
 inner_width = body_width - 2 * wall_thickness;
 inner_length = body_length - 2 * wall_thickness;
-corner_radius = min(body_width, body_length) / 10;
+corner_radius_safe = min(corner_radius, body_width / 2, body_length / 2);
 inner_corner_radius = max(0, corner_radius - wall_thickness);
 inner_height = height - floor_thickness;
-// The fillet cannot exceed either inner footprint dimension or the cavity height
+
+// The chamfer / fillet cannot exceed either inner footprint dimension or the cavity height
 safe_fillet = min(floor_fillet, inner_width / 2 - 0.1, inner_length / 2 - 0.1, inner_height - 0.1);
+safe_chamfer = min(bottom_chamfer, floor_thickness);
 
 echo("SIZE H × W × L:", height, width, length);
 echo("INNER W × L:", inner_width, inner_length);
@@ -52,8 +55,8 @@ echo("INNER W × L:", inner_width, inner_length);
 // ====================================================================
 
 module ribs() {
-    width_span = body_width - 2 * corner_radius;
-    length_span = body_length - 2 * corner_radius;
+    width_span = body_width - 2 * corner_radius_safe;
+    length_span = body_length - 2 * corner_radius_safe;
     width_rib_count = max(1, floor(width_span / (2 * rib_radius)));
     length_rib_count = max(1, floor(length_span / (2 * rib_radius)));
     width_rib_spacing = width_span / width_rib_count;
@@ -79,8 +82,8 @@ module ribs() {
 
             for (x_side = [-1, 1], y_side = [-1, 1], i = [0:corner_rib_count - 1]) {
                 angle = (i + 0.5) * corner_rib_spacing;
-                x = x_side * (body_width / 2 - corner_radius + corner_radius * cos(angle));
-                y = y_side * (body_length / 2 - corner_radius + corner_radius * sin(angle));
+                x = x_side * (body_width / 2 - corner_radius_safe + corner_radius_safe * cos(angle));
+                y = y_side * (body_length / 2 - corner_radius_safe + corner_radius_safe * sin(angle));
                 translate([x, y, 0])
                     cyl(h=height - rim_height, r=rib_radius, anchor=BOTTOM);
             }
@@ -90,7 +93,7 @@ module ribs() {
             path=rect([body_width + 2 * rib_radius, body_length + 2 * rib_radius],
                 rounding=corner_radius + rib_radius),
             height=height - rim_height,
-            bottom=os_chamfer(bottom_rounding + rib_radius),
+            bottom=os_chamfer(safe_chamfer + rib_radius),
             anchor="base"
         );
     }
@@ -100,9 +103,9 @@ module ribs() {
 module body() {
     color("#aaa")
     offset_sweep(
-        path=rect([body_width, body_length], rounding=corner_radius),
+        path=rect([body_width, body_length], rounding=corner_radius_safe),
         height=height - rim_height,
-        bottom=os_chamfer(bottom_rounding),
+        bottom=os_chamfer(safe_chamfer),
         anchor="base"
     );
 
@@ -114,7 +117,7 @@ module body() {
     up(height - rim_height)
     offset_sweep(
         path=rect([width, length],
-            rounding=corner_radius + rib_radius),
+            rounding=corner_radius_safe + rib_radius),
         height=rim_height,
         bottom=os_circle(r=wall_thickness / 3),
         top=os_circle(wall_thickness / 3),
