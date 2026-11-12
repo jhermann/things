@@ -9,6 +9,7 @@ vent_diameter     = 144.65; // Nominal outer diameter of the vent
 vent_tube_depth   = 35;     // Height of the straight cylindrical section
 wall_thickness    = 1.5;    // Wall thickness for main cylinder
 tolerance_gap     = 0.15;   // Clearance subtracted from outer radius
+vent_edges        = 120;    // Number around the vent (try 4 or 6)
 
 // Vent rim
 rim_size           = 10;     // Extra margin width added around cylinder
@@ -34,6 +35,7 @@ eps = 0.05; // Small overlap value for CSG clean operations
 outer_radius  = (vent_diameter / 2) - tolerance_gap;
 inner_radius  = outer_radius - wall_thickness;
 tongue_inner_r = outer_radius - tongue_thickness;
+tongues = (vent_edges >= 36);
 
 // Fin depth along the slanted direction to achieve exact `grill_height` vertically
 fin_depth = grill_height / sin(grill_angle);
@@ -46,26 +48,27 @@ union() {
         // ----------------------------------------------------
         union() {
             // Main Solid Outer Cylinder
-            cylinder(r = outer_radius, h = vent_tube_depth);
-            
+            cylinder(r = outer_radius, h = vent_tube_depth, $fn=vent_edges);
+
             // Outer Rim at bottom
             difference() {
-                cylinder(r = outer_radius + rim_size, h = rim_thickness);
-                
+                cylinder(r = outer_radius + rim_size, h = rim_thickness, $fn=vent_edges);
+
                 // Bottom chamfer
                 if (rim_bottom_chamfer > 0) {
                     translate([0, 0, -eps])
                         difference() {
-                            cylinder(r = outer_radius + rim_size + eps, h = rim_bottom_chamfer + eps);
+                            cylinder(r = outer_radius + rim_size + eps, h = rim_bottom_chamfer + eps, $fn=vent_edges);
                             translate([0, 0, -eps])
-                                cylinder(r1 = outer_radius + rim_size - rim_bottom_chamfer, 
-                                         r2 = outer_radius + rim_size, 
+                                cylinder(r1 = outer_radius + rim_size - rim_bottom_chamfer,
+                                         r2 = outer_radius + rim_size,
                                          h = rim_bottom_chamfer + 2*eps);
                         }
                 }
             }
-            
+
             // Ellipsoid Friction Segments on Spring Tongues
+            if (tongues)
             for (a = [0, 90, 180, 270]) {
                 rotate([0, 0, a])
                     translate([0, outer_radius, vent_tube_depth - (tongue_size / 2)])
@@ -80,9 +83,10 @@ union() {
         // A. Main Inner Cavity: Hollows out tube EXCEPT for the spring tongue zones
         difference() {
             translate([0, 0, -eps])
-                cylinder(r = inner_radius, h = vent_tube_depth + 2*eps);
-            
+                cylinder(r = inner_radius, h = vent_tube_depth + 2*eps, $fn=vent_edges);
+
             // Protect the 4 tongue height zones from being hollowed out prematurely
+            if (tongues)
             for (a = [0, 90, 180, 270]) {
                 rotate([0, 0, a])
                     translate([-tongue_size/2, 0, vent_tube_depth - tongue_size])
@@ -91,9 +95,10 @@ union() {
         }
 
         // B. Tongue Thinning Cut & Vertical Slits
+        if (tongues)
         for (a = [0, 90, 180, 270]) {
             rotate([0, 0, a]) {
-                
+
                 // --- THINNING CUT ---
                 // Cuts away inner wall behind the tongue down to tongue_inner_r (1.0mm thickness).
                 // Extends past the inner edge into the hollow tube to ensure zero wall remnants.
@@ -114,8 +119,8 @@ union() {
     // 3. INTEGRATED GRILL & CENTRAL STABILIZER
     // ----------------------------------------------------
     intersection() {
-        cylinder(r = outer_radius, h = grill_height);
-        
+        cylinder(r = outer_radius, h = grill_height, $fn=vent_edges);
+
         union() {
             // Angled Grill Fins
             for (x = [-outer_radius : grill_distance : outer_radius]) {
@@ -124,7 +129,7 @@ union() {
                         translate([-grill_thickness/2, -outer_radius, 0])
                             cube([grill_thickness, outer_radius * 2, fin_depth]);
             }
-            
+
             // Vertical Central Stabilizer
             translate([-outer_radius, -grill_thickness/2, 0])
                 cube([outer_radius * 2, grill_thickness, grill_height]);
