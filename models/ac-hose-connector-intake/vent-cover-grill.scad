@@ -62,7 +62,8 @@ union() {
                             translate([0, 0, -eps])
                                 cylinder(r1 = outer_radius + rim_size - rim_bottom_chamfer,
                                          r2 = outer_radius + rim_size,
-                                         h = rim_bottom_chamfer + 2*eps);
+                                         h = rim_bottom_chamfer + 2*eps,
+                                         $fn=vent_edges);
                         }
                 }
             }
