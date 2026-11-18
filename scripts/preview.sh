@@ -30,6 +30,7 @@ scad_dirs=(
     parts/springs
     parts/textures
     models/bambu-lab-a1
+    models/japandi
     models/lamp-led-puck
 )
 
